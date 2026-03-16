@@ -1,0 +1,354 @@
+/* =========================================
+   Shared component styles using CSS variables
+   for proper light/dark mode theming
+   ========================================= */
+
+/* ── Utilities ── */
+.pv-row-sb {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pv-section-title,
+.cv-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.pv-btn-outline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* ── Payments: Metric cards ── */
+.pv-metric-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.pv-metric-number {
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.pv-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.pv-badge-green { background-color: #E8F5E9; color: #4CAF50; }
+.pv-badge-red   { background-color: #FFEBEE; color: #FF4444; }
+
+.app-container.dark .pv-badge-green { background-color: rgba(76, 175, 80, 0.15); }
+.app-container.dark .pv-badge-red   { background-color: rgba(255, 68, 68, 0.15); }
+
+.pv-subtext {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.pv-bold-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ── Payments: Avatar row ── */
+.pv-avatar-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 18px;
+  color: #111111;
+}
+
+.pv-avatar-name {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.pv-view-all-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-primary);
+}
+
+/* ── Payments: Bar chart ── */
+.pv-revenue-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--border);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 1;
+  background: transparent !important;
+}
+
+.app-container.dark .pv-revenue-label {
+  color: var(--text-secondary);
+  opacity: 0.2;
+}
+
+.pv-chart-bar {
+  width: 32px;
+  border-radius: 6px 6px 0 0;
+  background-color: var(--border);
+  position: relative;
+  z-index: 2;
+}
+
+.app-container.dark .pv-chart-bar[data-inactive="true"] {
+  background-color: #2A2A2A;
+}
+
+
+/* ── Generic Shared Components (for Invoices, Licenses, etc.) ── */
+
+.comp-stats-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.comp-stat-tile {
+  flex: 1;
+  background-color: var(--bg);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid var(--border);
+}
+
+.comp-stat-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.comp-stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.comp-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.comp-badge-success { background-color: #E8F5E9; color: #4CAF50; }
+.comp-badge-warning { background-color: #FFF8E1; color: #F59E0B; }
+.comp-badge-danger  { background-color: #FFEBEE; color: #FF4444; }
+.comp-badge-neutral { background-color: var(--border); color: var(--text-secondary); }
+
+.app-container.dark .comp-badge-success { background-color: rgba(76, 175, 80, 0.15); }
+.app-container.dark .comp-badge-warning { background-color: rgba(245, 158, 11, 0.15); }
+.app-container.dark .comp-badge-danger  { background-color: rgba(255, 68, 68, 0.15); }
+
+.comp-table-container {
+  overflow-x: auto;
+}
+
+.comp-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.comp-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  border-bottom: 1px solid var(--border);
+}
+
+.comp-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.comp-avatar-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.comp-icon-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+}
+
+.comp-icon-btn:hover {
+  background-color: var(--border);
+}
+
+/* Plan badge specific */
+.comp-plan-badge {
+  background-color: var(--border);
+  color: var(--text-primary);
+}
+
+/* ═══════════════════════════════════
+   CUSTOMERS VIEW (Restored)
+   ═══════════════════════════════════ */
+
+.cv-stat-card { flex: 1; }
+
+.cv-stat-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.cv-stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.cv-stat-sub {
+  font-size: 12px;
+}
+
+.cv-add-btn {
+  padding: 8px 20px;
+  border-radius: 20px;
+  background-color: var(--text-primary);
+  color: var(--surface);
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.cv-customer-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+}
+
+.cv-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.cv-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cv-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.cv-contact {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.cv-contact span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cv-meta-col {
+  text-align: center;
+  min-width: 70px;
+}
+
+.cv-meta-value {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.cv-meta-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.cv-arrow-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+
