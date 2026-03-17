@@ -1,0 +1,39 @@
+To answer your question: No, the backend and frontend are currently NOT connected.
+
+The backend scripts (in the `backend/` directory) and the frontend scripts (in the `src/` directory) are 
+currently set up as two separate, independent pieces of the project.
+
+Here is why they are not connected and the changes needed to connect them:
+
+1. Frontend Using Mock Data
+In `src/App.tsx`, the frontend is using a hardcoded, fake authentication token 
+to skip the login process so you can see the UI:
+
+`const [token] = useState<string | null>('mock-token-for-ui');`
+It never actually asks the backend to log in or fetch any real users, transactions, or payments.
+ All the data you see in the UI is just placeholder data.
+
+2. Backend API Not Being Called
+The backend (`backend/index.ts`) has real API routes like `/api/auth` (for login) and `/api/payment`(for payments), 
+but the frontend code doesn't have any code (like `fetch` or `axios`) to actually send requests to these backend URLs.
+
+What Changes Are Needed to Connect Them?
+
+To actually connect them, we need to make the following changes:
+
+1. Update the Frontend to Fetch Real Data
+Instead of using mock data, the React components in `src/` must be changed to send HTTP requests to `http://localhost:5000/api/...` 
+to get their data. 
+For example, the frontend needs to send a real username and password to `/api/auth/login`, and the backend will return a real token. 
+This token will then be used to fetch the real Dashboard data.
+
+2. Update Backend CORS
+The backend must be configured to accept requests from the frontend's address (usually `http://localhost:5173` if running Vite). 
+This is done by modifying `app.use(cors())` in `backend/index.ts`.
+
+3. Database Connection
+The backend relies on PostgreSQL (`backend/db.ts`). For the backend to work and provide data to the frontend, 
+you must have a local PostgreSQL database running, and you must put its connection URL in a `.env` file in the root.
+
+To summarize: The backend has the foundation ready, and the frontend has the UI ready, but we need to explicitly 
+write the "bridge" code (API calls in the frontend) to connect them together.
