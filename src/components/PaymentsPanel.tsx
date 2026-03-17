@@ -1,12 +1,12 @@
 import { Users, Wallet, ArrowUp, ArrowDown, ChevronDown, ChevronRight } from 'lucide-react';
-import './components.css';
+import './css/components.css';
 
 const MOCK_PRODUCTS = [
-  { id: 1, name: 'Crypter - NFT UI Kit', price: '$3,250.00', status: 'Active', image: 'https://via.placeholder.com/48/3498db/ffffff?text=C' },
-  { id: 2, name: 'Bento Pro 2.0', price: '$7,890.00', status: 'Active', image: 'https://via.placeholder.com/48/9b59b6/ffffff?text=B' },
-  { id: 3, name: 'Fleet - tracking kit', price: '$1,500.00', status: 'Offline', image: 'https://via.placeholder.com/48/e67e22/ffffff?text=F' },
-  { id: 4, name: 'SimpleSocial UI Kit', price: '$9,999.99', status: 'Active', image: 'https://via.placeholder.com/48/2ecc71/ffffff?text=S' },
-  { id: 5, name: 'Bento Pro vol. 2', price: '$4,750.00', status: 'Active', image: 'https://via.placeholder.com/48/f1c40f/ffffff?text=B2' },
+  { id: 1, name: 'Crypter - NFT UI Kit', price: '$3,250.00', status: 'Active'},
+  { id: 2, name: 'Bento Pro 2.0', price: '$7,890.00', status: 'Active'},
+  { id: 3, name: 'Fleet - tracking kit', price: '$1,500.00', status: 'Offline'},
+  { id: 4, name: 'SimpleSocial UI Kit', price: '$9,999.99', status: 'Active'},
+  { id: 5, name: 'Bento Pro vol. 2', price: '$4,750.00', status: 'Active'},
 ];
 
 export function PaymentsView() {
@@ -97,7 +97,6 @@ export function PaymentsView() {
               <div key={prod.id} className="pv-product-row" style={{
                 borderBottom: i < MOCK_PRODUCTS.length - 1 ? '1px solid var(--border)' : 'none'
               }}>
-                <img src={prod.image} alt={prod.name} style={{ width: '44px', height: '44px', borderRadius: '8px', flexShrink: 0 }} />
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div className="pv-product-name">{prod.name}</div>
                   <div className="pv-subtext">UI Kit</div>
@@ -115,7 +114,7 @@ export function PaymentsView() {
         </div>
 
         {/* Comments */}
-        <div className="base-card">
+        {/* <div className="base-card">
           <h2 className="pv-section-title" style={{ marginBottom: '16px' }}>Comments</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {[
@@ -136,7 +135,7 @@ export function PaymentsView() {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

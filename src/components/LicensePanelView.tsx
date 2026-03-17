@@ -1,5 +1,5 @@
 import { Plus, RefreshCw, XCircle, ArrowRight } from 'lucide-react';
-import './components.css';
+import './css/components.css';
 
 const MOCK_LICENSES = [
   { key: 'LIC-A1B2C3', store: 'Ravi Store', owner: 'Ravi Kumar', status: 'Active', device: 'A1B2C3D4', expires: '2027-03-15', plan: 'Pro' },

@@ -1,5 +1,5 @@
 import { Phone, Mail, ChevronRight } from 'lucide-react';
-import './components.css';
+import './css/components.css';
 
 const CUSTOMERS = [
   { name: 'Alice Doe', phone: '+91 98765 43210', email: 'alice@store.in', orders: 14, spend: '₹21,500', joined: 'Jan 2026', initial: 'A', color: '#9b59b6' },

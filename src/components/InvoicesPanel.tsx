@@ -1,5 +1,5 @@
 import { FileText, Download, Plus } from 'lucide-react';
-import './components.css';
+import './css/components.css';
 
 const MOCK_INVOICES = [
   { id: 'INV-2001', customer: 'Alice Doe', amount: 1500, status: 'Paid', date: '2026-03-10', due: '2026-03-20' },

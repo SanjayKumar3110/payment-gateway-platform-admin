@@ -1,6 +1,6 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { Download } from 'lucide-react';
-import './components.css';
+import './css/components.css';
 
 const pieData = [
   { name: 'Completed', value: 400 },
@@ -24,7 +24,7 @@ const LOGS = [
   { id: 'RPT-903', type: 'Customer Acquisition', generated: '2026-03-08', status: 'Done' },
 ];
 
-export function ReportsView() {
+export function Dashboard() {
   return (
     <div>
       <div className="pv-row-sb" style={{ marginBottom: '24px' }}>

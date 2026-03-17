@@ -1,39 +1,24 @@
 import { useState } from 'react';
 import './App.css';
 import { 
-  LayoutDashboard, 
-  CreditCard, 
-  ListOrdered, 
-  FileText, 
-  Users, 
-  BarChart, 
-  Settings,
-  Search,
-  Bell,
-  MessageSquare,
-  Moon,
-  Sun,
-  Hexagon,
-  ShieldCheck
-} from 'lucide-react';
-import { KanbanDashboard } from './components/KanbanDashboard';
-import { TransactionsTable } from './components/TransactionsTable';
-import { ReportsView } from './components/ReportsView';
-import { PaymentsView } from './components/PaymentsView';
-import { InvoicesView } from './components/InvoicesView';
-import { CustomersView } from './components/CustomersView';
-import { LicensePanelView } from './components/LicensePanelView';
+  LayoutDashboard, CreditCard, ListOrdered, FileText, Users, 
+  Settings, Search, Bell, MessageSquare, Moon, Sun,
+  Hexagon,} from 'lucide-react';
 
-type Tab = 'dashboard' | 'payments' | 'transactions' | 'invoices' | 'customers' | 'reports' | 'licenses';
+import { TransactionsTable } from './components/TransactionsTable';
+import { Dashboard } from './components/DashboardView';
+import { PaymentsView } from './components/PaymentsPanel';
+import { InvoicesView } from './components/InvoicesPanel';
+import { CustomersView } from './components/CustomersPanel';
+
+type Tab = 'dashboard' | 'payments' | 'transactions' | 'invoices' | 'customers' ; //| 'reports' | 'licenses'
 
 const PAGE_TITLES: Record<Tab, string> = {
   dashboard: 'Dashboard',
   payments: 'Payments',
   transactions: 'Transactions',
   invoices: 'Invoices',
-  customers: 'Customers',
-  reports: 'Reports',
-  licenses: 'Licenses',
+  customers: 'Customers'
 };
 
 export default function App() {
@@ -51,8 +36,6 @@ export default function App() {
     { id: 'transactions', icon: ListOrdered, label: 'Transactions' },
     { id: 'invoices', icon: FileText, label: 'Invoices' },
     { id: 'customers', icon: Users, label: 'Customers' },
-    { id: 'reports', icon: BarChart, label: 'Reports' },
-    { id: 'licenses', icon: ShieldCheck, label: 'Licenses' },
   ];
 
   return (
@@ -122,13 +105,11 @@ export default function App() {
 
         {/* Page Content */}
         <main className="content-area-scrollable">
-          {activeTab === 'dashboard'    && <KanbanDashboard />}
+          {activeTab === 'dashboard'    && <Dashboard />}
           {activeTab === 'payments'     && <PaymentsView />}
           {activeTab === 'transactions' && <TransactionsTable />}
           {activeTab === 'invoices'     && <InvoicesView />}
           {activeTab === 'customers'    && <CustomersView />}
-          {activeTab === 'reports'      && <ReportsView />}
-          {activeTab === 'licenses'     && <LicensePanelView />}
         </main>
         
       </div>
