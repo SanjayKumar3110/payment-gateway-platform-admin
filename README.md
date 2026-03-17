@@ -75,7 +75,9 @@ Several directories are automatically excluded from source control (via `.gitign
 
 Detail implementation plan is in `test/implementation_plan.md` 
 
-## High Level Architecture ![alt text](test/images/system_architecture.png)
+## High Level Architecture 
+![alt text](test/images/system_architecture.png)
 
-## Sequence Diagrams ![alt text](test/images/detail_sequence_workflow.png)
+## Sequence Diagrams 
+![alt text](test/images/detail_sequence_workflow.png)
 
