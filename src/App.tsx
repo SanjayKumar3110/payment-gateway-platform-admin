@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './App.css';
 import { 
   LayoutDashboard, CreditCard, ListOrdered, FileText, Users, 
-  Settings, Search, Bell, MessageSquare, Moon, Sun,
+  Settings, Bell, Moon, Sun,
   Hexagon,} from 'lucide-react';
 
 import { TransactionsTable } from './components/TransactionsTable';
@@ -61,10 +61,10 @@ export default function App() {
         </nav>
         
         <div className="sidebar-bottom">
-          <button className="nav-btn" title="Messages">
+          {/* <button className="nav-btn" title="Messages">
             <MessageSquare className="icon" />
             <span>Messages</span>
-          </button>
+          </button> */}
           {/* Dark Mode Toggle — functional */}
           <button 
             className="nav-btn" 
@@ -88,17 +88,17 @@ export default function App() {
         <header className="topbar">
           <h1 className="page-title">{PAGE_TITLES[activeTab]}</h1>
           
-          <div className="top-search-container">
+          {/* <div className="top-search-container">
             <div className="search-input-wrapper">
               <Search className="search-icon" />
               <input type="text" className="search-input" placeholder="Search anything..." />
             </div>
-          </div>
+          </div> */}
           
           <div className="top-actions">
-            <button className="btn-create">Create</button>
+            {/* <button className="btn-create">Create</button> */}
             <button className="icon-btn-circle"><Bell size={18} /></button>
-            <button className="icon-btn-circle"><MessageSquare size={18} /></button>
+            {/* <button className="icon-btn-circle"><MessageSquare size={18} /></button> */}
             <div className="avatar">JD</div>
           </div>
         </header>
