@@ -1,18 +1,12 @@
 import { Users, Wallet, ArrowUp, ArrowDown, ChevronDown, ChevronRight } from 'lucide-react';
 import './css/components.css';
 
-const MOCK_PRODUCTS = [
-  { id: 1, name: 'Crypter - NFT UI Kit', price: '$3,250.00', status: 'Active'},
-  { id: 2, name: 'Bento Pro 2.0', price: '$7,890.00', status: 'Active'},
-  { id: 3, name: 'Fleet - tracking kit', price: '$1,500.00', status: 'Offline'},
-  { id: 4, name: 'SimpleSocial UI Kit', price: '$9,999.99', status: 'Active'},
-  { id: 5, name: 'Bento Pro vol. 2', price: '$4,750.00', status: 'Active'},
-];
+import MOCK_PRODUCTS from '../data/payments.json';
 
 export function PaymentsView() {
   return (
     <div className="desktop-split-layout">
-      
+
       {/* Main Content */}
       <div className="desktop-split-main">
 

@@ -1,0 +1,52 @@
+[
+    {
+        "name": "Alice Doe",
+        "phone": "+91 98765 43210",
+        "email": "alice@store.in",
+        "orders": 14,
+        "spend": "₹21,500",
+        "joined": "Jan 2026",
+        "initial": "A",
+        "color": "#9b59b6"
+    },
+    {
+        "name": "Bob Smith",
+        "phone": "+91 91234 56789",
+        "email": "bob@store.in",
+        "orders": 7,
+        "spend": "₹8,200",
+        "joined": "Feb 2026",
+        "initial": "B",
+        "color": "#34495e"
+    },
+    {
+        "name": "Charlie",
+        "phone": "+91 90012 34567",
+        "email": "charlie@store.in",
+        "orders": 22,
+        "spend": "₹56,000",
+        "joined": "Dec 2025",
+        "initial": "C",
+        "color": "#e67e22"
+    },
+    {
+        "name": "Dave L.",
+        "phone": "+91 88800 11122",
+        "email": "dave@store.in",
+        "orders": 3,
+        "spend": "₹2,100",
+        "joined": "Mar 2026",
+        "initial": "D",
+        "color": "#f1c40f"
+    },
+    {
+        "name": "Eve",
+        "phone": "+91 77711 22233",
+        "email": "eve@store.in",
+        "orders": 9,
+        "spend": "₹12,700",
+        "joined": "Feb 2026",
+        "initial": "E",
+        "color": "#1abc9c"
+    }
+]

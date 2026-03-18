@@ -1,0 +1,67 @@
+{
+    "pieData": [
+        {
+            "name": "Completed",
+            "value": 400
+        },
+        {
+            "name": "Processing",
+            "value": 300
+        },
+        {
+            "name": "Failed",
+            "value": 50
+        }
+    ],
+    "barData": [
+        {
+            "month": "Oct",
+            "revenue": 42000
+        },
+        {
+            "month": "Nov",
+            "revenue": 58000
+        },
+        {
+            "month": "Dec",
+            "revenue": 71000
+        },
+        {
+            "month": "Jan",
+            "revenue": 63000
+        },
+        {
+            "month": "Feb",
+            "revenue": 88000
+        },
+        {
+            "month": "Mar",
+            "revenue": 92000
+        }
+    ],
+    "logs": [
+        {
+            "id": "RPT-901",
+            "type": "Monthly Processing",
+            "generated": "Today, 10:00 AM",
+            "status": "Done"
+        },
+        {
+            "id": "RPT-902",
+            "type": "Failed Transactions",
+            "generated": "Yesterday",
+            "status": "Done"
+        },
+        {
+            "id": "RPT-903",
+            "type": "Customer Acquisition",
+            "generated": "2026-03-08",
+            "status": "Done"
+        }
+    ],
+    "pieColors": [
+        "#4CAF50",
+        "var(--text-primary)",
+        "#FF4444"
+    ]
+}

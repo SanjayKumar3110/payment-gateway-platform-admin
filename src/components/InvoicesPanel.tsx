@@ -1,12 +1,7 @@
 import { FileText, Download, Plus } from 'lucide-react';
 import './css/components.css';
 
-const MOCK_INVOICES = [
-  { id: 'INV-2001', customer: 'Alice Doe', amount: 1500, status: 'Paid', date: '2026-03-10', due: '2026-03-20' },
-  { id: 'INV-2002', customer: 'Bob Smith', amount: 450, status: 'Pending', date: '2026-03-10', due: '2026-03-25' },
-  { id: 'INV-2003', customer: 'Charlie', amount: 12000, status: 'Overdue', date: '2026-03-01', due: '2026-03-08' },
-  { id: 'INV-2004', customer: 'Dave L.', amount: 999, status: 'Paid', date: '2026-03-08', due: '2026-03-18' },
-];
+import MOCK_INVOICES from '../data/invoices.json';
 
 const getStatusClass = (status: string) => {
   switch (status.toLowerCase()) {

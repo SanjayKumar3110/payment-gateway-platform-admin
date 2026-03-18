@@ -2,27 +2,9 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip, B
 import { Download } from 'lucide-react';
 import './css/components.css';
 
-const pieData = [
-  { name: 'Completed', value: 400 },
-  { name: 'Processing', value: 300 },
-  { name: 'Failed', value: 50 },
-];
-const PIE_COLORS = ['#4CAF50', 'var(--text-primary)', '#FF4444'];
+import dashboardData from '../data/dashboard.json';
 
-const barData = [
-  { month: 'Oct', revenue: 42000 },
-  { month: 'Nov', revenue: 58000 },
-  { month: 'Dec', revenue: 71000 },
-  { month: 'Jan', revenue: 63000 },
-  { month: 'Feb', revenue: 88000 },
-  { month: 'Mar', revenue: 92000 },
-];
-
-const LOGS = [
-  { id: 'RPT-901', type: 'Monthly Processing', generated: 'Today, 10:00 AM', status: 'Done' },
-  { id: 'RPT-902', type: 'Failed Transactions', generated: 'Yesterday', status: 'Done' },
-  { id: 'RPT-903', type: 'Customer Acquisition', generated: '2026-03-08', status: 'Done' },
-];
+const { pieData, barData, logs: LOGS, pieColors: PIE_COLORS } = dashboardData;
 
 export function Dashboard() {
   return (
@@ -49,9 +31,9 @@ export function Dashboard() {
                   <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
                 ))}
               </Pie>
-              <RechartsTooltip 
-                contentStyle={{ 
-                  backgroundColor: 'var(--surface)', 
+              <RechartsTooltip
+                contentStyle={{
+                  backgroundColor: 'var(--surface)',
                   borderColor: 'var(--border)',
                   color: 'var(--text-primary)',
                   borderRadius: '12px'
@@ -78,10 +60,10 @@ export function Dashboard() {
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
               <XAxis dataKey="month" tick={{ fontSize: 13, fill: 'var(--text-secondary)' }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} axisLine={false} tickLine={false} />
-              <RechartsTooltip 
+              <RechartsTooltip
                 cursor={{ fill: 'var(--bg)', opacity: 0.4 }}
-                contentStyle={{ 
-                  backgroundColor: 'var(--surface)', 
+                contentStyle={{
+                  backgroundColor: 'var(--surface)',
                   borderColor: 'var(--border)',
                   color: 'var(--text-primary)',
                   borderRadius: '12px'
