@@ -3,7 +3,7 @@ import './css/components.css';
 
 import CUSTOMERS from '../data/customers.json';
 
-export function CustomersView() {
+export function Customers() {
   return (
     <div>
       {/* Stats Row */}

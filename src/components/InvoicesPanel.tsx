@@ -12,7 +12,7 @@ const getStatusClass = (status: string) => {
   }
 };
 
-export function InvoicesView() {
+export function Invoices() {
   return (
     <div className="base-card">
       <div className="pv-row-sb" style={{ marginBottom: '24px' }}>

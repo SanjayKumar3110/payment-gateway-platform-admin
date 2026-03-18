@@ -1,32 +1,47 @@
 [
     {
-        "id": 1,
-        "name": "Crypter - NFT UI Kit",
-        "price": "$3,250.00",
-        "status": "Active"
+        "id": "TXN-001",
+        "customer": "Alice Doe",
+        "amount": 1500,
+        "method": "UPI",
+        "status": "Success",
+        "date": "2026-03-10",
+        "staff": "Staff A"
     },
     {
-        "id": 2,
-        "name": "Bento Pro 2.0",
-        "price": "$7,890.00",
-        "status": "Active"
+        "id": "TXN-002",
+        "customer": "Bob Smith",
+        "amount": 450,
+        "method": "Card",
+        "status": "Pending",
+        "date": "2026-03-10",
+        "staff": "Staff B"
     },
     {
-        "id": 3,
-        "name": "Fleet - tracking kit",
-        "price": "$1,500.00",
-        "status": "Offline"
+        "id": "TXN-003",
+        "customer": "Charlie",
+        "amount": 12000,
+        "method": "Bank Transfer",
+        "status": "Failed",
+        "date": "2026-03-09",
+        "staff": "Staff A"
     },
     {
-        "id": 4,
-        "name": "SimpleSocial UI Kit",
-        "price": "$9,999.99",
-        "status": "Active"
+        "id": "TXN-004",
+        "customer": "Dave L.",
+        "amount": 999,
+        "method": "Wallet",
+        "status": "Success",
+        "date": "2026-03-09",
+        "staff": "Staff C"
     },
     {
-        "id": 5,
-        "name": "Bento Pro vol. 2",
-        "price": "$4,750.00",
-        "status": "Active"
+        "id": "TXN-005",
+        "customer": "Eve",
+        "amount": 3200,
+        "method": "UPI",
+        "status": "Success",
+        "date": "2026-03-08",
+        "staff": "Staff B"
     }
 ]
