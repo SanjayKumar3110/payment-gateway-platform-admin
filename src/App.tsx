@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import './App.css';
 import {
   LayoutDashboard, CreditCard, ListOrdered, FileText, Users,
-  Settings, Bell, Moon, Sun,
+  Settings, Bell, Moon, Sun, Search,
   Hexagon, LogOut,
 } from 'lucide-react';
 
@@ -105,12 +105,12 @@ export default function App() {
         <header className="topbar">
           <h1 className="page-title">{PAGE_TITLES[activeTab]}</h1>
 
-          {/* <div className="top-search-container">
+          <div className="top-search-container">
             <div className="search-input-wrapper">
               <Search className="search-icon" />
               <input type="text" className="search-input" placeholder="Search anything..." />
             </div>
-          </div> */}
+          </div>
 
           <div className="top-actions">
             {/* <button className="btn-create">Create</button> */}

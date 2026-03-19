@@ -1,81 +1,173 @@
-import { Eye, FileText, Download } from 'lucide-react';
+import { useState } from 'react';
+import { CloudDownload, Plus, Search, ChevronDown, ChevronRight, Clock, CheckCircle2, XCircle, FilePlus, CreditCard, Building2, Smartphone } from 'lucide-react';
+import PAYMENTS_DATA from '../data/payments.json';
+import './css/components.css';
 
-import MOCK_TRANSACTIONS from '../data/payments.json';
+const TABS = ['All payments', 'Succeeded', 'Refunded'];
 
-const statusStyle = (status: string) => {
-  switch (status.toLowerCase()) {
-    case 'success': return { backgroundColor: '#E8F5E9', color: '#4CAF50' };
-    case 'pending': return { backgroundColor: '#FFF8E1', color: '#F59E0B' };
-    case 'failed': return { backgroundColor: '#FFEBEE', color: '#FF4444' };
-    default: return {};
+const getStatusBadge = (status: string) => {
+  switch (status) {
+    case 'Succeeded':
+      return (
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', backgroundColor: '#ECFDF5', color: '#10B981', borderRadius: '4px', fontSize: '13px', fontWeight: 500 }}>
+          <CheckCircle2 size={14} /> Succeeded
+        </span>
+      );
+    case 'Pending':
+      return (
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', backgroundColor: '#FFFBEB', color: '#F59E0B', borderRadius: '4px', fontSize: '13px', fontWeight: 500 }}>
+          <Clock size={14} /> Pending
+        </span>
+      );
+    case 'Declined':
+      return (
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', backgroundColor: '#FEF2F2', color: '#EF4444', borderRadius: '4px', fontSize: '13px', fontWeight: 500 }}>
+          <XCircle size={14} /> Declined
+        </span>
+      );
+    case 'Create':
+      return (
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', backgroundColor: '#EEF2FF', color: '#6366F1', borderRadius: '4px', fontSize: '13px', fontWeight: 500 }}>
+          <FilePlus size={14} /> Create
+        </span>
+      );
+    default:
+      return null;
+  }
+};
+
+const getMethodIcon = (type: string) => {
+  switch (type) {
+    case 'visa':
+      return <CreditCard size={16} color="#1434CB" />;
+    case 'mastercard':
+      return <CreditCard size={16} color="#EB001B" />;
+    case 'nupay':
+      return <Smartphone size={16} color="#8A05BE" />;
+    case 'mercadopago':
+      return <CreditCard size={16} color="#009EE3" />;
+    case 'bank':
+      return <Building2 size={16} color="#4B5563" />;
+    default:
+      return <CreditCard size={16} />;
   }
 };
 
 export function Payments() {
+  const [activeTab, setActiveTab] = useState('All payments');
+
   return (
-    <div className="base-card" style={{ width: '100%' }}>
+    <div style={{ backgroundColor: 'white', minHeight: '100%', borderRadius: '12px', padding: '32px' }}>
+
+      {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-        <h2 style={{ fontSize: '18px', fontWeight: 600 }}>Transactions</h2>
+        <h1 style={{ fontSize: '24px', fontWeight: 600, color: '#111827', margin: 0 }}>Payments overview</h1>
         <div style={{ display: 'flex', gap: '12px' }}>
-          <button style={{
-            padding: '8px 20px', borderRadius: '20px', border: '1px solid #EEEEEE',
-            backgroundColor: '#FFFFFF', color: '#111111', cursor: 'pointer', fontWeight: 500, fontSize: '14px'
-          }}>Export CSV</button>
-          <button style={{
-            padding: '8px 20px', borderRadius: '20px', border: 'none',
-            backgroundColor: '#111111', color: '#FFFFFF', cursor: 'pointer', fontWeight: 500, fontSize: '14px'
-          }}>+ New Entry</button>
+          <button style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', backgroundColor: 'white', border: '1px solid #E5E7EB', borderRadius: '8px', color: '#374151', fontSize: '14px', fontWeight: 500, cursor: 'pointer', transition: 'all 0.2s' }}>
+            <CloudDownload size={16} /> Export
+          </button>
+          <button style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', backgroundColor: '#4F46E5', border: 'none', borderRadius: '8px', color: 'white', fontSize: '14px', fontWeight: 500, cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>
+            <Plus size={16} /> Payment link
+          </button>
         </div>
       </div>
 
+      {/* Tabs */}
+      <div style={{ display: 'flex', gap: '24px', borderBottom: '1px solid #E5E7EB', marginBottom: '24px' }}>
+        {TABS.map(tab => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            style={{
+              padding: '0 0 12px 0',
+              backgroundColor: 'transparent',
+              border: 'none',
+              borderBottom: activeTab === tab ? '2px solid #4F46E5' : '2px solid transparent',
+              color: activeTab === tab ? '#4F46E5' : '#6B7280',
+              fontSize: '14px',
+              fontWeight: activeTab === tab ? 600 : 500,
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              marginBottom: '-1px'
+            }}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+
+      {/* Filters and Search */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+        <div style={{ display: 'flex', gap: '12px' }}>
+          <button style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 12px', backgroundColor: 'white', border: '1px solid #E5E7EB', borderRadius: '6px', color: '#4B5563', fontSize: '13px', cursor: 'pointer' }}>
+            <Clock size={14} color="#9CA3AF" /> Date range <ChevronDown size={14} color="#9CA3AF" />
+          </button>
+          <button style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 12px', backgroundColor: 'white', border: '1px solid #E5E7EB', borderRadius: '6px', color: '#4B5563', fontSize: '13px', cursor: 'pointer' }}>
+            Flag Status <ChevronDown size={14} color="#9CA3AF" />
+          </button>
+          <button style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 12px', backgroundColor: 'white', border: '1px solid #E5E7EB', borderRadius: '6px', color: '#4B5563', fontSize: '13px', cursor: 'pointer' }}>
+            <CreditCard size={14} color="#9CA3AF" /> P. Method <ChevronDown size={14} color="#9CA3AF" />
+          </button>
+        </div>
+
+        <div style={{ position: 'relative', width: '320px' }}>
+          <Search size={16} color="#9CA3AF" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+          <input
+            type="text"
+            placeholder="Search by amount, payment method..."
+            style={{ width: '100%', padding: '8px 12px 8px 36px', backgroundColor: 'white', border: 'none', borderRadius: '6px', fontSize: '13px', color: '#374151', outline: 'none' }}
+          />
+        </div>
+      </div>
+
+      {/* Table */}
       <div style={{ overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
           <thead>
-            <tr style={{ borderBottom: '1px solid #EEEEEE' }}>
-              {['Transaction ID', 'Customer', 'Amount (INR)', 'Method', 'Status', 'Date', 'Staff', 'Actions'].map(h => (
-                <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontSize: '13px', color: '#888888', fontWeight: 500, whiteSpace: 'nowrap' }}>{h}</th>
-              ))}
+            <tr style={{ borderBottom: '1px solid #E5E7EB' }}>
+              <th style={{ padding: '16px 8px', width: '40px' }}><input type="checkbox" style={{ cursor: 'pointer' }} /></th>
+              <th style={{ padding: '16px 12px', color: '#4B5563', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>PAYMENT ID</th>
+              <th style={{ padding: '16px 12px', color: '#4B5563', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>STATUS</th>
+              <th style={{ padding: '16px 12px', color: '#4B5563', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>AMOUNT</th>
+              <th style={{ padding: '16px 12px', color: '#4B5563', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>P. METHOD</th>
+              <th style={{ padding: '16px 12px', color: '#4B5563', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>CREATION DATE</th>
+              <th style={{ padding: '16px 8px', width: '40px' }}></th>
             </tr>
           </thead>
           <tbody>
-            {MOCK_TRANSACTIONS.map(txn => (
-              <tr key={txn.id} style={{ borderBottom: '1px solid #EEEEEE' }}>
-                <td style={{ padding: '14px 16px', fontSize: '13px', fontFamily: 'monospace', color: '#888888' }}>{txn.id}</td>
-                <td style={{ padding: '14px 16px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div style={{
-                      width: '32px', height: '32px', borderRadius: '50%',
-                      backgroundColor: '#F0F0F0', display: 'flex', alignItems: 'center',
-                      justifyContent: 'center', fontWeight: 600, fontSize: '13px'
-                    }}>{txn.customer.charAt(0)}</div>
-                    <span style={{ fontSize: '14px', fontWeight: 500 }}>{txn.customer}</span>
+            {PAYMENTS_DATA.map((payment, idx) => (
+              <tr key={idx} style={{ borderBottom: '1px solid #F3F4F6', transition: 'background-color 0.15s ease' }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F9FAFB'} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                <td style={{ padding: '16px 8px' }}><input type="checkbox" style={{ cursor: 'pointer' }} /></td>
+                <td style={{ padding: '16px 12px', color: '#6B7280', fontSize: '13px', fontFamily: 'monospace' }}>{payment.id}</td>
+                <td style={{ padding: '16px 12px' }}>{getStatusBadge(payment.status)}</td>
+                <td style={{ padding: '16px 12px', fontSize: '14px', fontWeight: 600, color: '#111827' }}>
+                  {payment.amount} <span style={{ color: '#9CA3AF', fontWeight: 400, fontSize: '13px' }}>{payment.currency}</span>
+                </td>
+                <td style={{ padding: '16px 12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#374151', fontWeight: 500 }}>
+                    {getMethodIcon(payment.iconType)}
+                    {payment.method} {payment.last4 && <span style={{ color: '#6B7280' }}>•••• {payment.last4}</span>}
                   </div>
                 </td>
-                <td style={{ padding: '14px 16px', fontWeight: 700, fontSize: '14px' }}>₹{txn.amount.toLocaleString()}</td>
-                <td style={{ padding: '14px 16px', fontSize: '14px', color: '#888888' }}>{txn.method}</td>
-                <td style={{ padding: '14px 16px' }}>
-                  <span style={{
-                    ...statusStyle(txn.status), padding: '4px 10px',
-                    borderRadius: '12px', fontSize: '12px', fontWeight: 600
-                  }}>{txn.status}</span>
-                </td>
-                <td style={{ padding: '14px 16px', fontSize: '13px', color: '#888888' }}>{txn.date}</td>
-                <td style={{ padding: '14px 16px', fontSize: '13px', color: '#888888' }}>{txn.staff}</td>
-                <td style={{ padding: '14px 16px' }}>
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    {[Eye, FileText, Download].map((Icon, i) => (
-                      <button key={i} style={{
-                        width: '32px', height: '32px', borderRadius: '8px', border: '1px solid #EEEEEE',
-                        backgroundColor: '#FFFFFF', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#888888'
-                      }}><Icon size={14} /></button>
-                    ))}
-                  </div>
-                </td>
+                <td style={{ padding: '16px 12px', color: '#6B7280', fontSize: '13px' }}>{payment.date}</td>
+                <td style={{ padding: '16px 8px', color: '#9CA3AF' }}><ChevronRight size={16} style={{ cursor: 'pointer' }} /></td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      {/* Footer */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '24px', paddingTop: '16px' }}>
+        <div style={{ color: '#6B7280', fontSize: '13px', fontWeight: 500 }}>
+          {PAYMENTS_DATA.length} results
+        </div>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <button style={{ padding: '6px 12px', backgroundColor: 'white', border: '1px solid #E5E7EB', borderRadius: '6px', color: '#374151', fontSize: '13px', fontWeight: 500, cursor: 'pointer' }}>Previous</button>
+          <button style={{ padding: '6px 12px', backgroundColor: 'white', border: '1px solid #E5E7EB', borderRadius: '6px', color: '#374151', fontSize: '13px', fontWeight: 500, cursor: 'pointer' }}>Next</button>
+        </div>
+      </div>
+
     </div>
   );
 }

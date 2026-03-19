@@ -1,82 +1,227 @@
-import { FileText, Download, Plus } from 'lucide-react';
+import { useState } from 'react';
+import { Calendar, Filter, ChevronDown, ArrowRight, Download } from 'lucide-react';
+import { BarChart, Bar, XAxis, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
+import INVOICE_DATA from '../data/invoices.json';
 import './css/components.css';
 
-import MOCK_INVOICES from '../data/invoices.json';
+const { chartData, overview, invoices, selectedInvoice } = INVOICE_DATA;
 
-const getStatusClass = (status: string) => {
-  switch (status.toLowerCase()) {
-    case 'paid': return 'comp-badge-success';
-    case 'pending': return 'comp-badge-warning';
-    case 'overdue': return 'comp-badge-danger';
-    default: return 'comp-badge-neutral';
+const StatusBadge = ({ status }: { status: string }) => {
+  if (status === 'PAID') {
+    return (
+      <span style={{ padding: '4px 12px', backgroundColor: '#ECFDF5', color: '#10B981', borderRadius: '12px', fontSize: '11px', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+        <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10B981' }}></div>
+        PAID
+      </span>
+    );
   }
+  return (
+    <span style={{ padding: '4px 12px', backgroundColor: '#FEF2F2', color: '#EF4444', borderRadius: '12px', fontSize: '11px', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+      <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#EF4444' }}></div>
+      UNPAID
+    </span>
+  );
 };
 
 export function Invoices() {
+  const [chartFilter, setChartFilter] = useState('All');
+
   return (
-    <div className="base-card">
-      <div className="pv-row-sb" style={{ marginBottom: '24px' }}>
-        <h2 className="pv-section-title">Invoices</h2>
-        <div style={{ display: 'flex', gap: '12px' }}>
-          <button className="pv-btn-outline"><Download size={14} /> Export</button>
-          <button className="cv-add-btn" style={{ display: 'flex', alignItems: 'center', gap: '6px', height: 'auto', padding: '8px 20px' }}>
-            <Plus size={14} /> New Invoice
-          </button>
+    <div style={{ display: 'flex', gap: '20px', minHeight: '100%', padding: '24px', backgroundColor: '#F9FAFB' }}>
+
+      {/* LEFT COLUMN (Main Content) */}
+      <div style={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column', gap: '20px', minWidth: 0 }}>
+
+        {/* Top Blocks Wrapper */}
+        <div style={{ display: 'flex', gap: '20px' }}>
+
+          {/* Invoice Income Card */}
+          <div style={{ flex: '2', backgroundColor: 'white', borderRadius: '16px', padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+              <div>
+                <h2 style={{ fontSize: '18px', fontWeight: 600, color: '#111827', margin: 0 }}>Invoice Income</h2>
+                <p style={{ fontSize: '12px', color: '#6B7280', margin: '4px 0 0 0' }}>Listed below are all conclusion from invoice income</p>
+              </div>
+              <button style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', backgroundColor: 'white', border: '1px solid #E5E7EB', borderRadius: '8px', color: '#374151', fontSize: '13px', fontWeight: 500, cursor: 'pointer' }}>
+                <Calendar size={14} /> Export Invoice
+              </button>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px', marginBottom: '20px' }}>
+              <div style={{ display: 'flex', backgroundColor: '#F3F4F6', borderRadius: '8px', padding: '4px' }}>
+                {['All', 'Single', 'Recurring'].map(filter => (
+                  <button key={filter} onClick={() => setChartFilter(filter)} style={{
+                    padding: '6px 16px', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '12px', fontWeight: 500,
+                    backgroundColor: chartFilter === filter ? '#1D4ED8' : 'transparent',
+                    color: chartFilter === filter ? 'white' : '#6B7280',
+                    transition: 'all 0.2s'
+                  }}>
+                    {filter}
+                  </button>
+                ))}
+              </div>
+              <button style={{ border: 'none', backgroundColor: 'transparent', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', color: '#374151', fontWeight: 500, cursor: 'pointer' }}>
+                Last Week <ChevronDown size={14} />
+              </button>
+            </div>
+
+            <div style={{ flex: 1, minHeight: '180px' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={chartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+                  <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#6B7280' }} dy={10} />
+                  <RechartsTooltip cursor={{ fill: 'transparent' }} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                  <Bar dataKey="paid" fill="#1D4ED8" radius={[2, 2, 0, 0] as any} barSize={24} background={{ fill: '#E0E7FF', radius: [2, 2, 0, 0] as any }} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Overview Card */}
+          <div style={{ flex: '1', backgroundColor: 'white', borderRadius: '16px', padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column' }}>
+            <h2 style={{ fontSize: '16px', fontWeight: 600, color: '#111827', margin: '0 0 20px 0' }}>Overview</h2>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+              <span style={{ fontSize: '13px', color: '#6B7280' }}>Total Paid :</span>
+              <span style={{ fontSize: '14px', fontWeight: 600, color: '#111827' }}>{overview.totalPaid}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '24px' }}>
+              <span style={{ fontSize: '13px', color: '#6B7280' }}>Total Issued :</span>
+              <span style={{ fontSize: '14px', fontWeight: 600, color: '#111827' }}>{overview.totalIssued}</span>
+            </div>
+
+            <div style={{ position: 'relative', height: '36px', width: '100%', backgroundColor: '#E0E7FF', borderRadius: '4px', overflow: 'hidden', marginBottom: '12px' }}>
+              <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '80%', backgroundColor: '#1D4ED8' }}></div>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'auto' }}>
+              <span style={{ fontSize: '11px', color: '#6B7280' }}>Total Paid</span>
+              <span style={{ fontSize: '11px', color: '#6B7280' }}>Total Issued</span>
+            </div>
+
+            <button style={{ border: 'none', backgroundColor: 'transparent', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', color: '#1D4ED8', fontWeight: 600, padding: '0', cursor: 'pointer', alignSelf: 'flex-start', marginTop: '24px' }}>
+              View Detail <ArrowRight size={14} />
+            </button>
+          </div>
+        </div>
+
+        {/* Billing & invoices Card */}
+        <div style={{ flex: '1', backgroundColor: 'white', borderRadius: '16px', padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
+            <div>
+              <h2 style={{ fontSize: '18px', fontWeight: 600, color: '#111827', margin: 0 }}>Billing & invoices</h2>
+              <p style={{ fontSize: '12px', color: '#6B7280', margin: '4px 0 0 0' }}>Listed below are all of your invoices and bills</p>
+            </div>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', backgroundColor: 'white', border: '1px solid #E5E7EB', borderRadius: '8px', color: '#374151', fontSize: '13px', fontWeight: 500, cursor: 'pointer' }}>
+                <Calendar size={14} /> Select Date
+              </button>
+              <button style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', backgroundColor: 'white', border: '1px solid #E5E7EB', borderRadius: '8px', color: '#374151', fontSize: '13px', fontWeight: 500, cursor: 'pointer' }}>
+                <Filter size={14} /> Apply Filter
+              </button>
+            </div>
+          </div>
+
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid #E5E7EB' }}>
+                <th style={{ padding: '12px 0', color: '#6B7280', fontSize: '12px', fontWeight: 500 }}>Invoice ID</th>
+                <th style={{ padding: '12px 0', color: '#6B7280', fontSize: '12px', fontWeight: 500 }}>Invoice Name</th>
+                <th style={{ padding: '12px 0', color: '#6B7280', fontSize: '12px', fontWeight: 500 }}>Start Date</th>
+                <th style={{ padding: '12px 0', color: '#6B7280', fontSize: '12px', fontWeight: 500 }}>End Date</th>
+                <th style={{ padding: '12px 0', color: '#6B7280', fontSize: '12px', fontWeight: 500 }}>Invoice amount</th>
+                <th style={{ padding: '12px 0', color: '#6B7280', fontSize: '12px', fontWeight: 500 }}>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {invoices.map((inv, idx) => (
+                <tr key={idx} style={{ borderBottom: idx === invoices.length - 1 ? 'none' : '1px solid #F3F4F6', transition: 'background-color 0.15s ease' }}>
+                  <td style={{ padding: '16px 0', color: '#111827', fontSize: '13px', fontWeight: 600 }}>{inv.id}</td>
+                  <td style={{ padding: '16px 0' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: inv.avatarColor, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 600, fontSize: '14px' }}>
+                        {inv.name.charAt(0)}
+                      </div>
+                      <span style={{ fontSize: '13px', fontWeight: 600, color: '#111827' }}>{inv.name}</span>
+                    </div>
+                  </td>
+                  <td style={{ padding: '16px 0', color: '#6B7280', fontSize: '13px' }}>{inv.startDate}</td>
+                  <td style={{ padding: '16px 0', color: '#6B7280', fontSize: '13px' }}>{inv.endDate}</td>
+                  <td style={{ padding: '16px 0', color: '#6B7280', fontSize: '13px' }}>{inv.amount}</td>
+                  <td style={{ padding: '16px 0' }}>
+                    <StatusBadge status={inv.status} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
-      {/* Stats Row */}
-      <div className="comp-stats-row">
-        {[
-          { label: 'Total invoices', value: '24', color: 'var(--text-primary)' },
-          { label: 'Total paid', value: '18', color: '#4CAF50' },
-          { label: 'Total pending', value: '4', color: '#F59E0B' },
-          { label: 'Total overdue', value: '2', color: '#FF4444' },
-        ].map(stat => (
-          <div key={stat.label} className="comp-stat-tile">
-            <div className="comp-stat-label">{stat.label}</div>
-            <div className="comp-stat-value" style={{ color: stat.color }}>{stat.value}</div>
+      {/* RIGHT COLUMN (Invoice Details Panel) */}
+      <div style={{ flex: '0 0 340px', backgroundColor: 'white', borderRadius: '16px', padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column' }}>
+
+        {/* Header Details */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
+          <div style={{ width: '48px', height: '48px', backgroundColor: '#1D4ED8', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <span style={{ color: 'white', fontSize: '24px' }}>❋</span>
           </div>
-        ))}
+          <div>
+            <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#111827', margin: '0 0 4px 0' }}>Invoice</h3>
+            <span style={{ fontSize: '13px', color: '#6B7280' }}>{selectedInvoice.id}</span>
+          </div>
+          <div style={{ marginLeft: 'auto', textAlign: 'right', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <span style={{ fontSize: '11px', color: '#6B7280' }}>Start date : {selectedInvoice.startDate}</span>
+            <span style={{ fontSize: '11px', color: '#6B7280' }}>End date : {selectedInvoice.endDate}</span>
+          </div>
+        </div>
+
+        <div style={{ borderBottom: '1px solid #E5E7EB', paddingBottom: '20px', marginBottom: '20px' }}>
+          <h4 style={{ fontSize: '14px', fontWeight: 600, color: '#111827', margin: '0 0 8px 0' }}>{selectedInvoice.clientName}</h4>
+          <p style={{ fontSize: '13px', color: '#6B7280', margin: 0, lineHeight: '1.5' }}>{selectedInvoice.clientAddress}</p>
+        </div>
+
+        {/* Item Details */}
+        <div style={{ marginBottom: '24px' }}>
+          <h4 style={{ fontSize: '14px', fontWeight: 600, color: '#111827', margin: '0 0 16px 0' }}>Item Details</h4>
+
+          <div style={{ border: '1px solid #E5E7EB', borderRadius: '8px', overflow: 'hidden' }}>
+            <div style={{ padding: '12px 16px', borderBottom: '1px solid #E5E7EB' }}>
+              <span style={{ display: 'block', fontSize: '11px', color: '#6B7280', marginBottom: '4px' }}>Bill Name</span>
+              <span style={{ fontSize: '13px', fontWeight: 600, color: '#111827' }}>{selectedInvoice.billName}</span>
+            </div>
+            <div style={{ padding: '12px 16px', borderBottom: '1px solid #E5E7EB' }}>
+              <span style={{ display: 'block', fontSize: '11px', color: '#6B7280', marginBottom: '4px' }}>Type</span>
+              <span style={{ fontSize: '13px', fontWeight: 600, color: '#111827' }}>{selectedInvoice.type}</span>
+            </div>
+            <div style={{ padding: '12px 16px' }}>
+              <span style={{ display: 'block', fontSize: '11px', color: '#6B7280', marginBottom: '4px' }}>Amount</span>
+              <span style={{ fontSize: '16px', fontWeight: 600, color: '#111827' }}>{selectedInvoice.amount}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Note */}
+        <div style={{ marginBottom: '24px' }}>
+          <h4 style={{ fontSize: '14px', fontWeight: 600, color: '#111827', margin: '0 0 8px 0' }}>Note</h4>
+          <p style={{ fontSize: '12px', color: '#6B7280', margin: 0, lineHeight: '1.6' }}>
+            {selectedInvoice.note}
+          </p>
+        </div>
+
+        {/* File */}
+        <div style={{ marginTop: 'auto' }}>
+          <h4 style={{ fontSize: '14px', fontWeight: 600, color: '#111827', margin: '0 0 12px 0' }}>File</h4>
+          <button style={{
+            width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+            padding: '12px', backgroundColor: '#1D4ED8', border: 'none', borderRadius: '8px',
+            color: 'white', fontSize: '14px', fontWeight: 500, cursor: 'pointer', transition: 'background-color 0.2s'
+          }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#1E40AF'} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1D4ED8'}>
+            <Download size={16} /> Download PDF
+          </button>
+        </div>
+
       </div>
 
-      <div className="comp-table-container">
-        <table className="comp-table">
-          <thead>
-            <tr>
-              {['Invoice ID', 'Customer', 'Amount', 'Issue Date', 'Due Date', 'Status', 'Actions'].map(h => (
-                <th key={h}>{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {MOCK_INVOICES.map(inv => (
-              <tr key={inv.id}>
-                <td style={{ fontFamily: 'monospace', fontSize: '13px', color: 'var(--text-secondary)' }}>{inv.id}</td>
-                <td>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div className="comp-avatar-circle">{inv.customer.charAt(0)}</div>
-                    <span style={{ fontWeight: 500, fontSize: '14px' }}>{inv.customer}</span>
-                  </div>
-                </td>
-                <td style={{ fontWeight: 700 }}>₹{inv.amount.toLocaleString()}</td>
-                <td style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>{inv.date}</td>
-                <td style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>{inv.due}</td>
-                <td>
-                  <span className={`comp-badge ${getStatusClass(inv.status)}`}>{inv.status}</span>
-                </td>
-                <td>
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    {[FileText, Download].map((Icon, i) => (
-                      <button key={i} className="comp-icon-btn"><Icon size={14} /></button>
-                    ))}
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
     </div>
   );
 }

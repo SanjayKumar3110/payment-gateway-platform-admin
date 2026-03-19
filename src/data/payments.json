@@ -1,47 +1,102 @@
 [
     {
-        "id": "TXN-001",
-        "customer": "Alice Doe",
-        "amount": 1500,
-        "method": "UPI",
-        "status": "Success",
-        "date": "2026-03-10",
-        "staff": "Staff A"
+        "id": "06c1774-7f3d-46ad...90a8",
+        "status": "Succeeded",
+        "amount": "$19,623.00",
+        "currency": "USD",
+        "method": "Visa",
+        "last4": "4242",
+        "date": "Mar 23, 2022, 13:00 PM",
+        "iconType": "visa"
     },
     {
-        "id": "TXN-002",
-        "customer": "Bob Smith",
-        "amount": 450,
-        "method": "Card",
+        "id": "06c1774-7f3d-46ad...90a9",
         "status": "Pending",
-        "date": "2026-03-10",
-        "staff": "Staff B"
+        "amount": "$6,623.00",
+        "currency": "USD",
+        "method": "Mastercard",
+        "last4": "2332",
+        "date": "Mar 23, 2022, 13:00 PM",
+        "iconType": "mastercard"
     },
     {
-        "id": "TXN-003",
-        "customer": "Charlie",
-        "amount": 12000,
-        "method": "Bank Transfer",
-        "status": "Failed",
-        "date": "2026-03-09",
-        "staff": "Staff A"
+        "id": "06c1774-7f3d-46ad...90b8",
+        "status": "Declined",
+        "amount": "$1,623.53",
+        "currency": "USD",
+        "method": "NuPay",
+        "last4": "",
+        "date": "Mar 23, 2022, 13:00 PM",
+        "iconType": "nupay"
     },
     {
-        "id": "TXN-004",
-        "customer": "Dave L.",
-        "amount": 999,
-        "method": "Wallet",
-        "status": "Success",
-        "date": "2026-03-09",
-        "staff": "Staff C"
+        "id": "06c1774-7f3d-46ad...90c8",
+        "status": "Succeeded",
+        "amount": "$56,623.00",
+        "currency": "USD",
+        "method": "Mercado Pago",
+        "last4": "",
+        "date": "Mar 23, 2022, 13:00 PM",
+        "iconType": "mercadopago"
     },
     {
-        "id": "TXN-005",
-        "customer": "Eve",
-        "amount": 3200,
-        "method": "UPI",
-        "status": "Success",
-        "date": "2026-03-08",
-        "staff": "Staff B"
+        "id": "06c1774-7f3d-46ad...90d8",
+        "status": "Create",
+        "amount": "$130.00",
+        "currency": "USD",
+        "method": "Bank transfer",
+        "last4": "",
+        "date": "Mar 23, 2022, 13:00 PM",
+        "iconType": "bank"
+    },
+    {
+        "id": "06c1774-7f3d-46ad...90e8",
+        "status": "Succeeded",
+        "amount": "$19,623.00",
+        "currency": "USD",
+        "method": "Visa",
+        "last4": "4242",
+        "date": "Mar 23, 2022, 13:00 PM",
+        "iconType": "visa"
+    },
+    {
+        "id": "06c1774-7f3d-46ad...90f8",
+        "status": "Pending",
+        "amount": "$6,623.00",
+        "currency": "USD",
+        "method": "Mastercard",
+        "last4": "2332",
+        "date": "Mar 23, 2022, 13:00 PM",
+        "iconType": "mastercard"
+    },
+    {
+        "id": "06c1774-7f3d-46ad...91a8",
+        "status": "Declined",
+        "amount": "$1,623.53",
+        "currency": "USD",
+        "method": "NuPay",
+        "last4": "",
+        "date": "Mar 23, 2022, 13:00 PM",
+        "iconType": "nupay"
+    },
+    {
+        "id": "06c1774-7f3d-46ad...92b8",
+        "status": "Succeeded",
+        "amount": "$56,623.00",
+        "currency": "USD",
+        "method": "Mercado Pago",
+        "last4": "",
+        "date": "Mar 23, 2022, 13:00 PM",
+        "iconType": "mercadopago"
+    },
+    {
+        "id": "06c1774-7f3d-46ad...93c8",
+        "status": "Create",
+        "amount": "$130.00",
+        "currency": "USD",
+        "method": "Bank transfer",
+        "last4": "",
+        "date": "Mar 23, 2022, 13:00 PM",
+        "iconType": "bank"
     }
 ]

@@ -1,34 +1,83 @@
-[
-    {
-        "id": "INV-2001",
-        "customer": "Alice Doe",
-        "amount": 1500,
-        "status": "Paid",
-        "date": "2026-03-10",
-        "due": "2026-03-20"
+{
+    "chartData": [
+        {
+            "day": "8 Mar",
+            "paid": 60,
+            "total": 100
+        },
+        {
+            "day": "9 Mar",
+            "paid": 40,
+            "total": 100
+        },
+        {
+            "day": "10 Mar",
+            "paid": 95,
+            "total": 100
+        },
+        {
+            "day": "11 Mar",
+            "paid": 30,
+            "total": 100
+        },
+        {
+            "day": "12 Mar",
+            "paid": 30,
+            "total": 100
+        },
+        {
+            "day": "13 Mar",
+            "paid": 35,
+            "total": 100
+        },
+        {
+            "day": "Today",
+            "paid": 35,
+            "total": 100
+        }
+    ],
+    "overview": {
+        "totalPaid": 152,
+        "totalIssued": 32
     },
-    {
-        "id": "INV-2002",
-        "customer": "Bob Smith",
-        "amount": 450,
-        "status": "Pending",
-        "date": "2026-03-10",
-        "due": "2026-03-25"
-    },
-    {
-        "id": "INV-2003",
-        "customer": "Charlie",
-        "amount": 12000,
-        "status": "Overdue",
-        "date": "2026-03-01",
-        "due": "2026-03-08"
-    },
-    {
-        "id": "INV-2004",
-        "customer": "Dave L.",
-        "amount": 999,
-        "status": "Paid",
-        "date": "2026-03-08",
-        "due": "2026-03-18"
+    "invoices": [
+        {
+            "id": "#12995",
+            "name": "Starlink Venue",
+            "avatarColor": "#F59E0B",
+            "startDate": "13/04/2021",
+            "endDate": "14/04/2023",
+            "amount": "$4,800.00",
+            "status": "UNPAID"
+        },
+        {
+            "id": "#12996",
+            "name": "July's Invoice",
+            "avatarColor": "#8B5CF6",
+            "startDate": "21/05/2021",
+            "endDate": "24/05/2023",
+            "amount": "$1,731.00",
+            "status": "UNPAID"
+        },
+        {
+            "id": "#12997",
+            "name": "External Vendor",
+            "avatarColor": "#10B981",
+            "startDate": "27/06/2023",
+            "endDate": "28/06/2023",
+            "amount": "$2,591.00",
+            "status": "PAID"
+        }
+    ],
+    "selectedInvoice": {
+        "id": "#12955",
+        "startDate": "13/04/2021",
+        "endDate": "14/04/2023",
+        "clientName": "Starlink Venue",
+        "clientAddress": "4517 Washington Ave. Manchester, Kentucky 39495",
+        "billName": "Gracak Bulding Rent (2 days)",
+        "type": "One - Time",
+        "amount": "$ 4,800.00",
+        "note": "Please make the payment on or before the due date to avoid any late payment charges. If you have any questions or concerns about this invoice or the copywriting services we provided, please don't hesitate to contact us."
     }
-]
+}
