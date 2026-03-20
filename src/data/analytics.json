@@ -1,32 +1,44 @@
-[
-    {
-        "id": 1,
-        "name": "Crypter - NFT UI Kit",
-        "price": "$3,250.00",
-        "status": "Active"
-    },
-    {
-        "id": 2,
-        "name": "Bento Pro 2.0",
-        "price": "$7,890.00",
-        "status": "Active"
-    },
-    {
-        "id": 3,
-        "name": "Fleet - tracking kit",
-        "price": "$1,500.00",
-        "status": "Offline"
-    },
-    {
-        "id": 4,
-        "name": "SimpleSocial UI Kit",
-        "price": "$9,999.99",
-        "status": "Active"
-    },
-    {
-        "id": 5,
-        "name": "Bento Pro vol. 2",
-        "price": "$4,750.00",
-        "status": "Active"
-    }
-]
+{
+    "products": [
+        {
+            "id": "p1",
+            "name": "Crypter - NFT UI Kit",
+            "initial": "C",
+            "color": "#8B5CF6",
+            "price": "$3,250.00",
+            "status": "Active",
+            "totalSold": 18,
+            "revenue": "$58,500.00"
+        },
+        {
+            "id": "p2",
+            "name": "Bento Pro 2.0",
+            "initial": "B",
+            "color": "#3B82F6",
+            "price": "$7,890.00",
+            "status": "Active",
+            "totalSold": 9,
+            "revenue": "$71,010.00"
+        },
+        {
+            "id": "p3",
+            "name": "Fleet - tracking kit",
+            "initial": "F",
+            "color": "#EF4444",
+            "price": "$1,500.00",
+            "status": "Offline",
+            "totalSold": 2,
+            "revenue": "$3,000.00"
+        },
+        {
+            "id": "p4",
+            "name": "SimpleSocial UI Kit",
+            "initial": "S",
+            "color": "#10B981",
+            "price": "$9,999.99",
+            "status": "Active",
+            "totalSold": 11,
+            "revenue": "$109,999.89"
+        }
+    ]
+}
