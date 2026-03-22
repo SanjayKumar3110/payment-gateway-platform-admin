@@ -44,21 +44,21 @@ export function Analytics() {
           {/* <h1 style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: 'var(--text-primary)' }}>Welcome Back, Alex!</h1> */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '8px' }}>
             <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>20 Mar 2026, 11:15 AM</span>
-            <button style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '4px 10px', backgroundColor: 'var(--surface)', border: '1px solid #E5E7EB', borderRadius: '6px', fontSize: '12px', color: 'var(--text-primary)', cursor: 'pointer' }}>
+            <button className="glass-action-btn small">
               <Calendar size={12} /> Last 7 Days
             </button>
           </div>
         </div>
-        <button style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', backgroundColor: 'var(--surface)', border: '1px solid #E5E7EB', borderRadius: '8px', fontSize: '13px', fontWeight: 500, color: 'var(--text-primary)', cursor: 'pointer', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>
-          <Download size={16} /> Export Data
+        <button className="cv-add-btn" style={{ display: 'flex', alignItems: 'center', gap: '6px', height: 'auto', padding: '8px 20px' }}>
+          <Download size={14} /> Export Data
         </button>
       </div>
 
       {/* SUMMARY CARDS */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', marginBottom: '20px' }}>
+      <div className="responsive-grid-4" style={{ marginBottom: '20px' }}>
 
         {/* Card 1 */}
-        <div style={{ backgroundColor: 'var(--surface)', padding: '20px', borderRadius: '12px', border: '1px solid #F3F4F6', boxShadow: '0 1px 2px rgba(0,0,0,0.02)' }}>
+        <div className="comp-stat-tile" style={{ display: 'flex', flexDirection: 'column', padding: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <div>
               <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>Total Revenue</div>
@@ -81,7 +81,7 @@ export function Analytics() {
         </div>
 
         {/* Card 2 */}
-        <div style={{ backgroundColor: 'var(--surface)', padding: '20px', borderRadius: '12px', border: '1px solid #F3F4F6', boxShadow: '0 1px 2px rgba(0,0,0,0.02)' }}>
+        <div className="comp-stat-tile" style={{ display: 'flex', flexDirection: 'column', padding: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <div>
               <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>Total Customers</div>
@@ -102,7 +102,7 @@ export function Analytics() {
         </div>
 
         {/* Card 3 */}
-        <div style={{ backgroundColor: 'var(--surface)', padding: '20px', borderRadius: '12px', border: '1px solid #F3F4F6', boxShadow: '0 1px 2px rgba(0,0,0,0.02)' }}>
+        <div className="comp-stat-tile" style={{ display: 'flex', flexDirection: 'column', padding: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <div>
               <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>Total Transactions</div>
@@ -123,7 +123,7 @@ export function Analytics() {
         </div>
 
         {/* Card 4 */}
-        <div style={{ backgroundColor: 'var(--surface)', padding: '20px', borderRadius: '12px', border: '1px solid #F3F4F6', boxShadow: '0 1px 2px rgba(0,0,0,0.02)' }}>
+        <div className="comp-stat-tile" style={{ display: 'flex', flexDirection: 'column', padding: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <div>
               <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>Total Products</div>
@@ -145,10 +145,10 @@ export function Analytics() {
       </div>
 
       {/* CHARTS ROW */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px', marginBottom: '20px' }}>
+      <div className="responsive-grid-2-1" style={{ marginBottom: '20px' }}>
 
         {/* Revenue Trends */}
-        <div style={{ backgroundColor: 'var(--surface)', padding: '24px', borderRadius: '16px', border: '1px solid #F3F4F6', boxShadow: '0 1px 2px rgba(0,0,0,0.02)' }}>
+        <div className="base-card">
           <h3 style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 4px 0' }}>Revenue Trends (Oct '25 - Mar '26)</h3>
           <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 24px 0' }}>Monthly revenue data from dashboard.json.barData</p>
           <div style={{ height: '240px' }}>
@@ -169,7 +169,7 @@ export function Analytics() {
         </div>
 
         {/* Daily Invoicing Activity */}
-        <div style={{ backgroundColor: 'var(--surface)', padding: '24px', borderRadius: '16px', border: '1px solid #F3F4F6', boxShadow: '0 1px 2px rgba(0,0,0,0.02)' }}>
+        <div className="base-card">
           <h3 style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 4px 0' }}>Daily Invoicing Activity (Last 7 Days)</h3>
           <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 24px 0' }}>Daily paid vs total invoices</p>
           <div style={{ height: '240px' }}>
@@ -186,11 +186,11 @@ export function Analytics() {
         </div>
       </div>
 
-      {/* BOTTOM ROW */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px' }}>
+      {/* PRODUCTS AND ACTIVITY */}
+      <div className="responsive-grid-2-1">
 
-        {/* Product Performance Overview */}
-        <div style={{ backgroundColor: 'var(--surface)', padding: '24px', borderRadius: '16px', border: '1px solid #F3F4F6', boxShadow: '0 1px 2px rgba(0,0,0,0.02)' }}>
+        {/* Top Products */}
+        <div className="base-card">
           <h3 style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 20px 0' }}>Product Performance Overview</h3>
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
             <thead>
@@ -226,7 +226,7 @@ export function Analytics() {
         </div>
 
         {/* Transaction Status Breakdown */}
-        <div style={{ backgroundColor: 'var(--surface)', padding: '24px', borderRadius: '16px', border: '1px solid #F3F4F6', boxShadow: '0 1px 2px rgba(0,0,0,0.02)' }}>
+        <div className="base-card">
           <h3 style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 24px 0' }}>Transaction Status Breakdown</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             {statusBreakdown.map((item) => {

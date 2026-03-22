@@ -52,7 +52,7 @@ export function SettingsPanel() {
                                     <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>Store Name</label>
                                     <input type="text" defaultValue="PayPlatform Demo Store" style={{
                                         padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--border)',
-                                        backgroundColor: 'var(--bg)', color: 'var(--text-primary)', outline: 'none'
+                                        background: 'var(--input-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', color: 'var(--text-primary)', outline: 'none'
                                     }} />
                                 </div>
 
@@ -60,7 +60,7 @@ export function SettingsPanel() {
                                     <label style={{ fontSize: '13px', fontWeight: 600 }}>Support Email</label>
                                     <input type="email" defaultValue="support@payplatform.in" style={{
                                         padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--border)',
-                                        backgroundColor: 'var(--bg)', color: 'var(--text-primary)', outline: 'none'
+                                        background: 'var(--input-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', color: 'var(--text-primary)', outline: 'none'
                                     }} />
                                 </div>
 
@@ -68,7 +68,7 @@ export function SettingsPanel() {
                                     <label style={{ fontSize: '13px', fontWeight: 600 }}>Phone Number</label>
                                     <input type="text" defaultValue="+91 98765 43210" style={{
                                         padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--border)',
-                                        backgroundColor: 'var(--bg)', color: 'var(--text-primary)', outline: 'none'
+                                        background: 'var(--input-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', color: 'var(--text-primary)', outline: 'none'
                                     }} />
                                 </div>
 
@@ -91,7 +91,7 @@ export function SettingsPanel() {
                                     <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>Razorpay Key ID</label>
                                     <input type="text" placeholder="rzp_test_..." style={{
                                         padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--border)',
-                                        backgroundColor: 'var(--bg)', color: 'var(--text-primary)', outline: 'none', fontFamily: 'monospace'
+                                        background: 'var(--input-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', color: 'var(--text-primary)', outline: 'none', fontFamily: 'monospace'
                                     }} />
                                 </div>
 
@@ -99,7 +99,7 @@ export function SettingsPanel() {
                                     <label style={{ fontSize: '13px', fontWeight: 600 }}>Razorpay Key Secret</label>
                                     <input type="password" placeholder="••••••••••••••••" style={{
                                         padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--border)',
-                                        backgroundColor: 'var(--bg)', color: 'var(--text-primary)', outline: 'none', fontFamily: 'monospace'
+                                        background: 'var(--input-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', color: 'var(--text-primary)', outline: 'none', fontFamily: 'monospace'
                                     }} />
                                 </div>
 
@@ -107,7 +107,7 @@ export function SettingsPanel() {
                                     <label style={{ fontSize: '13px', fontWeight: 600 }}>Webhook Secret</label>
                                     <input type="password" placeholder="••••••••••••••••" style={{
                                         padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--border)',
-                                        backgroundColor: 'var(--bg)', color: 'var(--text-primary)', outline: 'none', fontFamily: 'monospace'
+                                        background: 'var(--input-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', color: 'var(--text-primary)', outline: 'none', fontFamily: 'monospace'
                                     }} />
                                     <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Used to verify payment.captured events.</span>
                                 </div>
