@@ -537,3 +537,32 @@
   color: var(--text-primary);
   transform: translateX(4px);
 }
+
+/* ═══════════════════════════════════
+   INVOICE PANEL (Item Details Grid)
+   ═══════════════════════════════════ */
+
+.invoice-item-grid {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.invoice-item-row {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.invoice-item-row:last-child {
+  border-bottom: none;
+}
+
+.app-container.dark .invoice-item-grid {
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.app-container.dark .invoice-item-row {
+  border-bottom: 1px solid var(--border);
+}

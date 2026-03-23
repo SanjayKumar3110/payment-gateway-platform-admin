@@ -184,16 +184,16 @@ export function Invoices() {
         <div style={{ marginBottom: '24px' }}>
           <h4 style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 16px 0' }}>Item Details</h4>
 
-          <div style={{ border: '1px solid #E5E7EB', borderRadius: '8px', overflow: 'hidden' }}>
-            <div style={{ padding: '12px 16px', borderBottom: '1px solid #E5E7EB' }}>
+          <div className="invoice-item-grid">
+            <div className="invoice-item-row">
               <span style={{ display: 'block', fontSize: '11px', color: 'var(--text-secondary)', marginBottom: '4px' }}>Bill Name</span>
               <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>{selectedInvoice.billName}</span>
             </div>
-            <div style={{ padding: '12px 16px', borderBottom: '1px solid #E5E7EB' }}>
+            <div className="invoice-item-row">
               <span style={{ display: 'block', fontSize: '11px', color: 'var(--text-secondary)', marginBottom: '4px' }}>Type</span>
               <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>{selectedInvoice.type}</span>
             </div>
-            <div style={{ padding: '12px 16px' }}>
+            <div className="invoice-item-row">
               <span style={{ display: 'block', fontSize: '11px', color: 'var(--text-secondary)', marginBottom: '4px' }}>Amount</span>
               <span style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text-primary)' }}>{selectedInvoice.amount}</span>
             </div>
