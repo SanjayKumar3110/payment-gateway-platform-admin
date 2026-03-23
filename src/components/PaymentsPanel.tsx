@@ -261,9 +261,9 @@ export function Payments() {
 
       {/* Table */}
       <div style={{ overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center' }}>
           <thead>
-            <tr style={{ borderBottom: '1px solid var(--border)', textAlign: 'center' }}>
+            <tr style={{ borderBottom: '1px solid var(--border)' }}>
               <th style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>PAYMENT ID</th>
               <th style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>STATUS</th>
               <th style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>AMOUNT</th>
