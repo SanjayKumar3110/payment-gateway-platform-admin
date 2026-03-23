@@ -13,7 +13,7 @@ import { Invoices } from './components/InvoicesPanel';
 import { Customers } from './components/CustomersPanel';
 import { SettingsPanel } from './components/SettingsPanel';
 
-type Tab = 'dashboard' | 'analytics' | 'payments' | 'invoices' | 'customers' | 'settings'; //| 'reports' | 'licenses'
+type Tab = 'dashboard' | 'analytics' | 'payments' | 'invoices' | 'customers' | 'settings';
 
 const PAGE_TITLES: Record<Tab, string> = {
   dashboard: 'Dashboard',
@@ -27,7 +27,7 @@ const PAGE_TITLES: Record<Tab, string> = {
 export default function App() {
   const [token] = useState<string | null>('mock-token-for-ui');
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const menuRef = useRef<HTMLDivElement>(null);

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { CloudDownload, Plus, Search, ChevronDown, ChevronRight, Clock, CheckCircle2, XCircle, FilePlus, CreditCard, Building2, Smartphone } from 'lucide-react';
 import PAYMENTS_DATA from '../data/payments.json';
 import './css/components.css';
@@ -31,6 +31,12 @@ const getStatusBadge = (status: string) => {
           <FilePlus size={14} /> Create
         </span>
       );
+    case 'Refunded':
+      return (
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', backgroundColor: '#F3F4F6', color: '#4B5563', borderRadius: '4px', fontSize: '13px', fontWeight: 500 }}>
+          <XCircle size={14} /> Refunded
+        </span>
+      );
     default:
       return null;
   }
@@ -47,14 +53,142 @@ const getMethodIcon = (type: string) => {
     case 'mercadopago':
       return <CreditCard size={16} color="#009EE3" />;
     case 'bank':
-      return <Building2 size={16} color="var(--text-secondary)" />;
+      return <Building2 size={16} color="#4B5563" />;
     default:
       return <CreditCard size={16} />;
   }
 };
 
+// Custom Dropdown Component
+const Dropdown = ({ label, icon: Icon, options, value, onChange }: any) => {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, []);
+
+  return (
+    <div style={{ position: 'relative' }} ref={ref}>
+      <button
+        onClick={() => setOpen(!open)}
+        style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 12px', backgroundColor: 'var(--surface)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', border: '1px solid var(--border)', borderRadius: '6px', color: 'var(--text-secondary)', fontSize: '13px', cursor: 'pointer' }}
+      >
+        {Icon && <Icon size={14} color="var(--text-secondary)" />}
+        {value ? value : label}
+        <ChevronDown size={14} color="var(--text-secondary)" />
+      </button>
+
+      {open && (
+        <div style={{ position: 'absolute', top: '100%', left: 0, marginTop: '4px', backgroundColor: 'var(--surface)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', border: '1px solid var(--border)', borderRadius: '6px', width: 'max-content', minWidth: '160px', zIndex: 100, boxShadow: 'var(--glass-shadow)' }}>
+          <div
+            onClick={() => { onChange(''); setOpen(false); }}
+            style={{ padding: '8px 16px', fontSize: '13px', cursor: 'pointer', borderBottom: '1px solid var(--border)', color: 'var(--text-primary)' }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--border)'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+          >
+            Clear Filter
+          </div>
+          {options.map((opt: string) => (
+            <div
+              key={opt}
+              onClick={() => { onChange(opt); setOpen(false); }}
+              style={{ padding: '8px 16px', fontSize: '13px', cursor: 'pointer', color: value === opt ? '#4F46E5' : 'var(--text-primary)', backgroundColor: value === opt ? 'var(--border)' : 'transparent', fontWeight: value === opt ? 600 : 400 }}
+              onMouseEnter={(e) => { if (value !== opt) e.currentTarget.style.backgroundColor = 'var(--border)' }}
+              onMouseLeave={(e) => { if (value !== opt) e.currentTarget.style.backgroundColor = 'transparent' }}
+            >
+              {opt}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 export function Payments() {
   const [activeTab, setActiveTab] = useState('All payments');
+  const [dateRange, setDateRange] = useState('');
+  const [flagStatus, setFlagStatus] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Return back to first payment table when filters/tabs change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeTab, dateRange, flagStatus, paymentMethod, searchQuery]);
+
+  const filteredAndSortedData = useMemo(() => {
+    let data = [...PAYMENTS_DATA];
+
+    // 1. Tab Filtering
+    if (activeTab === 'Succeeded') data = data.filter(p => p.status === 'Succeeded');
+    if (activeTab === 'Refunded') data = data.filter(p => p.status === 'Refunded');
+
+    // 2. Search Query
+    if (searchQuery) {
+      const lowerQ = searchQuery.toLowerCase();
+      data = data.filter(p =>
+        p.amount.toLowerCase().includes(lowerQ) ||
+        p.method.toLowerCase().includes(lowerQ) ||
+        p.id.toLowerCase().includes(lowerQ)
+      );
+    }
+
+    // 3. Date Range Filtering
+    if (dateRange) {
+      const now = new Date('2026-03-23T23:59:59'); // Base mock date
+      data = data.filter(p => {
+        const pDate = new Date(p.date.replace(' PM', '').replace(' AM', '')); // basic parse
+        const diffTime = Math.abs(now.getTime() - pDate.getTime());
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (dateRange === 'Today') return diffDays <= 1;
+        if (dateRange === 'Last 3 days') return diffDays <= 3;
+        if (dateRange === 'Week') return diffDays <= 7;
+        if (dateRange === 'Month') return diffDays <= 30;
+        if (dateRange === 'Last 3 months') return diffDays <= 90;
+        return true;
+      });
+    }
+
+    // 4. Group / Sort by Flag Status (Push selected to top)
+    if (flagStatus) {
+      // It says: "If user click succeed it shows all succeed payement on top and below remain status in a group"
+      // Wait, "succeed", "pending", "create", "declined".
+      const matchStatusStr = flagStatus === 'Successed' ? 'Succeeded' : flagStatus;
+
+      data.sort((a, b) => {
+        if (a.status === matchStatusStr && b.status !== matchStatusStr) return -1;
+        if (b.status === matchStatusStr && a.status !== matchStatusStr) return 1;
+
+        // Secondary sort: group remaining items by status alphabetically
+        return a.status.localeCompare(b.status);
+      });
+    }
+
+    // 5. Group / Sort by Payment Method (Push selected to top)
+    if (paymentMethod) {
+      data.sort((a, b) => {
+        if (a.method === paymentMethod && b.method !== paymentMethod) return -1;
+        if (b.method === paymentMethod && a.method !== paymentMethod) return 1;
+        return a.method.localeCompare(b.method);
+      });
+    }
+
+    return data;
+  }, [activeTab, dateRange, flagStatus, paymentMethod, searchQuery]);
+
+  // Pagination bounds logic
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(filteredAndSortedData.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedData = filteredAndSortedData.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <div style={{ backgroundColor: 'var(--surface)', minHeight: '100%', borderRadius: '12px', padding: '32px' }}>
@@ -63,17 +197,17 @@ export function Payments() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
         <h1 style={{ fontSize: '24px', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>Payments overview</h1>
         <div style={{ display: 'flex', gap: '12px' }}>
-          <button style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', backgroundColor: 'var(--surface)', border: '1px solid #E5E7EB', borderRadius: '8px', color: 'var(--text-primary)', fontSize: '14px', fontWeight: 500, cursor: 'pointer', transition: 'all 0.2s' }}>
+          <button style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--text-primary)', fontSize: '14px', fontWeight: 500, cursor: 'pointer', transition: 'all 0.2s' }}>
             <CloudDownload size={16} /> Export
           </button>
-          <button style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', backgroundColor: '#4F46E5', border: 'none', borderRadius: '8px', color: 'white', fontSize: '14px', fontWeight: 500, cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>
+          <button style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', backgroundColor: '#4F46E5', border: 'none', borderRadius: '8px', color: '#fff', fontSize: '14px', fontWeight: 500, cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>
             <Plus size={16} /> Payment link
           </button>
         </div>
       </div>
 
       {/* Tabs */}
-      <div style={{ display: 'flex', gap: '24px', borderBottom: '1px solid #E5E7EB', marginBottom: '24px' }}>
+      <div style={{ display: 'flex', gap: '24px', borderBottom: '1px solid var(--border)', marginBottom: '24px' }}>
         {TABS.map(tab => (
           <button
             key={tab}
@@ -97,17 +231,20 @@ export function Payments() {
       </div>
 
       {/* Filters and Search */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', position: 'relative', zIndex: 50 }}>
         <div style={{ display: 'flex', gap: '12px' }}>
-          <button style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 12px', backgroundColor: 'var(--surface)', border: '1px solid #E5E7EB', borderRadius: '6px', color: 'var(--text-secondary)', fontSize: '13px', cursor: 'pointer' }}>
-            <Clock size={14} color="var(--text-secondary)" /> Date range <ChevronDown size={14} color="var(--text-secondary)" />
-          </button>
-          <button style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 12px', backgroundColor: 'var(--surface)', border: '1px solid #E5E7EB', borderRadius: '6px', color: 'var(--text-secondary)', fontSize: '13px', cursor: 'pointer' }}>
-            Flag Status <ChevronDown size={14} color="var(--text-secondary)" />
-          </button>
-          <button style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 12px', backgroundColor: 'var(--surface)', border: '1px solid #E5E7EB', borderRadius: '6px', color: 'var(--text-secondary)', fontSize: '13px', cursor: 'pointer' }}>
-            <CreditCard size={14} color="var(--text-secondary)" /> P. Method <ChevronDown size={14} color="var(--text-secondary)" />
-          </button>
+          <Dropdown
+            label="Date range" icon={Clock} value={dateRange} onChange={setDateRange}
+            options={['Today', 'Last 3 days', 'Week', 'Month', 'Last 3 months']}
+          />
+          <Dropdown
+            label="Flag Status" value={flagStatus} onChange={setFlagStatus}
+            options={['Successed', 'Pending', 'Create', 'Declined']}
+          />
+          <Dropdown
+            label="Payment Method" icon={CreditCard} value={paymentMethod} onChange={setPaymentMethod}
+            options={['Visa', 'Mastercard', 'Bank transfer', 'NuPay', 'Mercado Pago']}
+          />
         </div>
 
         <div style={{ position: 'relative', width: '320px' }}>
@@ -115,7 +252,9 @@ export function Payments() {
           <input
             type="text"
             placeholder="Search by amount, payment method..."
-            style={{ width: '100%', padding: '8px 12px 8px 36px', backgroundColor: 'var(--surface)', border: 'none', borderRadius: '6px', fontSize: '13px', color: 'var(--text-primary)', outline: 'none' }}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={{ width: '100%', padding: '8px 12px 8px 36px', backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '6px', fontSize: '13px', color: 'var(--text-primary)', outline: 'none' }}
           />
         </div>
       </div>
@@ -124,19 +263,19 @@ export function Payments() {
       <div style={{ overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
           <thead>
-            <tr style={{ borderBottom: '1px solid #E5E7EB' }}>
-              <th style={{ padding: '16px 8px', width: '40px' }}><input type="checkbox" style={{ cursor: 'pointer' }} /></th>
+            <tr style={{ borderBottom: '1px solid var(--border)' }}>
+              <th style={{ padding: '16px 8px', width: '40px' }}></th> {/*<input type="checkbox" style={{ cursor: 'pointer' }} /> */}
               <th style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>PAYMENT ID</th>
               <th style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>STATUS</th>
               <th style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>AMOUNT</th>
-              <th style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>P. METHOD</th>
+              <th style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>PAYMENT METHOD</th>
               <th style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>CREATION DATE</th>
               <th style={{ padding: '16px 8px', width: '40px' }}></th>
             </tr>
           </thead>
           <tbody>
-            {PAYMENTS_DATA.map((payment, idx) => (
-              <tr key={idx} style={{ borderBottom: '1px solid #F3F4F6', transition: 'background-color 0.15s ease' }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg)'} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+            {paginatedData.map((payment, idx) => (
+              <tr key={idx} style={{ borderBottom: '1px solid var(--border)', transition: 'background-color 0.15s ease' }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg)'} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
                 <td style={{ padding: '16px 8px' }}><input type="checkbox" style={{ cursor: 'pointer' }} /></td>
                 <td style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '13px', fontFamily: 'monospace' }}>{payment.id}</td>
                 <td style={{ padding: '16px 12px' }}>{getStatusBadge(payment.status)}</td>
@@ -160,11 +299,21 @@ export function Payments() {
       {/* Footer */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '24px', paddingTop: '16px' }}>
         <div style={{ color: 'var(--text-secondary)', fontSize: '13px', fontWeight: 500 }}>
-          {PAYMENTS_DATA.length} results
+          {filteredAndSortedData.length === 0 ? '0 results' : `Showing ${startIndex + 1}-${Math.min(startIndex + 10, filteredAndSortedData.length)} of ${filteredAndSortedData.length} results`}
         </div>
         <div style={{ display: 'flex', gap: '8px' }}>
-          <button style={{ padding: '6px 12px', backgroundColor: 'var(--surface)', border: '1px solid #E5E7EB', borderRadius: '6px', color: 'var(--text-primary)', fontSize: '13px', fontWeight: 500, cursor: 'pointer' }}>Previous</button>
-          <button style={{ padding: '6px 12px', backgroundColor: 'var(--surface)', border: '1px solid #E5E7EB', borderRadius: '6px', color: 'var(--text-primary)', fontSize: '13px', fontWeight: 500, cursor: 'pointer' }}>Next</button>
+          <button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+            style={{ padding: '6px 12px', backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '6px', color: currentPage === 1 ? 'var(--text-secondary)' : 'var(--text-primary)', opacity: currentPage === 1 ? 0.5 : 1, fontSize: '13px', fontWeight: 500, cursor: currentPage === 1 ? 'not-allowed' : 'pointer' }}>
+            Previous
+          </button>
+          <button
+            disabled={currentPage === totalPages || totalPages === 0}
+            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+            style={{ padding: '6px 12px', backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '6px', color: (currentPage === totalPages || totalPages === 0) ? 'var(--text-secondary)' : 'var(--text-primary)', opacity: (currentPage === totalPages || totalPages === 0) ? 0.5 : 1, fontSize: '13px', fontWeight: 500, cursor: (currentPage === totalPages || totalPages === 0) ? 'not-allowed' : 'pointer' }}>
+            Next
+          </button>
         </div>
       </div>
 
