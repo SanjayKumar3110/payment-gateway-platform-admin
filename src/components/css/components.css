@@ -150,11 +150,23 @@
   font-weight: 600;
 }
 
-.pv-badge-green { background-color: #E8F5E9; color: #4CAF50; }
-.pv-badge-red   { background-color: #FFEBEE; color: #FF4444; }
+.pv-badge-green {
 
-.app-container.dark .pv-badge-green { background-color: rgba(76, 175, 80, 0.15); }
-.app-container.dark .pv-badge-red   { background-color: rgba(255, 68, 68, 0.15); }
+  color: #4CAF50;
+}
+
+.pv-badge-red {
+
+  color: #FF4444;
+}
+
+.app-container.dark .pv-badge-green {
+  background-color: rgba(76, 175, 80, 0.15);
+}
+
+.app-container.dark .pv-badge-red {
+  background-color: rgba(255, 68, 68, 0.15);
+}
 
 .pv-subtext {
   font-size: 12px;
@@ -291,14 +303,34 @@
   font-weight: 600;
 }
 
-.comp-badge-success { background-color: #E8F5E9; color: #4CAF50; }
-.comp-badge-warning { background-color: #FFF8E1; color: #F59E0B; }
-.comp-badge-danger  { background-color: #FFEBEE; color: #FF4444; }
-.comp-badge-neutral { background-color: var(--border); color: var(--text-secondary); }
+.comp-badge-success {
+  color: #4CAF50;
+}
 
-.app-container.dark .comp-badge-success { background-color: rgba(76, 175, 80, 0.15); }
-.app-container.dark .comp-badge-warning { background-color: rgba(245, 158, 11, 0.15); }
-.app-container.dark .comp-badge-danger  { background-color: rgba(255, 68, 68, 0.15); }
+.comp-badge-warning {
+  color: #F59E0B;
+}
+
+.comp-badge-danger {
+  color: #FF4444;
+}
+
+.comp-badge-neutral {
+  background-color: var(--border);
+  color: var(--text-secondary);
+}
+
+.app-container.dark .comp-badge-success {
+  background-color: rgba(76, 175, 80, 0.15);
+}
+
+.app-container.dark .comp-badge-warning {
+  background-color: rgba(245, 158, 11, 0.15);
+}
+
+.app-container.dark .comp-badge-danger {
+  background-color: rgba(255, 68, 68, 0.15);
+}
 
 .comp-table-container {
   overflow-x: auto;
@@ -375,7 +407,9 @@
    CUSTOMERS VIEW (Restored)
    ═══════════════════════════════════ */
 
-.cv-stat-card { flex: 1; }
+.cv-stat-card {
+  flex: 1;
+}
 
 .cv-stat-label {
   font-size: 13px;
@@ -503,5 +537,3 @@
   color: var(--text-primary);
   transform: translateX(4px);
 }
-
-

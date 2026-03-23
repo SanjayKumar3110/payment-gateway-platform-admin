@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { CloudDownload, Plus, Search, ChevronDown, ChevronRight, Clock, CheckCircle2, XCircle, FilePlus, CreditCard, Building2, Smartphone } from 'lucide-react';
+import { CloudDownload, Plus, Search, ChevronDown, Clock, CheckCircle2, XCircle, FilePlus, CreditCard, Building2, Smartphone } from 'lucide-react';
 import PAYMENTS_DATA from '../data/payments.json';
 import './css/components.css';
 
@@ -9,31 +9,31 @@ const getStatusBadge = (status: string) => {
   switch (status) {
     case 'Succeeded':
       return (
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', backgroundColor: '#ECFDF5', color: '#10B981', borderRadius: '4px', fontSize: '13px', fontWeight: 500 }}>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', color: '#10B981', borderRadius: '4px', fontSize: '13px', fontWeight: 500 }}>
           <CheckCircle2 size={14} /> Succeeded
         </span>
       );
     case 'Pending':
       return (
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', backgroundColor: '#FFFBEB', color: '#F59E0B', borderRadius: '4px', fontSize: '13px', fontWeight: 500 }}>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', color: '#F59E0B', borderRadius: '4px', fontSize: '13px', fontWeight: 500 }}>
           <Clock size={14} /> Pending
         </span>
       );
     case 'Declined':
       return (
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', backgroundColor: '#FEF2F2', color: '#EF4444', borderRadius: '4px', fontSize: '13px', fontWeight: 500 }}>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', color: '#EF4444', borderRadius: '4px', fontSize: '13px', fontWeight: 500 }}>
           <XCircle size={14} /> Declined
         </span>
       );
     case 'Create':
       return (
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', backgroundColor: '#EEF2FF', color: '#6366F1', borderRadius: '4px', fontSize: '13px', fontWeight: 500 }}>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', color: '#6366F1', borderRadius: '4px', fontSize: '13px', fontWeight: 500 }}>
           <FilePlus size={14} /> Create
         </span>
       );
     case 'Refunded':
       return (
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', backgroundColor: '#F3F4F6', color: '#4B5563', borderRadius: '4px', fontSize: '13px', fontWeight: 500 }}>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', color: '#4B5563', borderRadius: '4px', fontSize: '13px', fontWeight: 500 }}>
           <XCircle size={14} /> Refunded
         </span>
       );
@@ -201,7 +201,7 @@ export function Payments() {
             <CloudDownload size={16} /> Export
           </button>
           <button style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', backgroundColor: '#4F46E5', border: 'none', borderRadius: '8px', color: '#fff', fontSize: '14px', fontWeight: 500, cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>
-            <Plus size={16} /> Payment link
+            <Plus size={16} /> Payment
           </button>
         </div>
       </div>
@@ -263,20 +263,17 @@ export function Payments() {
       <div style={{ overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
           <thead>
-            <tr style={{ borderBottom: '1px solid var(--border)' }}>
-              <th style={{ padding: '16px 8px', width: '40px' }}></th> {/*<input type="checkbox" style={{ cursor: 'pointer' }} /> */}
+            <tr style={{ borderBottom: '1px solid var(--border)', textAlign: 'center' }}>
               <th style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>PAYMENT ID</th>
               <th style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>STATUS</th>
               <th style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>AMOUNT</th>
               <th style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>PAYMENT METHOD</th>
               <th style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>CREATION DATE</th>
-              <th style={{ padding: '16px 8px', width: '40px' }}></th>
             </tr>
           </thead>
           <tbody>
             {paginatedData.map((payment, idx) => (
               <tr key={idx} style={{ borderBottom: '1px solid var(--border)', transition: 'background-color 0.15s ease' }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg)'} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
-                <td style={{ padding: '16px 8px' }}><input type="checkbox" style={{ cursor: 'pointer' }} /></td>
                 <td style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '13px', fontFamily: 'monospace' }}>{payment.id}</td>
                 <td style={{ padding: '16px 12px' }}>{getStatusBadge(payment.status)}</td>
                 <td style={{ padding: '16px 12px', fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>
@@ -289,7 +286,6 @@ export function Payments() {
                   </div>
                 </td>
                 <td style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '13px' }}>{payment.date}</td>
-                <td style={{ padding: '16px 8px', color: 'var(--text-secondary)' }}><ChevronRight size={16} style={{ cursor: 'pointer' }} /></td>
               </tr>
             ))}
           </tbody>
