@@ -36,7 +36,7 @@ export function Invoices() {
         <div style={{ display: 'flex', gap: '20px' }}>
 
           {/* Invoice Income Card */}
-          <div style={{ flex: '2', backgroundColor: 'var(--surface)', borderRadius: '16px', padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column' }}>
+          <div className="base-card" style={{ flex: '2', display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
               <div>
                 <h2 style={{ fontSize: '18px', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>Invoice Income</h2>
@@ -77,7 +77,7 @@ export function Invoices() {
           </div>
 
           {/* Overview Card */}
-          <div style={{ flex: '1', backgroundColor: 'var(--surface)', borderRadius: '16px', padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column' }}>
+          <div className="base-card" style={{ flex: '1', display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 20px 0' }}>Overview</h2>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
@@ -105,7 +105,7 @@ export function Invoices() {
         </div>
 
         {/* Billing & invoices Card */}
-        <div style={{ flex: '1', backgroundColor: 'var(--surface)', borderRadius: '16px', padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        <div className="base-card" style={{ flex: '1' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
             <div>
               <h2 style={{ fontSize: '18px', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>Billing & invoices</h2>
@@ -158,7 +158,7 @@ export function Invoices() {
       </div>
 
       {/* RIGHT COLUMN (Invoice Details Panel) */}
-      <div style={{ flex: '0 0 340px', backgroundColor: 'var(--surface)', borderRadius: '16px', padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column' }}>
+      <div className="base-card" style={{ flex: '0 0 340px', display: 'flex', flexDirection: 'column' }}>
 
         {/* Header Details */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>

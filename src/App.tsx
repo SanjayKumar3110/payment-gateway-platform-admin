@@ -3,7 +3,7 @@ import './App.css';
 import {
   LayoutDashboard, CreditCard, ListOrdered, FileText, Users,
   Settings, Bell, Moon, Sun, Search,
-  Hexagon, LogOut,
+  Hexagon, LogOut, Menu, X,
 } from 'lucide-react';
 
 import { Payments } from './components/PaymentsPanel';
@@ -29,7 +29,17 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [darkMode, setDarkMode] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  // Close sidebar by default on small screens
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)');
+    const handler = (e: MediaQueryListEvent | MediaQueryList) => setSidebarOpen(!e.matches);
+    handler(mq);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -57,8 +67,13 @@ export default function App() {
 
   return (
     <div className={`app-container${darkMode ? ' dark' : ''}`}>
+      {/* Mobile sidebar backdrop */}
+      {sidebarOpen && (
+        <div className="sidebar-backdrop" onClick={() => setSidebarOpen(false)} />
+      )}
+
       {/* Sidebar — fixed 220px */}
-      <aside className="sidebar">
+      <aside className={`sidebar${sidebarOpen ? ' sidebar-open' : ' sidebar-closed'}`}>
         <div className="sidebar-logo">
           <Hexagon className="icon" />
           <span>PayPlatform</span>
@@ -103,6 +118,10 @@ export default function App() {
 
         {/* Topbar */}
         <header className="topbar">
+          {/* Hamburger — visible on mobile */}
+          <button className="hamburger-btn" onClick={() => setSidebarOpen(prev => !prev)}>
+            {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
           <h1 className="page-title">{PAGE_TITLES[activeTab]}</h1>
 
           <div className="top-search-container">
@@ -126,12 +145,14 @@ export default function App() {
                   position: 'absolute',
                   top: 'calc(100% + 10px)',
                   right: 0,
-                  backgroundColor: 'var(--surface)',
-                  border: '1px solid var(--border)',
+                  backgroundColor: 'rgba(255, 255, 255, 0.92)',
+                  backdropFilter: 'blur(24px)',
+                  WebkitBackdropFilter: 'blur(24px)',
+                  border: '1.5px solid rgba(180, 195, 215, 0.8)',
                   borderRadius: '12px',
                   padding: '16px',
                   width: '240px',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.12), inset 1px 1px 0 rgba(255,255,255,0.8)',
                   zIndex: 100,
                   display: 'flex',
                   flexDirection: 'column',

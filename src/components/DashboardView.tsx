@@ -19,7 +19,7 @@ export function Dashboard() {
         </div>
       </div>
 
-      <div style={{ display: 'flex', gap: '24px', marginBottom: '24px' }}>
+      <div className="responsive-flex-row" style={{ marginBottom: '24px' }}>
         {/* Pie Chart */}
         <div className="base-card" style={{ flex: 1 }}>
           <h3 className="pv-product-name" style={{ fontSize: '16px', marginBottom: '4px' }}>Transaction Summary</h3>
@@ -33,11 +33,15 @@ export function Dashboard() {
               </Pie>
               <RechartsTooltip
                 contentStyle={{
-                  backgroundColor: 'var(--surface)',
-                  borderColor: 'var(--border)',
-                  color: 'var(--text-primary)',
-                  borderRadius: '12px'
+                  backgroundColor: 'rgba(255,255,255,0.85)',
+                  borderColor: 'rgba(200,210,220,0.6)',
+                  color: '#111111',
+                  borderRadius: '12px',
+                  backdropFilter: 'blur(12px)',
+                  boxShadow: '0 4px 16px rgba(0,0,0,0.08)'
                 }}
+                labelStyle={{ color: '#111111', fontWeight: 600 }}
+                itemStyle={{ color: '#555555' }}
               />
             </PieChart>
           </ResponsiveContainer>
@@ -61,13 +65,17 @@ export function Dashboard() {
               <XAxis dataKey="month" tick={{ fontSize: 13, fill: 'var(--text-secondary)' }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} axisLine={false} tickLine={false} />
               <RechartsTooltip
-                cursor={{ fill: 'var(--bg)', opacity: 0.4 }}
+                cursor={{ fill: 'rgba(0, 0, 0, 0.04)' }}
                 contentStyle={{
-                  backgroundColor: 'var(--surface)',
-                  borderColor: 'var(--border)',
-                  color: 'var(--text-primary)',
-                  borderRadius: '12px'
+                  backgroundColor: 'rgba(255,255,255,0.85)',
+                  borderColor: 'rgba(200,210,220,0.6)',
+                  color: '#111111',
+                  borderRadius: '12px',
+                  backdropFilter: 'blur(12px)',
+                  boxShadow: '0 4px 16px rgba(0,0,0,0.08)'
                 }}
+                labelStyle={{ color: '#111111', fontWeight: 600, marginBottom: '4px' }}
+                itemStyle={{ color: '#555555' }}
               />
               <Bar dataKey="revenue" fill="#4CAF50" radius={[6, 6, 0, 0]} />
             </BarChart>
