@@ -1,12 +1,11 @@
 import { Calendar, Download, Users, DollarSign, List, TrendingUp } from 'lucide-react';
 import {
-  AreaChart, Area, XAxis, Tooltip, ResponsiveContainer,
-  Bar, LineChart, Line, ComposedChart
+  AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, LineChart, Line
 } from 'recharts';
 
+import InvoiceChart from './charts/InvoiceChart';
+
 import DASHBOARD_DATA from '../data/dashboard.json';
-import CUSTOMERS_DATA from '../data/customers.json';
-import INVOICES_DATA from '../data/invoices.json';
 import PAYMENTS_DATA from '../data/payments.json';
 import ANALYTICS_DATA from '../data/analytics.json';
 
@@ -15,10 +14,6 @@ import ANALYTICS_DATA from '../data/analytics.json';
 // "Monthly revenue data from dashboard.json.barData"
 const revenueTrendsData = DASHBOARD_DATA.barData;
 
-// "Daily paid vs total invoices" from invoices
-// The image shows dual bars / lines.
-const dailyInvoicingData = INVOICES_DATA.chartData;
-
 // Transaction Status Breakdown
 // From dashboard.json pieData
 const statusBreakdown = DASHBOARD_DATA.pieData; // [{name: 'Completed', value: 400}, {name: 'Processing', value: 300}, {name: 'Failed', value: 50}]
@@ -26,7 +21,7 @@ const totalTransactionsBreakdown = statusBreakdown.reduce((acc, curr) => acc + c
 
 // Summary Cards
 const totalRevenue = "$152,492.00";
-const totalCustomers = CUSTOMERS_DATA.length;
+const totalCustomers = "12";  // This lines update customer count in analytics panel It can able to change by add customers.json files
 const totalPayments = PAYMENTS_DATA.length;
 const totalProducts = ANALYTICS_DATA.products.length;
 
@@ -68,6 +63,7 @@ export function Analytics() {
               <TrendingUp size={12} /> +12.5%
             </div>
           </div>
+
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
             <div style={{ fontSize: '24px', fontWeight: 700, color: 'var(--text-primary)' }}>{totalRevenue}</div>
             <div style={{ width: '60px', height: '30px' }}>
@@ -169,20 +165,15 @@ export function Analytics() {
         </div>
 
         {/* Daily Invoicing Activity */}
-        <div className="base-card">
-          <h3 style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 4px 0' }}>Daily Invoicing Activity (Last 7 Days)</h3>
-          <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 24px 0' }}>Daily paid vs total invoices</p>
-          <div style={{ height: '240px' }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <ComposedChart data={dailyInvoicingData} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>
-                <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: 'var(--text-secondary)' }} />
-                <Tooltip cursor={{ fill: 'transparent' }} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-                <Bar dataKey="total" fill="#CBD5E1" barSize={12} radius={[2, 2, 0, 0]} />
-                <Bar dataKey="paid" fill="#6366F1" barSize={12} radius={[2, 2, 0, 0]} />
-                <Line type="monotone" dataKey="paid" stroke="#475569" strokeWidth={2} dot={false} />
-              </ComposedChart>
-            </ResponsiveContainer>
+        <div className="base-card" style={{ flex: '2', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+            <div>
+              <h2 style={{ fontSize: '18px', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>Invoice Income</h2>
+              <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '4px 0 0 0' }}>Listed below are all conclusion from invoice income</p>
+            </div>
           </div>
+
+          <InvoiceChart />
         </div>
       </div>
 

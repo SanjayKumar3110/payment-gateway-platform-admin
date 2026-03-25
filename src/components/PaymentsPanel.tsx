@@ -84,7 +84,7 @@ const Dropdown = ({ label, icon: Icon, options, value, onChange }: any) => {
       </button>
 
       {open && (
-        <div style={{ position: 'absolute', top: '100%', left: 0, marginTop: '4px', backgroundColor: 'var(--surface)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', border: '1px solid var(--border)', borderRadius: '6px', width: 'max-content', minWidth: '160px', zIndex: 100, boxShadow: 'var(--glass-shadow)' }}>
+        <div className="solid-dropdown" style={{ position: 'absolute', top: '100%', left: 0, marginTop: '4px', borderRadius: '6px', width: 'max-content', minWidth: '160px', zIndex: 100 }}>
           <div
             onClick={() => { onChange(''); setOpen(false); }}
             style={{ padding: '8px 16px', fontSize: '13px', cursor: 'pointer', borderBottom: '1px solid var(--border)', color: 'var(--text-primary)' }}

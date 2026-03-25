@@ -539,6 +539,22 @@
 }
 
 /* ═══════════════════════════════════
+   SOLID DROPDOWN (Overrides Glassmorphism)
+   ═══════════════════════════════════ */
+.solid-dropdown {
+  background-color: #FFFFFF !important;
+  color: #111111 !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1) !important;
+  border: 1px solid #E5E7EB !important;
+}
+.app-container.dark .solid-dropdown {
+  background-color: #1A1A24 !important;
+  color: #F8FAFC !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8) !important;
+  border: 1px solid #333333 !important;
+}
+
+/* ═══════════════════════════════════
    INVOICE PANEL (Item Details Grid)
    ═══════════════════════════════════ */
 

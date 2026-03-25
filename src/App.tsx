@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import './App.css';
 import {
-  LayoutDashboard, CreditCard, ListOrdered, FileText, Users,
+  LayoutDashboard, CreditCard, ListOrdered, FileText,
   Settings, Bell, Moon, Sun, Search,
   Hexagon, LogOut, Menu, X,
 } from 'lucide-react';
@@ -10,17 +10,15 @@ import { Payments } from './components/PaymentsPanel';
 import { Dashboard } from './components/DashboardView';
 import { Analytics } from './components/AnalyticsPanel';
 import { Invoices } from './components/InvoicesPanel';
-import { Customers } from './components/CustomersPanel';
 import { SettingsPanel } from './components/SettingsPanel';
 
-type Tab = 'dashboard' | 'analytics' | 'payments' | 'invoices' | 'customers' | 'settings';
+type Tab = 'dashboard' | 'analytics' | 'payments' | 'invoices' | 'settings';
 
 const PAGE_TITLES: Record<Tab, string> = {
   dashboard: 'Dashboard',
   analytics: 'Analytics',
   payments: 'Payments',
   invoices: 'Invoices',
-  customers: 'Customers',
   settings: 'Settings'
 };
 
@@ -62,7 +60,6 @@ export default function App() {
     { id: 'analytics', icon: CreditCard, label: 'Analytics' },
     { id: 'payments', icon: ListOrdered, label: 'Payments' },
     { id: 'invoices', icon: FileText, label: 'Invoices' },
-    { id: 'customers', icon: Users, label: 'Customers' },
   ];
 
   return (
@@ -189,7 +186,6 @@ export default function App() {
           {activeTab === 'analytics' && <Analytics />}
           {activeTab === 'payments' && <Payments />}
           {activeTab === 'invoices' && <Invoices />}
-          {activeTab === 'customers' && <Customers />}
           {activeTab === 'settings' && <SettingsPanel />}
         </main>
 
