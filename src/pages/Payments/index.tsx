@@ -1,7 +1,8 @@
-import { useState, useMemo, useEffect, useRef } from 'react';
-import { CloudDownload, Plus, Search, ChevronDown, Clock, CheckCircle2, XCircle, FilePlus, CreditCard, Building2, Smartphone } from 'lucide-react';
-import PAYMENTS_DATA from '../data/payments.json';
-import './css/components.css';
+import { useState, useMemo, useEffect } from 'react';
+import { CloudDownload, Plus, Search, Clock, CheckCircle2, XCircle, FilePlus, CreditCard, Building2, Smartphone } from 'lucide-react';
+import { Dropdown } from '../../components/ui/Dropdown';
+import PAYMENTS_DATA from '../../data/payments.json';
+import '../../components/css/components.css';
 
 const TABS = ['All payments', 'Succeeded', 'Refunded'];
 
@@ -59,56 +60,6 @@ const getMethodIcon = (type: string) => {
   }
 };
 
-// Custom Dropdown Component
-const Dropdown = ({ label, icon: Icon, options, value, onChange }: any) => {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    };
-    document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
-  }, []);
-
-  return (
-    <div style={{ position: 'relative' }} ref={ref}>
-      <button
-        onClick={() => setOpen(!open)}
-        style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 12px', backgroundColor: 'var(--surface)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', border: '1px solid var(--border)', borderRadius: '6px', color: 'var(--text-secondary)', fontSize: '13px', cursor: 'pointer' }}
-      >
-        {Icon && <Icon size={14} color="var(--text-secondary)" />}
-        {value ? value : label}
-        <ChevronDown size={14} color="var(--text-secondary)" />
-      </button>
-
-      {open && (
-        <div className="solid-dropdown" style={{ position: 'absolute', top: '100%', left: 0, marginTop: '4px', borderRadius: '6px', width: 'max-content', minWidth: '160px', zIndex: 100 }}>
-          <div
-            onClick={() => { onChange(''); setOpen(false); }}
-            style={{ padding: '8px 16px', fontSize: '13px', cursor: 'pointer', borderBottom: '1px solid var(--border)', color: 'var(--text-primary)' }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--border)'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-          >
-            Clear Filter
-          </div>
-          {options.map((opt: string) => (
-            <div
-              key={opt}
-              onClick={() => { onChange(opt); setOpen(false); }}
-              style={{ padding: '8px 16px', fontSize: '13px', cursor: 'pointer', color: value === opt ? '#4F46E5' : 'var(--text-primary)', backgroundColor: value === opt ? 'var(--border)' : 'transparent', fontWeight: value === opt ? 600 : 400 }}
-              onMouseEnter={(e) => { if (value !== opt) e.currentTarget.style.backgroundColor = 'var(--border)' }}
-              onMouseLeave={(e) => { if (value !== opt) e.currentTarget.style.backgroundColor = 'transparent' }}
-            >
-              {opt}
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
 
 export function Payments() {
   const [activeTab, setActiveTab] = useState('All payments');
@@ -280,9 +231,9 @@ export function Payments() {
                   {payment.amount} <span style={{ color: 'var(--text-secondary)', fontWeight: 400, fontSize: '13px' }}>{payment.currency}</span>
                 </td>
                 <td style={{ padding: '16px 12px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-primary)', fontWeight: 500 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-primary)', fontWeight: 500 }}>
                     {getMethodIcon(payment.iconType)}
-                    {payment.method} {payment.last4 && <span style={{ color: 'var(--text-secondary)' }}>•••• {payment.last4}</span>}
+                    {payment.method} {payment.last4 && <span style={{ color: 'var(--text-secondary)' }}>â€¢â€¢â€¢â€¢ {payment.last4}</span>}
                   </div>
                 </td>
                 <td style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '13px' }}>{payment.date}</td>
@@ -316,3 +267,4 @@ export function Payments() {
     </div>
   );
 }
+

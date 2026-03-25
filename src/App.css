@@ -630,3 +630,16 @@ body {
     padding: 16px;
   }
 }
+
+/* ═══════════════════════════════════════════════
+   RECHARTS CSS VARIABLES FIX & ENHANCEMENTS
+   ═══════════════════════════════════════════════ */
+/* Fix Recharts bug where "var(--...)" in tick fill falls back to black in dark mode */
+.recharts-cartesian-axis-tick text {
+  fill: var(--text-primary) !important;
+}
+
+/* Force tooltip text-shadow for readability */
+.recharts-default-tooltip {
+  text-shadow: var(--tooltip-shadow) !important;
+}

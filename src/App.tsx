@@ -6,11 +6,11 @@ import {
   Hexagon, LogOut, Menu, X,
 } from 'lucide-react';
 
-import { Payments } from './components/PaymentsPanel';
-import { Dashboard } from './components/DashboardView';
-import { Analytics } from './components/AnalyticsPanel';
-import { Invoices } from './components/InvoicesPanel';
-import { SettingsPanel } from './components/SettingsPanel';
+import { Payments } from './pages/Payments';
+import { Dashboard } from './pages/Dashboard';
+import { Analytics } from './pages/Analytics';
+import { Invoices } from './pages/Invoices';
+import { SettingsPanel } from './pages/Settings';
 
 type Tab = 'dashboard' | 'analytics' | 'payments' | 'invoices' | 'settings';
 

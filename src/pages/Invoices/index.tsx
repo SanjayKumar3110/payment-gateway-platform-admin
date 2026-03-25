@@ -1,8 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
+﻿import { useState, useRef, useEffect } from 'react';
 import { Calendar, Filter, ChevronDown, Download, ChevronLeft, ChevronRight } from 'lucide-react';
 // import { BarChart, Bar, XAxis, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
-import INVOICE_DATA from '../data/invoices.json';
-import './css/components.css';
+import INVOICE_DATA from '../../data/invoices.json';
+import '../../components/css/components.css';
 import InvoiceChart from './charts/InvoiceChart';
 
 const { invoices } = INVOICE_DATA;
@@ -359,7 +359,7 @@ export function Invoices() {
         {/* Header Details */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
           <div style={{ width: '48px', height: '48px', backgroundColor: '#1D4ED8', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <span style={{ color: 'white', fontSize: '24px' }}>❋</span>
+            <span style={{ color: 'white', fontSize: '24px' }}>â‹</span>
           </div>
           <div>
             <h3 style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 4px 0' }}>Invoice</h3>
@@ -421,3 +421,4 @@ export function Invoices() {
     </div>
   );
 }
+
