@@ -204,8 +204,8 @@ export function Dashboard({ showMorePayments }: DashboardProps) {
 
         {/* Revenue Bar Chart */}
         <div className="base-card" style={{ flex: 2 }}>
-          <h3 className="pv-product-name" style={{ fontSize: '16px', marginBottom: '4px' }}>Monthly Revenue</h3>
-          <p className="pv-subtext" style={{ marginBottom: '16px' }}>Last 6 months</p>
+          <h3 className="pv-product-name" style={{ fontSize: '16px', marginBottom: '4px', padding: '16px' }}>Monthly Revenue</h3>
+          {/* <p className="pv-subtext" style={{ marginBottom: '16px' }}>Last 6 months</p> */}
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={currentBarData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />

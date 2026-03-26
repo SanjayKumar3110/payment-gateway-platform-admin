@@ -1,0 +1,9 @@
+[
+    {
+      "id": "USR-9821",
+      "email": "admin@payplatform.in",
+      "password": "password123", 
+      "name": "John Doe",
+      "role": "admin"
+    }
+  ]

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, Lock, Eye, EyeOff, Hexagon, Github, Chrome, Shield, Zap, Globe } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, Hexagon, Chrome, Shield, Zap, Globe } from 'lucide-react';
 import './Login.css';
 
 interface LoginPageProps {
@@ -24,16 +24,36 @@ export function LoginPage({ onLogin }: LoginPageProps) {
     }
 
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 1200));
 
-    if (password.length < 4) {
-      setError('Invalid credentials. Please try again.');
+    try {
+      // 1. Send credentials directly to your backend
+      const response = await fetch('http://localhost:5000/api/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      // 2. Handle incorrect passwords or missing users
+      if (!response.ok) {
+        setError(data.error || 'Invalid credentials. Please try again.');
+        setIsLoading(false);
+        return;
+      }
+
+      // 3. Success! Pass the token up to App.tsx
       setIsLoading(false);
-      return;
-    }
+      if (data.token) {
+        onLogin(email, data.token);
+      }
 
-    setIsLoading(false);
-    onLogin(email, password);
+    } catch (err) {
+      // 4. Catch server crashes or CORS errors
+      console.error("Connection error:", err);
+      setError('Cannot connect to the server. Is port 5000 running?');
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -160,9 +180,6 @@ export function LoginPage({ onLogin }: LoginPageProps) {
             <div className="login-social-row">
               <button type="button" className="login-social-btn">
                 <Chrome size={16} /> Google
-              </button>
-              <button type="button" className="login-social-btn">
-                <Github size={16} /> GitHub
               </button>
             </div>
           </form>

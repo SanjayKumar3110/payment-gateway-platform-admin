@@ -5,13 +5,14 @@
   "type": "module",
   "main": "main.cjs",
   "scripts": {
+    "start": "npm run electron:dev",
     "dev": "vite",
-    "server": "nodemon --exec ts-node backend/index.ts",
+    "server": "nodemon --exec ts-node backend/server.ts",
     "dev:all": "concurrently \"npm run dev\" \"npm run server\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "electron:dev": "concurrently \"vite\" \"wait-on tcp:5173 && electron .\"",
+    "electron:dev": "concurrently \"vite\" \"npm run server\" \"wait-on tcp:5173 && electron .\"",
     "electron:build": "tsc -b && vite build && electron-builder"
   },
   "dependencies": {

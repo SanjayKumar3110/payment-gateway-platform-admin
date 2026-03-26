@@ -11,6 +11,7 @@ import { Dashboard } from './components/DashboardView';
 import { Analytics } from './components/AnalyticsPanel';
 import { Invoices } from './components/InvoicesPanel';
 import { SettingsPanel } from './components/SettingsPanel';
+import { LoginPage } from './Login/login';
 
 type Tab = 'dashboard' | 'analytics' | 'payments' | 'invoices' | 'settings';
 
@@ -23,11 +24,16 @@ const PAGE_TITLES: Record<Tab, string> = {
 };
 
 export default function App() {
-  const [token] = useState<string | null>('mock-token-for-ui');
+// 1. Check localStorage before defaulting to null
+  const [token, setToken] = useState<string | null>(() => {
+    return localStorage.getItem('payplatform_token');
+  });
+
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [darkMode, setDarkMode] = useState(true);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+
   const menuRef = useRef<HTMLDivElement>(null);
 
   // Close sidebar by default on small screens
@@ -51,10 +57,30 @@ export default function App() {
     };
   }, []);
 
-  if (!token) {
-    return <div style={{ padding: '32px' }}>Please Login</div>;
-  }
+  
+  // Update this function to accept the token
+  // 3. Handle the Login Action
+  const handleLogin = (_email: string, receivedToken: string) => {
+    console.log("Login successful! Token received:", receivedToken);
+    setToken(receivedToken); 
+    
+    // Save the token to the browser so they stay logged in
+    localStorage.setItem('payplatform_token', receivedToken);
+  };
 
+  // 4. Handle the Logout Action
+  const handleLogout = () => {
+    setToken(null); // Clear from React state
+    setShowProfileMenu(false); 
+    setActiveTab('dashboard'); 
+    
+    // Wipe the token from the browser
+    localStorage.removeItem('payplatform_token');
+  };
+
+  if (!token) {
+    return <LoginPage onLogin={handleLogin} />;
+  }
   const navItems = [
     { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
     { id: 'analytics', icon: CreditCard, label: 'Analytics' },
@@ -90,10 +116,6 @@ export default function App() {
         </nav>
 
         <div className="sidebar-bottom">
-          {/* <button className="nav-btn" title="Messages">
-            <MessageSquare className="icon" />
-            <span>Messages</span>
-          </button> */}
           {/* Dark Mode Toggle — functional */}
           <button
             className="nav-btn"
@@ -105,7 +127,12 @@ export default function App() {
           </button>
           <button className="nav-btn" title="Settings" onClick={() => setActiveTab('settings')}>
             <Settings className="icon" />
-            <span>Settings</span>
+            <span>Setting</span>
+          </button>
+          <button className="nav-btn" style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 12px', margin: 0, color: '#FF4444', border: 'none', backgroundColor: 'transparent', cursor: 'pointer' }} 
+          onClick={() => handleLogout()}>
+            <LogOut className="icon" size={16} color="#FF4444" />
+            <span color='#FF4444'>Sign Out</span>
           </button>
         </div>
       </aside>
@@ -170,7 +197,8 @@ export default function App() {
                     <span>Settings</span>
                   </button>
 
-                  <button className="nav-btn" style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 12px', margin: 0, color: '#FF4444', border: 'none', backgroundColor: 'transparent', cursor: 'pointer' }} onClick={() => { /* signout logic */ alert("Sign out clicked!") }}>
+                  <button className="nav-btn" style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 12px', margin: 0, color: '#FF4444', border: 'none', backgroundColor: 'transparent', cursor: 'pointer' }} 
+                  onClick={() => { handleLogout()}}>
                     <LogOut className="icon" size={16} color="#FF4444" />
                     <span>Sign Out</span>
                   </button>
