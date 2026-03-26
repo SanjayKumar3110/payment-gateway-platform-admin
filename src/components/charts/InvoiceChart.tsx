@@ -119,19 +119,20 @@ export default function InvoiceChart() {
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={chartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
                         <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: 'var(--text-secondary)' }} dy={10} />
-                        <RechartsTooltip 
-                            cursor={false} 
-                            contentStyle={{ 
-                                borderRadius: '12px', 
-                                border: '1px solid var(--border)', 
-                                boxShadow: 'var(--glass-shadow)', 
-                                backgroundColor: 'var(--tooltip-bg)', 
+                        {/* <RechartsTooltip cursor={{ fill: 'transparent' }} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', backgroundColor: 'var(--surface)', color: 'var(--text-primary)' }} /> */}
+                        <RechartsTooltip
+                            cursor={false}
+                            contentStyle={{
+                                borderRadius: '12px',
+                                border: '1px solid var(--border)',
+                                boxShadow: 'var(--glass-shadow)',
+                                backgroundColor: 'var(--tooltip-bg)',
                                 color: 'var(--tooltip-text)',
                                 backdropFilter: 'blur(12px)',
                                 WebkitBackdropFilter: 'blur(12px)'
-                            }} 
-                            labelStyle={{ color: 'var(--tooltip-text)', fontWeight: 600, marginBottom: '4px' }} 
-                            itemStyle={{ color: 'var(--tooltip-text-sec)' }} 
+                            }}
+                            labelStyle={{ color: 'var(--tooltip-text)', fontWeight: 600, marginBottom: '4px' }}
+                            itemStyle={{ color: 'var(--tooltip-text-sec)' }}
                         />
                         <Bar dataKey="paid" fill="#1D4ED8" radius={[2, 2, 0, 0] as any} barSize={12} />
                         <Bar dataKey="unpaid" fill="#E0E7FF" radius={[2, 2, 0, 0] as any} barSize={12} />

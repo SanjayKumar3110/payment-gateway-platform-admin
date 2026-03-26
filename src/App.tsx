@@ -6,11 +6,11 @@ import {
   Hexagon, LogOut, Menu, X,
 } from 'lucide-react';
 
-import { Payments } from './pages/Payments';
-import { Dashboard } from './pages/Dashboard';
-import { Analytics } from './pages/Analytics';
-import { Invoices } from './pages/Invoices';
-import { SettingsPanel } from './pages/Settings';
+import { Payments } from './components/PaymentsPanel';
+import { Dashboard } from './components/DashboardView';
+import { Analytics } from './components/AnalyticsPanel';
+import { Invoices } from './components/InvoicesPanel';
+import { SettingsPanel } from './components/SettingsPanel';
 
 type Tab = 'dashboard' | 'analytics' | 'payments' | 'invoices' | 'settings';
 
@@ -182,7 +182,9 @@ export default function App() {
 
         {/* Page Content */}
         <main className="content-area-scrollable">
-          {activeTab === 'dashboard' && <Dashboard />}
+          {activeTab === 'dashboard' && <Dashboard
+            showMorePayments={() => setActiveTab('payments')} />}
+
           {activeTab === 'analytics' && <Analytics />}
           {activeTab === 'payments' && <Payments />}
           {activeTab === 'invoices' && <Invoices />}
@@ -193,5 +195,3 @@ export default function App() {
     </div>
   );
 }
-
-// hi
