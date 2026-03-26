@@ -1,11 +1,10 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
-import { Download, Calendar, ChevronDown, Clock, CheckCircle2, XCircle, FilePlus, CreditCard, Building2, Smartphone } from 'lucide-react';
-import { Payments } from '../Payments';
-import '../../components/css/components.css';
+import { Download, Clock, CheckCircle2, XCircle, FilePlus, CreditCard, Building2, Smartphone, Calendar, ChevronDown } from 'lucide-react';
+import './css/components.css';
 
-import dashboardData from '../../data/dashboard.json';
-import PAYMENTS_DATA from '../../data/payments.json';
+import dashboardData from '../data/dashboard.json';
+import PAYMENTS_DATA from '../data/payments.json';
 
 const { pieData, barData, pieColors: PIE_COLORS } = dashboardData;
 
@@ -63,13 +62,14 @@ const getMethodIcon = (type: string) => {
   }
 };
 
-export function Dashboard() {
-  const [isPanelOpen, setIsPanelOpen] = useState(false);
+interface DashboardProps {
+  showMorePayments: () => void;
+}
+
+export function Dashboard({ showMorePayments }: DashboardProps) {
   const [timeRange, setTimeRange] = useState('This Month');
   const [showTimeRange, setShowTimeRange] = useState(false);
   const timeRangeRef = useRef<HTMLDivElement>(null);
-
-  const handleShowMore = () => setIsPanelOpen(true);
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -95,6 +95,7 @@ export function Dashboard() {
         { name: 'Failed', value: 350 }
       ];
     }
+    // Default This Month
     return pieData;
   }, [timeRange]);
 
@@ -112,6 +113,7 @@ export function Dashboard() {
     } else if (timeRange === 'This Year') {
       return barData.map(d => ({ label: d.month, revenue: d.revenue * 5 }));
     }
+    // Default This Month
     return [
       { label: 'Week 1', revenue: 63000 },
       { label: 'Week 2', revenue: 88000 },
@@ -120,15 +122,12 @@ export function Dashboard() {
     ];
   }, [timeRange]);
 
-  if (isPanelOpen) {
-    return <Payments />;
-  }
-
   return (
     <div>
       <div className="pv-row-sb" style={{ marginBottom: '24px' }}>
         <h2 className="pv-section-title">System Reports</h2>
         <div style={{ display: 'flex', gap: '12px' }}>
+          {/* <button className="pv-btn-outline">This Month</button> */}
           <div style={{ position: 'relative' }} ref={timeRangeRef}>
             <button
               className="glass-action-btn small"
@@ -159,6 +158,7 @@ export function Dashboard() {
               </div>
             )}
           </div>
+
           <button className="cv-add-btn" style={{ display: 'flex', alignItems: 'center', gap: '6px', height: 'auto', padding: '8px 20px' }}>
             <Download size={14} /> Export PDF
           </button>
@@ -204,12 +204,8 @@ export function Dashboard() {
 
         {/* Revenue Bar Chart */}
         <div className="base-card" style={{ flex: 2 }}>
-          <h3 className="pv-product-name" style={{ fontSize: '16px', marginBottom: '4px' }}>
-            {timeRange === 'This Year' ? 'Yearly Revenue' : timeRange === 'This Week' ? 'Weekly Revenue' : 'Monthly Revenue'}
-          </h3>
-          <p className="pv-subtext" style={{ marginBottom: '16px' }}>
-            {timeRange === 'This Year' ? 'Last 6 months' : timeRange === 'This Week' ? 'Last 7 days' : 'Last 4 weeks'}
-          </p>
+          <h3 className="pv-product-name" style={{ fontSize: '16px', marginBottom: '4px' }}>Monthly Revenue</h3>
+          <p className="pv-subtext" style={{ marginBottom: '16px' }}>Last 6 months</p>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={currentBarData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
@@ -236,19 +232,17 @@ export function Dashboard() {
 
       {/* Recent Payment Table */}
       <div className="base-card">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '8px', paddingTop: '16px' }}>
-          <h3 className="pv-product-name" style={{ fontSize: '16px', marginBottom: '16px' }}>Recent Payment Logs</h3>
+
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '8px', paddingBottom: '16px' }}>
+          <h3 className="pv-product-name" style={{ alignItems: 'center', fontSize: '16px', paddingBottom: '16px' }}>Recent Payment Logs</h3>
           <button
-            onClick={handleShowMore}
-            style={{ padding: '8px 16px', backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '6px', color: 'var(--text-primary)', fontSize: '13px', fontWeight: 500, cursor: 'pointer', transition: 'all 0.2s' }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--border)'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--surface)'}
-          >
+            onClick={showMorePayments}
+            style={{ padding: '12px 12px', backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '6px', color: 'var(--text-primary)', opacity: 1, fontSize: '13px', fontWeight: 500, cursor: 'pointer' }}>
             Show More
           </button>
         </div>
 
-        <div className="comp-table-container">
+        <div className="comp-table-container" >
           <table className="comp-table" style={{ borderBottom: '1px solid var(--border)', textAlign: 'center' }}>
             <thead>
               <tr style={{ borderBottom: '1px solid var(--border)', textAlign: 'center' }}>
@@ -259,6 +253,7 @@ export function Dashboard() {
                 <th style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em', textAlign: 'center' }}>DATE</th>
               </tr>
             </thead>
+
             <tbody>
               {PAYMENTS_DATA.slice(0, 5).map((payment, idx) => (
                 <tr
@@ -274,20 +269,22 @@ export function Dashboard() {
                     {payment.amount} <span style={{ color: 'var(--text-secondary)', fontWeight: 400, fontSize: '13px' }}>{payment.currency}</span>
                   </td>
                   <td style={{ padding: '16px 12px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-primary)', fontWeight: 500 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-primary)', fontWeight: 500 }}>
                       {getMethodIcon(payment.iconType)}
                       {payment.method} {payment.last4 && <span style={{ color: 'var(--text-secondary)' }}>•••• {payment.last4}</span>}
                     </div>
                   </td>
+
                   <td style={{ padding: '16px 12px' }}>{getStatusBadge(payment.status)}</td>
                   <td style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '13px' }}>{payment.date}</td>
                 </tr>
               ))}
             </tbody>
+
           </table>
         </div>
       </div>
     </div>
+
   );
 }
-

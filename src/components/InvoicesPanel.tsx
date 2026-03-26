@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
-import { Calendar, Filter, ChevronDown, CloudDownload, ChevronLeft, ChevronRight, Receipt } from 'lucide-react';
+import { Calendar, Filter, ChevronDown, Download, ChevronLeft, ChevronRight } from 'lucide-react';
 // import { BarChart, Bar, XAxis, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
-import INVOICE_DATA from '../../data/invoices.json';
-import '../../components/css/components.css';
-import InvoiceChart from '../../components/charts/InvoiceChart';
+import INVOICE_DATA from '../data/invoices.json';
+import './css/components.css';
+import InvoiceChart from './charts/InvoiceChart';
 
 const { invoices } = INVOICE_DATA;
 
@@ -175,7 +175,7 @@ export function Invoices() {
                 <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '4px 0 0 0' }}>Listed below are all conclusion from invoice income</p>
               </div>
               <button style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--text-primary)', fontSize: '13px', fontWeight: 500, cursor: 'pointer' }}>
-                <CloudDownload size={14} /> Export Invoice
+                <Download size={14} /> Export Invoice
               </button>
             </div>
 
@@ -332,7 +332,7 @@ export function Invoices() {
         {/* Header Details */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
           <div style={{ width: '48px', height: '48px', backgroundColor: '#1D4ED8', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Receipt size={24} color="white" />
+            <span style={{ color: 'white', fontSize: '24px' }}>❋</span>
           </div>
           <div>
             <h3 style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 4px 0' }}>Invoice</h3>
@@ -385,7 +385,7 @@ export function Invoices() {
             padding: '12px', backgroundColor: '#1D4ED8', border: 'none', borderRadius: '8px',
             color: 'white', fontSize: '14px', fontWeight: 500, cursor: 'pointer', transition: 'background-color 0.2s'
           }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#1E40AF'} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1D4ED8'}>
-            <CloudDownload size={16} /> Download PDF
+            <Download size={16} /> Download PDF
           </button>
         </div>
 
@@ -394,4 +394,3 @@ export function Invoices() {
     </div>
   );
 }
-
