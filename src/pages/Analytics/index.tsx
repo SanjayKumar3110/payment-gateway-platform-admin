@@ -1,14 +1,14 @@
-import { useState, useRef, useEffect } from 'react';
+﻿import { useState, useRef, useEffect } from 'react';
 import { Calendar, Download, Users, DollarSign, List, TrendingUp, ChevronDown } from 'lucide-react';
 import {
   AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, LineChart, Line
 } from 'recharts';
 
-import InvoiceChart from './charts/InvoiceChart';
+import InvoiceChart from '../../components/charts/InvoiceChart';
 
-import DASHBOARD_DATA from '../data/dashboard.json';
-import PAYMENTS_DATA from '../data/payments.json';
-import ANALYTICS_DATA from '../data/analytics.json';
+import DASHBOARD_DATA from '../../data/dashboard.json';
+import PAYMENTS_DATA from '../../data/payments.json';
+import ANALYTICS_DATA from '../../data/analytics.json';
 
 // --- Extract data mapping based on UI logic ---
 
@@ -238,7 +238,19 @@ export function Analytics() {
                   </linearGradient>
                 </defs>
                 <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 13, fill: 'var(--text-secondary)' }} />
-                <Tooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                <Tooltip 
+                  cursor={false} 
+                  contentStyle={{ 
+                    borderRadius: '12px', 
+                    border: '1px solid var(--border)', 
+                    boxShadow: 'var(--glass-shadow)',
+                    backgroundColor: 'var(--tooltip-bg)',
+                    backdropFilter: 'blur(12px)',
+                    WebkitBackdropFilter: 'blur(12px)'
+                  }} 
+                  labelStyle={{ color: 'var(--tooltip-text)', fontWeight: 600, marginBottom: '4px' }}
+                  itemStyle={{ color: 'var(--tooltip-text-sec)' }}
+                />
                 <Area type="monotone" dataKey="revenue" stroke="#8B5CF6" strokeWidth={2} fillOpacity={1} fill="url(#colorRev)" />
               </AreaChart>
             </ResponsiveContainer>
@@ -325,3 +337,4 @@ export function Analytics() {
     </div>
   );
 }
+

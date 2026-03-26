@@ -1,6 +1,6 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Save, Key, User, Shield, Bell } from 'lucide-react';
-import './css/components.css';
+import '../../components/css/components.css';
 
 export function SettingsPanel() {
     const [activeSection, setActiveSection] = useState('profile');
@@ -97,7 +97,7 @@ export function SettingsPanel() {
 
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                     <label style={{ fontSize: '13px', fontWeight: 600 }}>Razorpay Key Secret</label>
-                                    <input type="password" placeholder="••••••••••••••••" style={{
+                                    <input type="password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" style={{
                                         padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--border)',
                                         background: 'var(--input-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', color: 'var(--text-primary)', outline: 'none', fontFamily: 'monospace'
                                     }} />
@@ -105,7 +105,7 @@ export function SettingsPanel() {
 
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                     <label style={{ fontSize: '13px', fontWeight: 600 }}>Webhook Secret</label>
-                                    <input type="password" placeholder="••••••••••••••••" style={{
+                                    <input type="password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" style={{
                                         padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--border)',
                                         background: 'var(--input-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', color: 'var(--text-primary)', outline: 'none', fontFamily: 'monospace'
                                     }} />
@@ -113,7 +113,7 @@ export function SettingsPanel() {
                                 </div>
 
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '12px', padding: '16px', backgroundColor: '#FFF8E1', borderRadius: '8px', border: '1px solid #FFE082' }}>
-                                    <div style={{ color: '#F59E0B' }}>⚠️</div>
+                                    <div style={{ color: '#F59E0B' }}>âš ï¸</div>
                                     <div style={{ fontSize: '13px', color: '#B45309' }}>
                                         <strong>Warning:</strong> Changing API keys will interrupt active transactions.
                                     </div>
@@ -130,7 +130,7 @@ export function SettingsPanel() {
                     {(activeSection === 'notifications' || activeSection === 'security') && (
                         <div style={{ animation: 'fadeIn 0.3s ease', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '300px' }}>
                             <div style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>
-                                <div style={{ marginBottom: '16px' }}>🚧</div>
+                                <div style={{ marginBottom: '16px' }}>ðŸš§</div>
                                 <h3>Coming Soon</h3>
                                 <p style={{ fontSize: '14px', marginTop: '8px' }}>This settings pane will be available in the next update.</p>
                             </div>
@@ -142,3 +142,4 @@ export function SettingsPanel() {
         </div>
     );
 }
+

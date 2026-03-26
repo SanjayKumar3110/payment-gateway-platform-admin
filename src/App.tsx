@@ -6,11 +6,12 @@ import {
   Hexagon, LogOut, Menu, X,
 } from 'lucide-react';
 
-import { Payments } from './components/PaymentsPanel';
-import { Dashboard } from './components/DashboardView';
-import { Analytics } from './components/AnalyticsPanel';
-import { Invoices } from './components/InvoicesPanel';
-import { SettingsPanel } from './components/SettingsPanel';
+import { LoginPage } from './pages/Login';
+import { Payments } from './pages/Payments';
+import { Dashboard } from './pages/Dashboard';
+import { Analytics } from './pages/Analytics';
+import { Invoices } from './pages/Invoices';
+import { SettingsPanel } from './pages/Settings';
 
 type Tab = 'dashboard' | 'analytics' | 'payments' | 'invoices' | 'settings';
 
@@ -23,7 +24,7 @@ const PAGE_TITLES: Record<Tab, string> = {
 };
 
 export default function App() {
-  const [token] = useState<string | null>('mock-token-for-ui');
+  const [token, setToken] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [darkMode, setDarkMode] = useState(true);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -52,7 +53,7 @@ export default function App() {
   }, []);
 
   if (!token) {
-    return <div style={{ padding: '32px' }}>Please Login</div>;
+    return <LoginPage onLogin={(email) => setToken(email)} />;
   }
 
   const navItems = [
@@ -142,14 +143,14 @@ export default function App() {
                   position: 'absolute',
                   top: 'calc(100% + 10px)',
                   right: 0,
-                  backgroundColor: 'rgba(255, 255, 255, 0.92)',
-                  backdropFilter: 'blur(24px)',
-                  WebkitBackdropFilter: 'blur(24px)',
-                  border: '1.5px solid rgba(180, 195, 215, 0.8)',
+                  background: 'var(--surface)',
+                  backdropFilter: 'var(--glass-blur)',
+                  WebkitBackdropFilter: 'var(--glass-blur)',
+                  border: '1.5px solid var(--border)',
                   borderRadius: '12px',
                   padding: '16px',
                   width: '240px',
-                  boxShadow: '0 8px 32px rgba(0,0,0,0.12), inset 1px 1px 0 rgba(255,255,255,0.8)',
+                  boxShadow: 'var(--glass-shadow)',
                   zIndex: 100,
                   display: 'flex',
                   flexDirection: 'column',
@@ -170,7 +171,7 @@ export default function App() {
                     <span>Settings</span>
                   </button>
 
-                  <button className="nav-btn" style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 12px', margin: 0, color: '#FF4444', border: 'none', backgroundColor: 'transparent', cursor: 'pointer' }} onClick={() => { /* signout logic */ alert("Sign out clicked!") }}>
+                  <button className="nav-btn" style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 12px', margin: 0, color: '#FF4444', border: 'none', backgroundColor: 'transparent', cursor: 'pointer' }} onClick={() => { setToken(null); setShowProfileMenu(false); }}>
                     <LogOut className="icon" size={16} color="#FF4444" />
                     <span>Sign Out</span>
                   </button>
