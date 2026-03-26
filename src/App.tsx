@@ -182,7 +182,9 @@ export default function App() {
 
         {/* Page Content */}
         <main className="content-area-scrollable">
-          {activeTab === 'dashboard' && <Dashboard />}
+          {activeTab === 'dashboard' && <Dashboard
+            showMorePayments={() => setActiveTab('payments')} />}
+
           {activeTab === 'analytics' && <Analytics />}
           {activeTab === 'payments' && <Payments />}
           {activeTab === 'invoices' && <Invoices />}

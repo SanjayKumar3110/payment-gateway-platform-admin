@@ -181,33 +181,6 @@ export function Invoices() {
 
             <InvoiceChart />
           </div>
-
-          {/* Overview Card */}
-          {/*<div className="base-card" style={{ flex: '1', display: 'flex', flexDirection: 'column' }}>
-            <h2 style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 20px 0' }}>Overview</h2>
-
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-              <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>Total Paid :</span>
-              <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>{overview.totalPaid}</span>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '24px' }}>
-              <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>Total Issued :</span>
-              <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>{overview.totalIssued}</span>
-            </div>
-
-            <div style={{ position: 'relative', height: '36px', width: '100%', backgroundColor: '#E0E7FF', borderRadius: '4px', overflow: 'hidden', marginBottom: '12px' }}>
-              <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '80%', backgroundColor: '#1D4ED8' }}></div>
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'auto' }}>
-              <span style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>Total Paid</span>
-              <span style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>Total Issued</span>
-            </div>
-
-            <button style={{ border: 'none', backgroundColor: 'transparent', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', color: '#1D4ED8', fontWeight: 600, padding: '0', cursor: 'pointer', alignSelf: 'flex-start', marginTop: '24px' }}>
-              View Detail <ArrowRight size={14} />
-            </button>
-          </div>*/}
         </div>
 
         {/* Billing & invoices Card */}
