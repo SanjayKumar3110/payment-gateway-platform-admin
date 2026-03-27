@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razorpay UPI Test Checkout</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #0f172a; color: white; margin: 0; }
+        .card { background: #1e293b; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.3); width: 100%; max-width: 400px; text-align: center; }
+        h1 { margin-bottom: 0.5rem; font-size: 1.5rem; }
+        p { color: #94a3b8; margin-bottom: 2rem; }
+        input { width: 100%; padding: 0.75rem; border-radius: 0.5rem; border: 1px solid #334155; background: #0f172a; color: white; outline: none; margin-bottom: 1.5rem; font-size: 1.1rem; text-align: center; box-sizing: border-box; }
+        button { width: 100%; padding: 0.75rem; border: none; border-radius: 0.5rem; background: #6366f1; color: white; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 1rem; }
+        button:hover { background: #4f46e5; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        #status { margin-top: 1.5rem; font-size: 0.9rem; border-top: 1px solid #334155; padding-top: 1rem; display: none; }
+        .success { color: #10b981; }
+        .error { color: #ef4444; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>UPI Payment Test</h1>
+        <p>Enter amount to test GPay/UPI flow</p>
+        <input type="number" id="amount" value="500" placeholder="Amount in INR">
+        <button id="pay-btn">Pay with Razorpay</button>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        const payBtn = document.getElementById('pay-btn');
+        const statusDiv = document.getElementById('status');
+        const amountInput = document.getElementById('amount');
+
+        // Load keys from localStorage (set in admin settings)
+        const KEY_ID = localStorage.getItem('rz_key_id');
+        const KEY_SECRET = localStorage.getItem('rz_key_secret');
+
+        if (!KEY_ID || !KEY_SECRET) {
+            alert('Please configure Razorpay API Keys in the Admin Settings first!');
+        }
+
+        payBtn.onclick = async () => {
+            const amount = amountInput.value;
+            const KEY_ID = localStorage.getItem('rz_key_id');
+            const KEY_SECRET = localStorage.getItem('rz_key_secret');
+
+            if (!amount || amount <= 0) return alert('Please enter a valid amount');
+            if (!KEY_ID || !KEY_SECRET) {
+                return alert('Keys missing! Go to Admin Panel -> Settings -> Payment Integration and enter "DEMO" in both fields, then click Save.');
+            }
+
+            payBtn.innerText = 'Initializing...';
+            payBtn.disabled = true;
+            statusDiv.style.display = 'none';
+
+            try {
+                // 1. Create order on backend
+                const orderRes = await fetch('http://localhost:5000/api/create-order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount, keyId: KEY_ID, keySecret: KEY_SECRET })
+                });
+                const order = await orderRes.json();
+
+                if (order.error) throw new Error(order.error);
+
+                // 2. Handle Mock Mode vs Real Razorpay
+                if (KEY_ID === 'DEMO') {
+                    statusDiv.style.display = 'block';
+                    statusDiv.innerHTML = '<div style="background: #334155; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem;">' +
+                        '<p style="margin-top:0; color: #fbbf24;">⚠️ MOCK MODE ACTIVE</p>' +
+                        '<button onclick="simulateSuccess(\'' + order.id + '\')" style="background: #10b981;">Simulate Successful UPI Payment</button>' +
+                        '</div>';
+                    window.simulateSuccess = async (orderId) => {
+                        statusDiv.innerHTML = 'Verifying mock payment...';
+                        const verifyRes = await fetch('http://localhost:5000/api/verify-payment', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                razorpay_order_id: orderId,
+                                razorpay_payment_id: 'pay_demo_' + Math.random().toString(36).substr(2, 9),
+                                razorpay_signature: 'demo_signature',
+                                keySecret: 'DEMO',
+                                paymentDetails: {
+                                    amount: (order.amount / 100).toLocaleString('en-IN', { style: 'currency', currency: 'INR' }),
+                                    method: 'UPI (DEMO)',
+                                    iconType: 'smartphone'
+                                }
+                            })
+                        });
+                        const result = await verifyRes.json();
+                        if (result.success) {
+                            statusDiv.innerHTML = '<span class="success">✓ Demo Payment Recorded!</span><br>Check your Admin Dashboard now.';
+                        }
+                    };
+                } else {
+                    // Open Real Razorpay Checkout
+                    const options = {
+                        key: KEY_ID,
+                        amount: order.amount,
+                        currency: order.currency,
+                        name: "PayPlatform Demo",
+                        description: "Test UPI Transaction",
+                        order_id: order.id,
+                        handler: async function (response) {
+                            statusDiv.style.display = 'block';
+                            statusDiv.innerHTML = 'Verifying payment...';
+                            
+                            const verifyRes = await fetch('http://localhost:5000/api/verify-payment', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    razorpay_order_id: response.razorpay_order_id,
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_signature: response.razorpay_signature,
+                                    keySecret: KEY_SECRET,
+                                    paymentDetails: {
+                                        amount: (order.amount / 100).toLocaleString('en-IN', { style: 'currency', currency: 'INR' }),
+                                        method: 'UPI',
+                                        iconType: 'smartphone'
+                                    }
+                                })
+                            });
+                            
+                            const result = await verifyRes.json();
+                            if (result.success) {
+                                statusDiv.innerHTML = '<span class="success">✓ Payment Successful!</span><br>ID: ' + response.razorpay_payment_id;
+                            } else {
+                                statusDiv.innerHTML = '<span class="error">✗ Verification Failed: ' + result.error + '</span>';
+                            }
+                        },
+                        prefill: {
+                            name: "Test Customer",
+                            email: "test@example.com",
+                            contact: "9988776655"
+                        },
+                        theme: { color: "#6366f1" }
+                    };
+
+                    const rzp = new Razorpay(options);
+                    rzp.on('payment.failed', function (response){
+                        statusDiv.style.display = 'block';
+                        statusDiv.innerHTML = '<span class="error">✗ Payment Failed: ' + response.error.description + '</span>';
+                    });
+                    rzp.open();
+                }
+
+            } catch (err) {
+                alert('Error: ' + err.message);
+            } finally {
+                payBtn.innerText = 'Pay with Razorpay';
+                payBtn.disabled = false;
+            }
+        };
+    </script>
+</body>
+</html>

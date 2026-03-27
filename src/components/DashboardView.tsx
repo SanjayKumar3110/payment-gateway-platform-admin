@@ -69,7 +69,26 @@ interface DashboardProps {
 export function Dashboard({ showMorePayments }: DashboardProps) {
   const [timeRange, setTimeRange] = useState('This Month');
   const [showTimeRange, setShowTimeRange] = useState(false);
+  const [realPayments, setRealPayments] = useState<any[]>([]);
   const timeRangeRef = useRef<HTMLDivElement>(null);
+
+  const fetchPayments = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/payments');
+      if (response.ok) {
+        const data = await response.json();
+        setRealPayments(data);
+      }
+    } catch (error) {
+      console.error('Dashboard fetch error:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPayments();
+    const interval = setInterval(fetchPayments, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -95,9 +114,24 @@ export function Dashboard({ showMorePayments }: DashboardProps) {
         { name: 'Failed', value: 350 }
       ];
     }
+    // If we have real payments, let's use them to populate the pie chart
+    if (realPayments.length > 0) {
+      const counts = { Succeeded: 0, Pending: 0, Failed: 0 };
+      realPayments.forEach(p => {
+        if (p.status === 'Succeeded') counts.Succeeded++;
+        else if (p.status === 'Pending') counts.Pending++;
+        else counts.Failed++;
+      });
+      return [
+        { name: 'Completed', value: counts.Succeeded + pieData[0].value },
+        { name: 'Processing', value: counts.Pending + pieData[1].value },
+        { name: 'Failed', value: counts.Failed + pieData[2].value }
+      ];
+    }
+
     // Default This Month
     return pieData;
-  }, [timeRange]);
+  }, [timeRange, realPayments]);
 
   const currentBarData = useMemo(() => {
     if (timeRange === 'This Week') {
@@ -255,7 +289,7 @@ export function Dashboard({ showMorePayments }: DashboardProps) {
             </thead>
 
             <tbody>
-              {PAYMENTS_DATA.slice(0, 5).map((payment, idx) => (
+              {[...realPayments, ...PAYMENTS_DATA].slice(0, 5).map((payment, idx) => (
                 <tr
                   key={idx}
                   style={{ borderBottom: '1px solid var(--border)', transition: 'background-color 0.15s ease' }}

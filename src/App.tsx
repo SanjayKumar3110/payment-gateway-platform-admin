@@ -13,6 +13,15 @@ import { Invoices } from './components/InvoicesPanel';
 import { SettingsPanel } from './components/SettingsPanel';
 import { LoginPage } from './Login/login';
 
+interface UserData {
+  id: string;
+  email: string;
+  name: string;
+  businessName?: string;
+  phone?: string;
+  role: string;
+}
+
 type Tab = 'dashboard' | 'analytics' | 'payments' | 'invoices' | 'settings';
 
 const PAGE_TITLES: Record<Tab, string> = {
@@ -27,6 +36,11 @@ export default function App() {
 // 1. Check localStorage before defaulting to null
   const [token, setToken] = useState<string | null>(() => {
     return localStorage.getItem('payplatform_token');
+  });
+
+  const [userData, setUserData] = useState<UserData | null>(() => {
+    const saved = localStorage.getItem('payplatform_user');
+    return saved ? JSON.parse(saved) : null;
   });
 
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
@@ -58,24 +72,27 @@ export default function App() {
   }, []);
 
   
-  // Update this function to accept the token
-  // 3. Handle the Login Action
-  const handleLogin = (_email: string, receivedToken: string) => {
+  // 3. Handle the Login/Signup Action
+  const handleLogin = (_email: string, receivedToken: string, user: UserData) => {
     console.log("Login successful! Token received:", receivedToken);
-    setToken(receivedToken); 
+    setToken(receivedToken);
+    setUserData(user);
     
-    // Save the token to the browser so they stay logged in
+    // Save both token and user data
     localStorage.setItem('payplatform_token', receivedToken);
+    localStorage.setItem('payplatform_user', JSON.stringify(user));
   };
 
   // 4. Handle the Logout Action
   const handleLogout = () => {
-    setToken(null); // Clear from React state
+    setToken(null);
+    setUserData(null);
     setShowProfileMenu(false); 
     setActiveTab('dashboard'); 
     
-    // Wipe the token from the browser
+    // Wipe token and user data from the browser
     localStorage.removeItem('payplatform_token');
+    localStorage.removeItem('payplatform_user');
   };
 
   if (!token) {
@@ -161,7 +178,7 @@ export default function App() {
             {/* <button className="icon-btn-circle"><MessageSquare size={18} /></button> */}
             <div className="avatar-container" style={{ position: 'relative' }} ref={menuRef}>
               <div className="avatar" onClick={() => setShowProfileMenu(!showProfileMenu)} style={{ cursor: 'pointer' }}>
-                JD
+                {userData?.name ? userData.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'JD'}
               </div>
 
               {showProfileMenu && (
@@ -185,9 +202,9 @@ export default function App() {
                   gap: '8px'
                 }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', borderBottom: '1px solid var(--border)', paddingBottom: '12px', marginBottom: '4px' }}>
-                    <span style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '15px' }}>John Doe</span>
-                    <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>admin@payplatform.in</span>
-                    <span style={{ fontSize: '12px', color: 'var(--text-secondary)', fontFamily: 'monospace', marginTop: '4px' }}>ID: USR-9821</span>
+                    <span style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '15px' }}>{userData?.name || 'John Doe'}</span>
+                    <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>{userData?.email || 'admin@payplatform.in'}</span>
+                    <span style={{ fontSize: '12px', color: 'var(--text-secondary)', fontFamily: 'monospace', marginTop: '4px' }}>ID: {userData?.id || 'USR-9821'}</span>
                   </div>
 
                   <button
@@ -218,7 +235,7 @@ export default function App() {
           {activeTab === 'analytics' && <Analytics />}
           {activeTab === 'payments' && <Payments />}
           {activeTab === 'invoices' && <Invoices />}
-          {activeTab === 'settings' && <SettingsPanel />}
+          {activeTab === 'settings' && <SettingsPanel userData={userData} />}
         </main>
 
       </div>

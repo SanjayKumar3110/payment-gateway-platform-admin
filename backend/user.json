@@ -1,9 +1,18 @@
 [
-    {
-      "id": "USR-9821",
-      "email": "admin@payplatform.in",
-      "password": "password123", 
-      "name": "John Doe",
-      "role": "admin"
-    }
-  ]
+  {
+    "id": "USR-9821",
+    "email": "admin@payplatform.in",
+    "password": "password123",
+    "name": "John Doe",
+    "role": "admin"
+  },
+  {
+    "id": "USR-2968",
+    "email": "sanjay@techpay.in",
+    "password": "test1234",
+    "name": "Sanjay Kumar",
+    "businessName": "TechPay Solutions",
+    "phone": "+91 99887 76655",
+    "role": "client"
+  }
+]

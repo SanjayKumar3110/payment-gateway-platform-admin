@@ -30,7 +30,26 @@ const miniChartDown = [{ v: 30 }, { v: 25 }, { v: 28 }, { v: 20 }, { v: 15 }, { 
 export function Analytics() {
   const [timeRange, setTimeRange] = useState('Last 7 Days');
   const [showTimeRange, setShowTimeRange] = useState(false);
+  const [realPayments, setRealPayments] = useState<any[]>([]);
   const timeRangeRef = useRef<HTMLDivElement>(null);
+
+  const fetchPayments = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/payments');
+      if (response.ok) {
+        const data = await response.json();
+        setRealPayments(data);
+      }
+    } catch (error) {
+      console.error('Analytics fetch error:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPayments();
+    const interval = setInterval(fetchPayments, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -43,13 +62,35 @@ export function Analytics() {
   }, []);
 
   const getMetrics = () => {
+    // Add real payments to the metrics
+    const combinedPayments = [...realPayments, ...PAYMENTS_DATA];
+    const realTotalRev = realPayments.reduce((acc: number, p: any) => {
+      const val = parseFloat(p.amount.replace(/[^0-9.-]+/g, '')) || 0;
+      return acc + val;
+    }, 0);
+
+    const baseData = baseMetrics();
+    const baseRevNum = parseFloat(baseData.totalRevenue.replace(/[^0-9.-]+/g, '')) || 0;
+    
+    return {
+      ...baseData,
+      totalRevenue: (baseRevNum + realTotalRev).toLocaleString('en-US', { 
+        style: 'currency', 
+        currency: 'USD',
+        minimumFractionDigits: 2
+      }),
+      totalPayments: combinedPayments.length
+    };
+  };
+
+  const baseMetrics = () => {
     switch (timeRange) {
       case 'Last 7 Days':
         return {
           totalRevenue: "$34,250.00",
           totalCustomers: "3",
           totalPayments: Math.floor(PAYMENTS_DATA.length * 0.25),
-          totalProducts: ANALYTICS_DATA.products.length,
+          totalProducts: (ANALYTICS_DATA as any).products.length,
           revenueStatus: "+4.2%",
           customersStatus: "+1",
           paymentsStatus: "+20",
@@ -60,7 +101,7 @@ export function Analytics() {
           totalRevenue: "$1,842,492.00",
           totalCustomers: "145",
           totalPayments: PAYMENTS_DATA.length * 12,
-          totalProducts: ANALYTICS_DATA.products.length + 4,
+          totalProducts: (ANALYTICS_DATA as any).products.length + 4,
           revenueStatus: "+148.5%",
           customersStatus: "+45",
           paymentsStatus: "+4,521",
@@ -72,7 +113,7 @@ export function Analytics() {
           totalRevenue: "$152,492.00",
           totalCustomers: "12",
           totalPayments: PAYMENTS_DATA.length,
-          totalProducts: ANALYTICS_DATA.products.length,
+          totalProducts: (ANALYTICS_DATA as any).products.length,
           revenueStatus: "+12.5%",
           customersStatus: "+3",
           paymentsStatus: "+142",

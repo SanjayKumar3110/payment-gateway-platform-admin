@@ -1,55 +1,88 @@
 import { useState } from 'react';
-import { Mail, Lock, Eye, EyeOff, Hexagon, Chrome, Shield, Zap, Globe } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, Hexagon, Chrome, Shield, Zap, Globe, User, Building2, Phone } from 'lucide-react';
 import './Login.css';
 
+interface UserData {
+  id: string;
+  email: string;
+  name: string;
+  businessName?: string;
+  phone?: string;
+  role: string;
+}
+
 interface LoginPageProps {
-  onLogin: (email: string, password: string) => void;
+  onLogin: (email: string, token: string, user: UserData) => void;
 }
 
 export function LoginPage({ onLogin }: LoginPageProps) {
+  const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [businessName, setBusinessName] = useState('');
+  const [phone, setPhone] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const resetForm = () => {
+    setEmail('');
+    setPassword('');
+    setName('');
+    setBusinessName('');
+    setPhone('');
+    setError('');
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    if (!email || !password) {
-      setError('Please fill in all fields');
-      return;
+    if (isSignUp) {
+      if (!name || !email || !password) {
+        setError('Name, email, and password are required');
+        return;
+      }
+    } else {
+      if (!email || !password) {
+        setError('Please fill in all fields');
+        return;
+      }
     }
 
     setIsLoading(true);
 
     try {
-      // 1. Send credentials directly to your backend
-      const response = await fetch('http://localhost:5000/api/login', {
+      const url = isSignUp
+        ? 'http://localhost:5000/api/signup'
+        : 'http://localhost:5000/api/login';
+
+      const body = isSignUp
+        ? { name, businessName, email, phone, password }
+        : { email, password };
+
+      const response = await fetch(url, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
       });
 
       const data = await response.json();
 
-      // 2. Handle incorrect passwords or missing users
       if (!response.ok) {
-        setError(data.error || 'Invalid credentials. Please try again.');
+        setError(data.error || 'Something went wrong. Please try again.');
         setIsLoading(false);
         return;
       }
 
-      // 3. Success! Pass the token up to App.tsx
       setIsLoading(false);
       if (data.token) {
-        onLogin(email, data.token);
+        onLogin(email, data.token, data.user);
       }
 
     } catch (err) {
-      // 4. Catch server crashes or CORS errors
       console.error("Connection error:", err);
       setError('Cannot connect to the server. Is port 5000 running?');
       setIsLoading(false);
@@ -105,19 +138,71 @@ export function LoginPage({ onLogin }: LoginPageProps) {
         </div>
       </div>
 
-      {/* ═══ RIGHT — Sign-In Form ═══ */}
+      {/* ═══ RIGHT — Sign-In / Sign-Up Form ═══ */}
       <div className="login-right">
         <div className="login-form-panel">
           <div className="login-header">
-            <h2>Welcome back</h2>
-            <p>Sign in to your admin dashboard</p>
+            <h2>{isSignUp ? 'Create Account' : 'Welcome back'}</h2>
+            <p>{isSignUp ? 'Sign up to get started with PayPlatform' : 'Sign in to your admin dashboard'}</p>
           </div>
 
           <form className="login-form" onSubmit={handleSubmit}>
             {error && <div className="login-error">{error}</div>}
 
+            {/* ── Sign Up extra fields ── */}
+            {isSignUp && (
+              <>
+                <div className="login-input-group">
+                  <label htmlFor="signup-name">Full Name *</label>
+                  <div className="login-input-wrapper">
+                    <User size={18} className="login-input-icon" />
+                    <input
+                      id="signup-name"
+                      type="text"
+                      className="login-input"
+                      placeholder="John Doe"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      autoComplete="name"
+                    />
+                  </div>
+                </div>
+
+                <div className="login-input-group">
+                  <label htmlFor="signup-business">Business Name</label>
+                  <div className="login-input-wrapper">
+                    <Building2 size={18} className="login-input-icon" />
+                    <input
+                      id="signup-business"
+                      type="text"
+                      className="login-input"
+                      placeholder="Your Company Ltd."
+                      value={businessName}
+                      onChange={(e) => setBusinessName(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="login-input-group">
+                  <label htmlFor="signup-phone">Phone Number</label>
+                  <div className="login-input-wrapper">
+                    <Phone size={18} className="login-input-icon" />
+                    <input
+                      id="signup-phone"
+                      type="tel"
+                      className="login-input"
+                      placeholder="+91 98765 43210"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      autoComplete="tel"
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+
             <div className="login-input-group">
-              <label htmlFor="login-email">Email</label>
+              <label htmlFor="login-email">Email *</label>
               <div className="login-input-wrapper">
                 <Mail size={18} className="login-input-icon" />
                 <input
@@ -133,7 +218,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
             </div>
 
             <div className="login-input-group">
-              <label htmlFor="login-password">Password</label>
+              <label htmlFor="login-password">Password *</label>
               <div className="login-input-wrapper">
                 <Lock size={18} className="login-input-icon" />
                 <input
@@ -143,7 +228,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                   placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  autoComplete="current-password"
+                  autoComplete={isSignUp ? 'new-password' : 'current-password'}
                 />
                 <button
                   type="button"
@@ -156,36 +241,49 @@ export function LoginPage({ onLogin }: LoginPageProps) {
               </div>
             </div>
 
-            <div className="login-options-row">
-              <label className="login-remember">
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                />
-                <span>Remember me</span>
-              </label>
-              <button type="button" className="login-forgot">Forgot password?</button>
-            </div>
+            {!isSignUp && (
+              <div className="login-options-row">
+                <label className="login-remember">
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                  />
+                  <span>Remember me</span>
+                </label>
+                <button type="button" className="login-forgot">Forgot password?</button>
+              </div>
+            )}
 
             <button type="submit" className="login-submit-btn" disabled={isLoading}>
               {isLoading && <span className="login-btn-spinner" />}
-              {isLoading ? 'Signing in...' : 'Sign In'}
+              {isLoading
+                ? (isSignUp ? 'Creating account...' : 'Signing in...')
+                : (isSignUp ? 'Create Account' : 'Sign In')
+              }
             </button>
 
-            <div className="login-divider">
-              <span>or continue with</span>
-            </div>
+            {!isSignUp && (
+              <>
+                <div className="login-divider">
+                  <span>or continue with</span>
+                </div>
 
-            <div className="login-social-row">
-              <button type="button" className="login-social-btn">
-                <Chrome size={16} /> Google
-              </button>
-            </div>
+                <div className="login-social-row">
+                  <button type="button" className="login-social-btn">
+                    <Chrome size={16} /> Google
+                  </button>
+                </div>
+              </>
+            )}
           </form>
 
           <div className="login-footer">
-            Don't have an account? <a href="#">Contact Admin</a>
+            {isSignUp ? (
+              <>Already have an account? <a href="#" onClick={(e) => { e.preventDefault(); setIsSignUp(false); resetForm(); }}>Sign In</a></>
+            ) : (
+              <>Don't have an account? <a href="#" onClick={(e) => { e.preventDefault(); setIsSignUp(true); resetForm(); }}>Sign Up</a></>
+            )}
           </div>
         </div>
       </div>

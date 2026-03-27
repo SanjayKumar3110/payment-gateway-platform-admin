@@ -117,6 +117,27 @@ export function Payments() {
   const [paymentMethod, setPaymentMethod] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [realPayments, setRealPayments] = useState<any[]>([]);
+
+  // Fetch real payments from backend
+  const fetchPayments = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/payments');
+      if (response.ok) {
+        const data = await response.json();
+        setRealPayments(data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch real payments:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPayments();
+    // Poll for new payments every 10 seconds
+    const interval = setInterval(fetchPayments, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Return back to first payment table when filters/tabs change
   useEffect(() => {
@@ -124,7 +145,8 @@ export function Payments() {
   }, [activeTab, dateRange, flagStatus, paymentMethod, searchQuery]);
 
   const filteredAndSortedData = useMemo(() => {
-    let data = [...PAYMENTS_DATA];
+    // Combine real payments with mock data
+    let data = [...realPayments, ...PAYMENTS_DATA];
 
     // 1. Tab Filtering
     if (activeTab === 'Succeeded') data = data.filter(p => p.status === 'Succeeded');
@@ -142,7 +164,7 @@ export function Payments() {
 
     // 3. Date Range Filtering
     if (dateRange) {
-      const now = new Date('2026-03-23T23:59:59'); // Base mock date
+      const now = new Date(); // Use real current date
       data = data.filter(p => {
         const pDate = new Date(p.date.replace(' PM', '').replace(' AM', '')); // basic parse
         const diffTime = Math.abs(now.getTime() - pDate.getTime());
