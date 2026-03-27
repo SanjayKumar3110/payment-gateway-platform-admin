@@ -1,74 +1,69 @@
-# QUICK start guide
+# 🚀 Payment Gateway Platform - Quickstart Guide
 
-# Payment Gateway Platform - Admin Application (Desktop)
+Welcome to the Admin Dashboard! This guide will help you get the system running and test a live payment flow in **less than 5 minutes**, even if you don't have a Razorpay account yet.
 
-This project is a React-based Admin dashboard for a payment gateway platform. It has been configured to run as a standalone desktop application on Windows using [Electron](https://www.electronjs.org/) and Vite.
+---
 
-## Prerequisites
+## 🛠️ Step 1: Initial Setup
 
-Before you begin, ensure you have the following installed on your local system:
-- **[Node.js](https://nodejs.org/)** (Recommended version: v20.19+ or v22.12+)
-- **Git** (to clone the repository)
+Ensure you have [Node.js](https://nodejs.org/) (v20+) installed.
 
-## Getting Started
+1. **Install Dependencies**:
+   Open a terminal in the project folder and run:
+   ```bash
+   npm install
+   ```
+2. **Start the System**:
+   Run both the dashboard and the backend server with one command:
+   ```bash
+   npm run dev:all
+   ```
+   *The dashboard will open at `http://localhost:5173` and the backend will run at `http://localhost:5000`.*
 
-Follow these step-by-step instructions to initialize and run the project locally.
+---
 
-### 1. Clone the repository
+## 💳 Step 2: Test a Payment (No Keys Needed)
 
-First, clone the project repository to your local machine using Git and navigate into the `admin` directory.
+We have built a **"Demo Mode"** so you can see the system in action immediately.
 
-```bash
-git clone <repository_url>
-cd "payment gateway platform/alpha_v0.1.0/admin"
-```
+1. **Configure Demo Keys**:
+   - In the Admin App, go to **Settings** → **Payment Integration**.
+   - Enter **`DEMO`** in the **Key ID** field.
+   - Enter **`DEMO`** in the **Key Secret** field.
+   - Click **Save API Keys**.
 
-*(Note: Replace `<repository_url>` with the actual Git URL of this repository)*
+2. **Open the Checkout Page**:
+   - Visit: [http://localhost:5173/checkout.html](http://localhost:5173/checkout.html)
+   - Enter any amount (e.g., `5000`) and click **Pay with Razorpay**.
+   - Click the green **"Simulate Successful UPI Payment"** button.
 
-### 2. Install Dependencies
+---
 
-Once inside the `admin` directory, install all the required Node.js dependencies using npm:
+## 📊 Step 3: Verify the Result
 
-```bash
-npm install
-```
+Once the payment is simulated, you can verify it across the platform:
 
-This command will download and configure all necessary packages, including React, Vite, and Electron, inside a new `node_modules` folder.
+- **Dashboard**: Check the **"Recent Payment Log"** at the bottom. Your new payment will appear at the top.
+- **Payments Page**: Go to the **Payments** sidebar. You'll see the full transaction list with the new "DEMO" entry.
+- **Analytics**: Watch the **Total Revenue** and **Total Transactions** counters increase in real-time.
 
-### 3. Run the Application in Development Mode
+---
 
-To start the application in development mode, run:
+## 📂 Project Structure
 
-```bash
-npm run electron:dev
-```
+- `/src`: The React frontend (Dashboard, Analytics, Settings).
+- `/backend`: The Express server handling order creation and verification.
+- `/backend/payments.json`: The database where real payments are stored.
+- `/public/checkout.html`: A standalone test environment for customers.
 
-If error occurs in electron try this:
-```bash
-npm install electron@latest --save-dev
-npm run electron:dev
-```
+---
 
-This will simultaneously start the Vite development server (usually on `localhost:5173`) and launch the native Electron desktop app window. Any changes you make in the code will hot-reload automatically in the app without requiring you to manually refresh!
+## 🛡️ Going Production
 
-## Building for Production (Windows Installer)
+When you are ready for real payments:
+1. Get your **Key ID** and **Key Secret** from the [Razorpay Dashboard](https://dashboard.razorpay.com/app/keys).
+2. Update them in the **Settings** panel of this app.
+3. The system will automatically switch from "Demo Mode" to real Razorpay processing.
 
-To create a standalone, installable `.exe` file for Windows, use the following build command:
-
-```bash
-npm run electron:build
-```
-
-This command will:
-1. Compile the TypeScript code.
-2. Build the Vite React app into a production bundle (placed in the `dist/` folder).
-3. Package the app and generate a Windows installer using Electron-Builder.
-
-Once the build finishes, you will find the generated `.exe` setup file located inside the newly created `release/` folder.
-
-## Ignored Folders (for Developers)
-Several directories are automatically excluded from source control (via `.gitignore`) because they contain temporary, downloaded, or compiled build data. These include:
-- `node_modules/` - External library packages downloaded via npm.
-- `dist/` - Compiled Vite output.
-- `release/` - Output generated by `electron-builder` (e.g., your final `.exe` files).
-- `.vscode/`, `.idea/`, etc. - Developer environment specifics.
+---
+*Created by Antigravity - Your Agentic Coding Assistant*
