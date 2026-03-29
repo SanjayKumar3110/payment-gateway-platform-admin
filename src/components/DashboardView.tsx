@@ -3,8 +3,8 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip, B
 import { Download, Clock, CheckCircle2, XCircle, FilePlus, CreditCard, Building2, Smartphone, Calendar, ChevronDown } from 'lucide-react';
 import './css/components.css';
 
-import dashboardData from '../data/dashboard.json';
-import PAYMENTS_DATA from '../data/payments.json';
+import dashboardData from '@data/dashboard.json';
+import PAYMENTS_DATA from '@data/payments.json';
 
 const { pieData, barData, pieColors: PIE_COLORS } = dashboardData;
 

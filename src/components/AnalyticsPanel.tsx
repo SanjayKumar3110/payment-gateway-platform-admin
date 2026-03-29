@@ -6,9 +6,9 @@ import {
 
 import InvoiceChart from './charts/InvoiceChart';
 
-import DASHBOARD_DATA from '../data/dashboard.json';
-import PAYMENTS_DATA from '../data/payments.json';
-import ANALYTICS_DATA from '../data/analytics.json';
+import DASHBOARD_DATA from '@data/dashboard.json';
+import PAYMENTS_DATA from '@data/payments.json';
+import ANALYTICS_DATA from '@data/analytics.json';
 
 // --- Extract data mapping based on UI logic ---
 
@@ -71,11 +71,11 @@ export function Analytics() {
 
     const baseData = baseMetrics();
     const baseRevNum = parseFloat(baseData.totalRevenue.replace(/[^0-9.-]+/g, '')) || 0;
-    
+
     return {
       ...baseData,
-      totalRevenue: (baseRevNum + realTotalRev).toLocaleString('en-US', { 
-        style: 'currency', 
+      totalRevenue: (baseRevNum + realTotalRev).toLocaleString('en-US', {
+        style: 'currency',
         currency: 'USD',
         minimumFractionDigits: 2
       }),
@@ -133,10 +133,10 @@ export function Analytics() {
           {/* <h1 style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: 'var(--text-primary)' }}>Welcome Back, Alex!</h1> */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '8px' }}>
             <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>20 Mar 2026, 11:15 AM</span>
-            
+
             <div style={{ position: 'relative' }} ref={timeRangeRef}>
-              <button 
-                className="glass-action-btn small" 
+              <button
+                className="glass-action-btn small"
                 onClick={() => setShowTimeRange(!showTimeRange)}
                 style={{ minWidth: '130px', justifyContent: 'space-between' }}
               >

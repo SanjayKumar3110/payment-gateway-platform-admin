@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Calendar, Filter, ChevronDown, Download, ChevronLeft, ChevronRight } from 'lucide-react';
 // import { BarChart, Bar, XAxis, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
-import INVOICE_DATA from '../data/invoices.json';
+import INVOICE_DATA from '@data/invoices.json';
 import './css/components.css';
 import InvoiceChart from './charts/InvoiceChart';
 

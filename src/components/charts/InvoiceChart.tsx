@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
 import { ChevronDown } from 'lucide-react';
-import INVOICE_DATA from '../../data/invoices.json';
+import INVOICE_DATA from '@data/invoices.json';
 
 const { invoices } = INVOICE_DATA;
 

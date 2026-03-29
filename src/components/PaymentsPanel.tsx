@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { CloudDownload, Plus, Search, ChevronDown, Clock, CheckCircle2, XCircle, FilePlus, CreditCard, Building2, Smartphone } from 'lucide-react';
-import PAYMENTS_DATA from '../data/payments.json';
+import PAYMENTS_DATA from '@data/payments.json';
 import './css/components.css';
 
 const TABS = ['All payments', 'Succeeded', 'Refunded'];

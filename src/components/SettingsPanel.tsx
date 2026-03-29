@@ -9,6 +9,10 @@ interface UserData {
     businessName?: string;
     phone?: string;
     role: string;
+    rz_key_id?: string;
+    rz_key_secret?: string;
+    rz_webhook_secret?: string;
+    rz_account_id?: string;
 }
 
 interface SettingsPanelProps {
@@ -19,20 +23,47 @@ export function SettingsPanel({ userData }: SettingsPanelProps) {
     const [activeSection, setActiveSection] = useState('profile');
 
     // Razorpay state — load from localStorage
-    const [razorpayKeyId, setRazorpayKeyId] = useState(() => localStorage.getItem('rz_key_id') || '');
-    const [razorpayKeySecret, setRazorpayKeySecret] = useState(() => localStorage.getItem('rz_key_secret') || '');
-    const [razorpayWebhookSecret, setRazorpayWebhookSecret] = useState(() => localStorage.getItem('rz_webhook_secret') || '');
-    const [razorpayAccountId, setRazorpayAccountId] = useState(() => localStorage.getItem('rz_account_id') || '');
+    const [razorpayKeyId, setRazorpayKeyId] = useState(() => userData?.rz_key_id || localStorage.getItem('rz_key_id') || '');
+    const [razorpayKeySecret, setRazorpayKeySecret] = useState(() => userData?.rz_key_secret || localStorage.getItem('rz_key_secret') || '');
+    const [razorpayWebhookSecret, setRazorpayWebhookSecret] = useState(() => userData?.rz_webhook_secret || localStorage.getItem('rz_webhook_secret') || '');
+    const [razorpayAccountId, setRazorpayAccountId] = useState(() => userData?.rz_account_id || localStorage.getItem('rz_account_id') || '');
     const [showSecret, setShowSecret] = useState(false);
     const [showWebhookSecret, setShowWebhookSecret] = useState(false);
     const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
 
-    const handleSaveRazorpay = () => {
+    const handleSaveRazorpay = async () => {
         setSaveStatus('saving');
+        
+        // Save to LocalStorage for quick access
         localStorage.setItem('rz_key_id', razorpayKeyId);
         localStorage.setItem('rz_key_secret', razorpayKeySecret);
         localStorage.setItem('rz_webhook_secret', razorpayWebhookSecret);
         localStorage.setItem('rz_account_id', razorpayAccountId);
+
+        // Sync to backend user.json persistent storage
+        if (userData?.email) {
+            try {
+                const response = await fetch('http://localhost:5000/api/update-keys', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: userData.email,
+                        rz_key_id: razorpayKeyId,
+                        rz_key_secret: razorpayKeySecret,
+                        rz_webhook_secret: razorpayWebhookSecret,
+                        rz_account_id: razorpayAccountId
+                    })
+                });
+                if (response.ok) {
+                    const result = await response.json();
+                    // Update main localized memory with the synced copy back
+                    localStorage.setItem('payplatform_user', JSON.stringify(result.user));
+                }
+            } catch (err) {
+                console.error('Failed to sync keys to backend', err);
+            }
+        }
+
         setTimeout(() => {
             setSaveStatus('saved');
             setTimeout(() => setSaveStatus('idle'), 2000);
@@ -48,7 +79,7 @@ export function SettingsPanel({ userData }: SettingsPanelProps) {
     };
 
     const labelStyle: React.CSSProperties = { fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' };
-    const hintStyle: React.CSSProperties = { fontSize: '12px', color: 'var(--text-secondary)', marginTop: '4px' };
+    // const hintStyle: React.CSSProperties = { fontSize: '12px', color: 'var(--text-secondary)', marginTop: '4px' };
 
     /* ── Read-only field renderer ── */
     const ProfileField = ({ icon: Icon, label, value }: { icon: any; label: string; value: string }) => (
@@ -160,9 +191,9 @@ export function SettingsPanel({ userData }: SettingsPanelProps) {
 
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '560px' }}>
                                 {razorpayKeyId === 'DEMO' && (
-                                    <div style={{ 
-                                        padding: '12px 16px', borderRadius: '10px', 
-                                        background: 'rgba(99, 102, 241, 0.1)', 
+                                    <div style={{
+                                        padding: '12px 16px', borderRadius: '10px',
+                                        background: 'rgba(99, 102, 241, 0.1)',
                                         border: '1px solid rgba(99, 102, 241, 0.3)',
                                         color: '#818CF8', fontSize: '13px', fontWeight: 500,
                                         display: 'flex', alignItems: 'center', gap: '10px'
@@ -242,8 +273,8 @@ export function SettingsPanel({ userData }: SettingsPanelProps) {
                                     </div>
                                 </div>
 
-                                <div style={{ 
-                                    padding: '16px', borderRadius: '12px', background: 'var(--bg)', 
+                                <div style={{
+                                    padding: '16px', borderRadius: '12px', background: 'var(--bg)',
                                     border: '1px solid var(--border)', marginTop: '8px'
                                 }}>
                                     <h4 style={{ margin: '0 0 12px 0', fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
