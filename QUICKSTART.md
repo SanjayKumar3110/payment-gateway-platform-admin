@@ -66,4 +66,24 @@ When you are ready for real payments:
 3. The system will automatically switch from "Demo Mode" to real Razorpay processing.
 
 ---
+
+## 🛑 Stopping Local Hosts Safely
+
+Sometimes, background processes (such as Node.js ports like 5000 or 5173) can remain active even if you close the terminal window or experience a crash (`EADDRINUSE` error). It is best practice to end these processes safely.
+
+**Windows (PowerShell):**
+```powershell
+Stop-Process -Id (Get-NetTCPConnection -LocalPort 5000).OwningProcess -Force
+Stop-Process -Id (Get-NetTCPConnection -LocalPort 5173).OwningProcess -Force
+```
+
+**Mac/Linux:**
+```bash
+kill -9 $(lsof -t -i:5000)
+kill -9 $(lsof -t -i:5173)
+```
+
+**Quick Tip:** By running these commands, you free up the ports so they can be securely used again the next time you start the server. You should also make sure to use `Ctrl + C` in the terminal to gracefully stop the current processes before closing the window.
+
+---
 *Created by Antigravity - Your Agentic Coding Assistant*

@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { CloudDownload, Plus, Search, ChevronDown, Clock, CheckCircle2, XCircle, FilePlus, CreditCard, Building2, Smartphone } from 'lucide-react';
+import { io } from 'socket.io-client';
 import PAYMENTS_DATA from '@data/payments.json';
 import './css/components.css';
 
@@ -134,9 +135,18 @@ export function Payments() {
 
   useEffect(() => {
     fetchPayments();
-    // Poll for new payments every 10 seconds
-    const interval = setInterval(fetchPayments, 10000);
-    return () => clearInterval(interval);
+
+    // Establish WebSocket Connection
+    const socket = io('http://localhost:5000');
+    
+    socket.on('newPayment', (payment) => {
+      console.log('Live Payment Received:', payment);
+      setRealPayments(prev => [payment, ...prev]);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   // Return back to first payment table when filters/tabs change

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { io } from 'socket.io-client';
 import { Download, Clock, CheckCircle2, XCircle, FilePlus, CreditCard, Building2, Smartphone, Calendar, ChevronDown } from 'lucide-react';
 import './css/components.css';
 
@@ -86,8 +87,17 @@ export function Dashboard({ showMorePayments }: DashboardProps) {
 
   useEffect(() => {
     fetchPayments();
-    const interval = setInterval(fetchPayments, 10000);
-    return () => clearInterval(interval);
+
+    // Establish WebSocket Connection
+    const socket = io('http://localhost:5000');
+    
+    socket.on('newPayment', (payment) => {
+      setRealPayments(prev => [payment, ...prev]);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   useEffect(() => {

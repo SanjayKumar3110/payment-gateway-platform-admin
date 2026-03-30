@@ -1,1502 +1,1502 @@
 [
-    {
-        "id": "dc2f862-86c2-4eb3...dfda",
-        "status": "Succeeded",
-        "amount": "$4,984.20",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Mar 22, 2026, 20:17 PM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "ba43cb9-9dea-4928...66ab",
-        "status": "Succeeded",
-        "amount": "$2,057.95",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "7027",
-        "date": "Mar 20, 2026, 19:16 PM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "59c3d95-8fdb-42ca...5c04",
-        "status": "Pending",
-        "amount": "$1,854.70",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Mar 16, 2026, 07:27 AM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "7c5e2f5-284f-4c84...ce75",
-        "status": "Succeeded",
-        "amount": "$45,858.72",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Mar 13, 2026, 13:09 PM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "4e83fbb-61b0-44ff...f5d4",
-        "status": "Succeeded",
-        "amount": "$4,579.68",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Mar 08, 2026, 16:52 PM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "0d4aa69-e7dd-4277...4991",
-        "status": "Succeeded",
-        "amount": "$195.07",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "6392",
-        "date": "Mar 06, 2026, 21:19 PM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "53540ac-ed72-4509...46f0",
-        "status": "Succeeded",
-        "amount": "$531.20",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Mar 05, 2026, 19:24 PM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "72486a4-322a-46c4...829c",
-        "status": "Declined",
-        "amount": "$1,287.07",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Mar 05, 2026, 00:26 AM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "b92f8dc-39bf-45eb...f152",
-        "status": "Succeeded",
-        "amount": "$3,574.28",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "7459",
-        "date": "Mar 03, 2026, 23:13 PM",
-        "iconType": "visa"
-    },
-    {
-        "id": "b3c456d-908d-4937...7aab",
-        "status": "Succeeded",
-        "amount": "$344.74",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "7705",
-        "date": "Mar 01, 2026, 09:08 AM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "4268077-b608-41ed...141a",
-        "status": "Refunded",
-        "amount": "$2,550.64",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "8304",
-        "date": "Feb 28, 2026, 15:07 PM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "0fbfd87-9565-4360...d0b6",
-        "status": "Succeeded",
-        "amount": "$3,432.76",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "6664",
-        "date": "Feb 27, 2026, 14:02 PM",
-        "iconType": "visa"
-    },
-    {
-        "id": "3bd2adc-822d-40ed...f997",
-        "status": "Succeeded",
-        "amount": "$302.92",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "5168",
-        "date": "Feb 27, 2026, 05:44 AM",
-        "iconType": "visa"
-    },
-    {
-        "id": "8a41590-a36b-4f3e...f7a8",
-        "status": "Succeeded",
-        "amount": "$33,479.66",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "7498",
-        "date": "Feb 26, 2026, 17:24 PM",
-        "iconType": "visa"
-    },
-    {
-        "id": "e39a9fa-a3e2-4ec0...0ee9",
-        "status": "Declined",
-        "amount": "$3,109.82",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Feb 22, 2026, 13:24 PM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "b6d98a7-1eeb-4761...6e34",
-        "status": "Succeeded",
-        "amount": "$4,743.70",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Feb 20, 2026, 06:58 AM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "3e7894b-6b92-4d4b...8442",
-        "status": "Declined",
-        "amount": "$117.92",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "4690",
-        "date": "Feb 20, 2026, 05:07 AM",
-        "iconType": "visa"
-    },
-    {
-        "id": "6391484-1fc3-4165...f4a6",
-        "status": "Succeeded",
-        "amount": "$2,317.13",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Feb 20, 2026, 00:22 AM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "91d9a61-47c7-4f91...a0a8",
-        "status": "Succeeded",
-        "amount": "$36,816.45",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Feb 19, 2026, 09:54 AM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "50cb8ca-6ea9-4e1b...cf59",
-        "status": "Succeeded",
-        "amount": "$25,318.42",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Feb 19, 2026, 09:35 AM",
-        "iconType": "bank"
-    },
-    {
-        "id": "1ced123-fad0-4634...ef7a",
-        "status": "Succeeded",
-        "amount": "$50,827.80",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "4605",
-        "date": "Feb 15, 2026, 01:36 AM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "b260f41-d43a-4429...f0ba",
-        "status": "Create",
-        "amount": "$4,482.74",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "5598",
-        "date": "Feb 14, 2026, 20:59 PM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "e99773a-e568-46c8...508f",
-        "status": "Succeeded",
-        "amount": "$30,919.20",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Feb 14, 2026, 10:35 AM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "8983e27-639d-44c5...6a7c",
-        "status": "Succeeded",
-        "amount": "$51,547.84",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "9509",
-        "date": "Feb 13, 2026, 08:52 AM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "9ab5506-d994-437b...3c04",
-        "status": "Succeeded",
-        "amount": "$4,669.56",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Feb 11, 2026, 17:23 PM",
-        "iconType": "bank"
-    },
-    {
-        "id": "f8c83b0-851d-483d...5f5a",
-        "status": "Pending",
-        "amount": "$1,386.66",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Feb 10, 2026, 00:21 AM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "062cbc6-015a-433d...6350",
-        "status": "Succeeded",
-        "amount": "$1,787.51",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "9940",
-        "date": "Feb 08, 2026, 11:50 AM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "df15678-3efa-4115...ae8d",
-        "status": "Succeeded",
-        "amount": "$1,782.97",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Feb 07, 2026, 20:32 PM",
-        "iconType": "bank"
-    },
-    {
-        "id": "e3396af-7e4d-402c...67ff",
-        "status": "Succeeded",
-        "amount": "$1,366.63",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "4753",
-        "date": "Feb 06, 2026, 18:53 PM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "d386182-2280-480f...0990",
-        "status": "Pending",
-        "amount": "$25,770.10",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Feb 05, 2026, 06:47 AM",
-        "iconType": "bank"
-    },
-    {
-        "id": "4e4e52d-2d30-48ee...0ded",
-        "status": "Succeeded",
-        "amount": "$4,400.80",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Feb 05, 2026, 01:44 AM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "b4315e7-2790-4890...ac85",
-        "status": "Declined",
-        "amount": "$2,631.43",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "6493",
-        "date": "Feb 04, 2026, 23:39 PM",
-        "iconType": "visa"
-    },
-    {
-        "id": "8571215-67b9-423e...6572",
-        "status": "Succeeded",
-        "amount": "$818.34",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Feb 04, 2026, 15:17 PM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "53cfa4f-5790-430f...af40",
-        "status": "Refunded",
-        "amount": "$3,254.06",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Feb 01, 2026, 10:14 AM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "bb656c2-0089-423b...b62b",
-        "status": "Succeeded",
-        "amount": "$3,415.00",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Feb 01, 2026, 02:35 AM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "4ff4a50-3988-43d7...6933",
-        "status": "Pending",
-        "amount": "$2,326.34",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "5372",
-        "date": "Feb 01, 2026, 00:15 AM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "b2979f6-e751-4b49...ddc9",
-        "status": "Succeeded",
-        "amount": "$2,476.16",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Jan 29, 2026, 20:25 PM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "ab7032d-0232-4fc4...f448",
-        "status": "Pending",
-        "amount": "$4,802.30",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Jan 29, 2026, 08:34 AM",
-        "iconType": "bank"
-    },
-    {
-        "id": "29e09bc-554b-4934...b430",
-        "status": "Succeeded",
-        "amount": "$9,957.90",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Jan 29, 2026, 04:01 AM",
-        "iconType": "bank"
-    },
-    {
-        "id": "8311703-759b-4332...300f",
-        "status": "Declined",
-        "amount": "$2,562.81",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "1133",
-        "date": "Jan 28, 2026, 13:52 PM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "303cc68-0c82-455b...b5b6",
-        "status": "Succeeded",
-        "amount": "$544.67",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Jan 27, 2026, 23:49 PM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "e82698c-3c97-4fe1...3fa3",
-        "status": "Succeeded",
-        "amount": "$4,241.50",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Jan 27, 2026, 15:41 PM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "27be085-e574-47a7...6fed",
-        "status": "Create",
-        "amount": "$842.62",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "7083",
-        "date": "Jan 26, 2026, 19:42 PM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "c8adf2e-d944-4e5d...03f4",
-        "status": "Succeeded",
-        "amount": "$2,254.99",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "1265",
-        "date": "Jan 25, 2026, 02:23 AM",
-        "iconType": "visa"
-    },
-    {
-        "id": "5aef9fe-4dee-4963...e355",
-        "status": "Succeeded",
-        "amount": "$491.73",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Jan 24, 2026, 12:15 PM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "ac89ddc-ebe8-4b4e...ee12",
-        "status": "Succeeded",
-        "amount": "$51,634.20",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Jan 24, 2026, 01:14 AM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "3876fb2-b347-4a64...8bd8",
-        "status": "Succeeded",
-        "amount": "$1,247.71",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "6164",
-        "date": "Jan 23, 2026, 01:42 AM",
-        "iconType": "visa"
-    },
-    {
-        "id": "d538181-8b30-439f...f43e",
-        "status": "Succeeded",
-        "amount": "$4,727.16",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "6182",
-        "date": "Jan 23, 2026, 00:36 AM",
-        "iconType": "visa"
-    },
-    {
-        "id": "55749c1-4196-462d...7ca9",
-        "status": "Pending",
-        "amount": "$2,225.03",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Jan 22, 2026, 14:30 PM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "02bc4cf-e8b5-4686...9bf9",
-        "status": "Succeeded",
-        "amount": "$168.08",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "5987",
-        "date": "Jan 21, 2026, 13:51 PM",
-        "iconType": "visa"
-    },
-    {
-        "id": "def156f-ab3c-446c...7650",
-        "status": "Refunded",
-        "amount": "$3,399.59",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Jan 19, 2026, 05:52 AM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "1f06bbf-da20-439b...9206",
-        "status": "Succeeded",
-        "amount": "$1,367.95",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Jan 16, 2026, 23:30 PM",
-        "iconType": "bank"
-    },
-    {
-        "id": "558f45f-1817-4cfd...9bc3",
-        "status": "Succeeded",
-        "amount": "$3,841.87",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "9535",
-        "date": "Jan 13, 2026, 17:56 PM",
-        "iconType": "visa"
-    },
-    {
-        "id": "a45ebd4-1078-4749...a52b",
-        "status": "Pending",
-        "amount": "$28,641.24",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Jan 08, 2026, 14:46 PM",
-        "iconType": "bank"
-    },
-    {
-        "id": "2be79f2-24ba-4153...0657",
-        "status": "Pending",
-        "amount": "$4,186.42",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Jan 07, 2026, 04:22 AM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "4f243a7-4f8a-4f9a...a65e",
-        "status": "Succeeded",
-        "amount": "$3,150.46",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Jan 06, 2026, 12:54 PM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "29bbf19-9436-4efd...4415",
-        "status": "Pending",
-        "amount": "$4,397.63",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Jan 05, 2026, 00:52 AM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "ba60d92-9ff6-4a29...c2e1",
-        "status": "Pending",
-        "amount": "$51,343.33",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "6706",
-        "date": "Jan 03, 2026, 09:30 AM",
-        "iconType": "visa"
-    },
-    {
-        "id": "7986918-f165-415c...047b",
-        "status": "Succeeded",
-        "amount": "$1,244.12",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "2794",
-        "date": "Jan 02, 2026, 19:56 PM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "04ae97f-c698-4cbd...dd22",
-        "status": "Declined",
-        "amount": "$1,976.61",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Jan 01, 2026, 17:25 PM",
-        "iconType": "bank"
-    },
-    {
-        "id": "0666777-09c6-4f91...9577",
-        "status": "Declined",
-        "amount": "$17,871.32",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Dec 31, 2025, 07:03 AM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "87e8552-747a-4947...40a3",
-        "status": "Succeeded",
-        "amount": "$1,105.98",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "8433",
-        "date": "Dec 31, 2025, 03:43 AM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "98accc7-946c-4b6a...a32f",
-        "status": "Succeeded",
-        "amount": "$3,763.49",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Dec 30, 2025, 21:41 PM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "a4d8927-45fe-429c...fce9",
-        "status": "Declined",
-        "amount": "$4,892.14",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "3649",
-        "date": "Dec 29, 2025, 17:11 PM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "05c7a01-0442-4905...8273",
-        "status": "Succeeded",
-        "amount": "$4,549.90",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Dec 29, 2025, 09:30 AM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "e8d6773-2306-4413...2c81",
-        "status": "Succeeded",
-        "amount": "$242.74",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Dec 27, 2025, 18:38 PM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "a91f227-7532-4740...bfcb",
-        "status": "Succeeded",
-        "amount": "$8,280.05",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Dec 21, 2025, 08:38 AM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "07a5f15-e529-490a...9858",
-        "status": "Succeeded",
-        "amount": "$2,874.22",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "1247",
-        "date": "Dec 17, 2025, 15:07 PM",
-        "iconType": "visa"
-    },
-    {
-        "id": "e228dfe-da5e-4ddb...a6ad",
-        "status": "Succeeded",
-        "amount": "$531.87",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Dec 17, 2025, 03:37 AM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "1129bd2-88cb-4d72...787e",
-        "status": "Succeeded",
-        "amount": "$58,535.94",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "4643",
-        "date": "Dec 07, 2025, 20:40 PM",
-        "iconType": "visa"
-    },
-    {
-        "id": "e12d085-e981-4ece...d643",
-        "status": "Succeeded",
-        "amount": "$411.33",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "1186",
-        "date": "Dec 06, 2025, 00:07 AM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "d496eba-830c-4a59...6c22",
-        "status": "Declined",
-        "amount": "$1,917.65",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Dec 04, 2025, 22:59 PM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "695356e-3db3-43f2...fb06",
-        "status": "Succeeded",
-        "amount": "$598.56",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "1848",
-        "date": "Dec 03, 2025, 20:54 PM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "129b56c-ebb4-4b36...9bfc",
-        "status": "Create",
-        "amount": "$1,791.99",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Dec 03, 2025, 09:05 AM",
-        "iconType": "bank"
-    },
-    {
-        "id": "9862cb2-e40c-4e25...9a13",
-        "status": "Pending",
-        "amount": "$1,644.29",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "2221",
-        "date": "Dec 02, 2025, 16:53 PM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "6706d6c-38b9-4e2b...4c66",
-        "status": "Succeeded",
-        "amount": "$969.20",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Nov 30, 2025, 14:49 PM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "38c0f41-b2fb-4c9d...2588",
-        "status": "Succeeded",
-        "amount": "$51,073.97",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Nov 28, 2025, 01:27 AM",
-        "iconType": "bank"
-    },
-    {
-        "id": "e7f8ce2-9bad-4f1c...1c8b",
-        "status": "Succeeded",
-        "amount": "$720.22",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "2581",
-        "date": "Nov 27, 2025, 08:55 AM",
-        "iconType": "visa"
-    },
-    {
-        "id": "b78b94b-08c6-4fad...155d",
-        "status": "Succeeded",
-        "amount": "$2,791.73",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "9149",
-        "date": "Nov 27, 2025, 01:06 AM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "c687ee7-ac70-461f...2cc2",
-        "status": "Succeeded",
-        "amount": "$3,116.62",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Nov 26, 2025, 22:17 PM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "9ee0ab6-60f4-4758...d5c9",
-        "status": "Succeeded",
-        "amount": "$4,016.94",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Nov 26, 2025, 16:15 PM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "0f85e48-bcac-4262...dd4e",
-        "status": "Pending",
-        "amount": "$48,235.67",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Nov 25, 2025, 16:15 PM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "fcd525b-84a9-4b29...a75d",
-        "status": "Succeeded",
-        "amount": "$2,610.65",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "3096",
-        "date": "Nov 23, 2025, 05:36 AM",
-        "iconType": "visa"
-    },
-    {
-        "id": "b925cd1-4e85-4829...7847",
-        "status": "Succeeded",
-        "amount": "$3,193.29",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "9100",
-        "date": "Nov 22, 2025, 21:06 PM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "c02e06e-455a-4829...b043",
-        "status": "Succeeded",
-        "amount": "$39,572.81",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "2622",
-        "date": "Nov 21, 2025, 20:27 PM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "c053fad-cf8d-4c0a...7b27",
-        "status": "Succeeded",
-        "amount": "$50,997.14",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "4279",
-        "date": "Nov 21, 2025, 13:45 PM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "c505de1-3cf4-485a...2962",
-        "status": "Succeeded",
-        "amount": "$12,729.42",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "7749",
-        "date": "Nov 18, 2025, 13:47 PM",
-        "iconType": "visa"
-    },
-    {
-        "id": "ad733e7-2bd9-4486...285c",
-        "status": "Succeeded",
-        "amount": "$2,738.94",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Nov 17, 2025, 20:23 PM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "9265031-ee39-4708...80aa",
-        "status": "Succeeded",
-        "amount": "$508.56",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Nov 17, 2025, 20:04 PM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "54c492c-e986-441a...f936",
-        "status": "Declined",
-        "amount": "$4,596.30",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Nov 17, 2025, 15:22 PM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "b488301-929b-494d...0d5c",
-        "status": "Succeeded",
-        "amount": "$20,499.76",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Nov 17, 2025, 13:29 PM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "49a9f62-0a3a-4618...08a6",
-        "status": "Create",
-        "amount": "$3,298.33",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Nov 16, 2025, 20:48 PM",
-        "iconType": "bank"
-    },
-    {
-        "id": "107e732-8b60-4b6b...26d6",
-        "status": "Succeeded",
-        "amount": "$736.48",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Nov 16, 2025, 11:04 AM",
-        "iconType": "bank"
-    },
-    {
-        "id": "a3644b9-ee08-415b...2973",
-        "status": "Succeeded",
-        "amount": "$903.70",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "8949",
-        "date": "Nov 14, 2025, 14:40 PM",
-        "iconType": "visa"
-    },
-    {
-        "id": "44df92e-d235-4e3b...dd24",
-        "status": "Succeeded",
-        "amount": "$1,743.50",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "5386",
-        "date": "Nov 10, 2025, 06:46 AM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "27c10b6-f2af-417a...ff78",
-        "status": "Succeeded",
-        "amount": "$4,807.40",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "3666",
-        "date": "Nov 09, 2025, 09:46 AM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "26a2596-4127-4186...db76",
-        "status": "Succeeded",
-        "amount": "$2,123.32",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "3168",
-        "date": "Nov 07, 2025, 02:38 AM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "d7b6cf8-4848-4a2d...80c7",
-        "status": "Pending",
-        "amount": "$2,530.28",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "3241",
-        "date": "Nov 04, 2025, 19:36 PM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "2a61ada-d00c-4d73...6769",
-        "status": "Create",
-        "amount": "$32,417.87",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Nov 03, 2025, 22:42 PM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "aed7de2-b30e-49ae...ea6d",
-        "status": "Succeeded",
-        "amount": "$2,070.44",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "2981",
-        "date": "Oct 31, 2025, 09:56 AM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "b1bd96a-d5c9-42bf...f9dc",
-        "status": "Declined",
-        "amount": "$809.84",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "5779",
-        "date": "Oct 30, 2025, 17:20 PM",
-        "iconType": "visa"
-    },
-    {
-        "id": "ca82b1f-fefc-4cfc...6829",
-        "status": "Succeeded",
-        "amount": "$2,991.43",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "5308",
-        "date": "Oct 26, 2025, 15:02 PM",
-        "iconType": "visa"
-    },
-    {
-        "id": "61313fb-69ba-4c0a...e4ef",
-        "status": "Succeeded",
-        "amount": "$2,824.34",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Oct 20, 2025, 23:51 PM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "12c041d-4ef7-44ce...4895",
-        "status": "Pending",
-        "amount": "$18,177.13",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "4143",
-        "date": "Oct 16, 2025, 20:02 PM",
-        "iconType": "visa"
-    },
-    {
-        "id": "b5c3bcb-da13-4c05...ce63",
-        "status": "Succeeded",
-        "amount": "$95.47",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Oct 16, 2025, 14:17 PM",
-        "iconType": "bank"
-    },
-    {
-        "id": "c23279d-0994-4c3b...8c5c",
-        "status": "Succeeded",
-        "amount": "$4,166.33",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Oct 15, 2025, 15:32 PM",
-        "iconType": "bank"
-    },
-    {
-        "id": "1b3447f-ef4a-4889...e5b0",
-        "status": "Succeeded",
-        "amount": "$37,692.71",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "2221",
-        "date": "Oct 15, 2025, 03:14 AM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "e6fa7e8-7aec-45b5...2f07",
-        "status": "Succeeded",
-        "amount": "$42,322.27",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Oct 11, 2025, 19:42 PM",
-        "iconType": "bank"
-    },
-    {
-        "id": "210b901-d2e6-46ea...5021",
-        "status": "Succeeded",
-        "amount": "$904.26",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Oct 11, 2025, 14:22 PM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "a22b8d3-62bb-4c59...cdb8",
-        "status": "Succeeded",
-        "amount": "$35,577.44",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Oct 11, 2025, 02:49 AM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "46b72e8-4666-4c78...940e",
-        "status": "Succeeded",
-        "amount": "$931.42",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "1948",
-        "date": "Oct 09, 2025, 13:18 PM",
-        "iconType": "visa"
-    },
-    {
-        "id": "faf8091-c784-42e9...02ae",
-        "status": "Succeeded",
-        "amount": "$6,793.52",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Oct 06, 2025, 13:32 PM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "c251a5c-4364-4d48...b6f4",
-        "status": "Succeeded",
-        "amount": "$48,348.49",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "4505",
-        "date": "Oct 05, 2025, 01:26 AM",
-        "iconType": "visa"
-    },
-    {
-        "id": "57ff6c7-1b1c-4cee...f568",
-        "status": "Succeeded",
-        "amount": "$25,171.38",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Oct 01, 2025, 01:39 AM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "55f9460-6624-4511...9fab",
-        "status": "Refunded",
-        "amount": "$29,013.25",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Sep 30, 2025, 20:38 PM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "53b29a9-0a60-441e...9496",
-        "status": "Refunded",
-        "amount": "$57,660.46",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Sep 29, 2025, 05:14 AM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "022fe81-3357-4ec1...0acc",
-        "status": "Pending",
-        "amount": "$10,414.32",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Sep 29, 2025, 01:06 AM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "cd26bea-409b-4817...206f",
-        "status": "Succeeded",
-        "amount": "$494.02",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "9427",
-        "date": "Sep 26, 2025, 00:06 AM",
-        "iconType": "visa"
-    },
-    {
-        "id": "42aa746-2a88-4eee...84e2",
-        "status": "Declined",
-        "amount": "$1,624.84",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Sep 25, 2025, 22:25 PM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "f66db11-1454-497a...fb13",
-        "status": "Succeeded",
-        "amount": "$1,473.40",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Sep 23, 2025, 17:16 PM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "2502319-1d5a-4be6...83a7",
-        "status": "Create",
-        "amount": "$686.01",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "1434",
-        "date": "Sep 19, 2025, 00:48 AM",
-        "iconType": "visa"
-    },
-    {
-        "id": "e29a2d6-29f6-426b...0803",
-        "status": "Succeeded",
-        "amount": "$33,024.78",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Sep 19, 2025, 00:31 AM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "3451c92-1233-48de...b6ad",
-        "status": "Pending",
-        "amount": "$37,479.30",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Sep 18, 2025, 16:51 PM",
-        "iconType": "bank"
-    },
-    {
-        "id": "19a713e-de04-4ce2...f6d6",
-        "status": "Succeeded",
-        "amount": "$3,113.69",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Sep 18, 2025, 00:11 AM",
-        "iconType": "bank"
-    },
-    {
-        "id": "7e537f1-359b-41f9...9708",
-        "status": "Create",
-        "amount": "$3,956.19",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Sep 17, 2025, 04:42 AM",
-        "iconType": "bank"
-    },
-    {
-        "id": "d7cd045-6a75-4813...4a57",
-        "status": "Declined",
-        "amount": "$20,451.68",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Sep 11, 2025, 20:25 PM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "cc10535-51cf-40de...ae4e",
-        "status": "Succeeded",
-        "amount": "$50,364.54",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "8847",
-        "date": "Sep 08, 2025, 17:54 PM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "49ea7ab-3e5b-4ae4...20ce",
-        "status": "Succeeded",
-        "amount": "$29,248.56",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Sep 03, 2025, 17:20 PM",
-        "iconType": "bank"
-    },
-    {
-        "id": "2c47574-c19b-4b83...b787",
-        "status": "Declined",
-        "amount": "$810.99",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Sep 02, 2025, 16:45 PM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "95ae211-fbed-4437...cebc",
-        "status": "Succeeded",
-        "amount": "$239.46",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "2021",
-        "date": "Aug 31, 2025, 23:45 PM",
-        "iconType": "visa"
-    },
-    {
-        "id": "57cee41-df1b-4488...a0de",
-        "status": "Succeeded",
-        "amount": "$3,435.27",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Aug 27, 2025, 09:57 AM",
-        "iconType": "bank"
-    },
-    {
-        "id": "bd70118-cdf7-425f...5971",
-        "status": "Create",
-        "amount": "$1,972.63",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "9528",
-        "date": "Aug 27, 2025, 03:41 AM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "ebfbf26-7544-4a2e...3e58",
-        "status": "Succeeded",
-        "amount": "$22,379.06",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Aug 26, 2025, 04:54 AM",
-        "iconType": "bank"
-    },
-    {
-        "id": "1160b9b-e326-4c53...400d",
-        "status": "Declined",
-        "amount": "$959.09",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Aug 25, 2025, 15:45 PM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "d843cee-b0d4-4739...bd9e",
-        "status": "Pending",
-        "amount": "$3,944.55",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Aug 25, 2025, 00:13 AM",
-        "iconType": "bank"
-    },
-    {
-        "id": "e1826c5-da00-4141...b6ae",
-        "status": "Refunded",
-        "amount": "$35,296.31",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "8106",
-        "date": "Aug 23, 2025, 23:50 PM",
-        "iconType": "visa"
-    },
-    {
-        "id": "7d5f1cf-3efd-4926...f656",
-        "status": "Succeeded",
-        "amount": "$4,162.80",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "6381",
-        "date": "Aug 23, 2025, 11:00 AM",
-        "iconType": "visa"
-    },
-    {
-        "id": "553b2b4-801d-4bfd...f496",
-        "status": "Succeeded",
-        "amount": "$4,022.85",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Aug 22, 2025, 14:28 PM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "72a4ba7-c0f3-4e9c...7280",
-        "status": "Pending",
-        "amount": "$10,468.01",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "3444",
-        "date": "Aug 17, 2025, 18:42 PM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "1a13337-1f70-4eb0...b6e6",
-        "status": "Succeeded",
-        "amount": "$3,460.26",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Aug 17, 2025, 15:06 PM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "456a18c-c0c7-4574...24cd",
-        "status": "Pending",
-        "amount": "$285.46",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "4619",
-        "date": "Aug 16, 2025, 21:35 PM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "16e9eba-6f03-481b...12b5",
-        "status": "Succeeded",
-        "amount": "$3,464.51",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Aug 13, 2025, 15:41 PM",
-        "iconType": "nupay"
-    },
-    {
-        "id": "afef867-2192-43de...a5e0",
-        "status": "Declined",
-        "amount": "$1,669.24",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "9217",
-        "date": "Aug 12, 2025, 00:49 AM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "3ccc6f4-b5c4-45ac...a23f",
-        "status": "Pending",
-        "amount": "$2,713.70",
-        "currency": "USD",
-        "method": "Mastercard",
-        "last4": "2945",
-        "date": "Aug 09, 2025, 09:51 AM",
-        "iconType": "mastercard"
-    },
-    {
-        "id": "4d823f2-7332-450c...884a",
-        "status": "Succeeded",
-        "amount": "$33,605.15",
-        "currency": "USD",
-        "method": "Bank transfer",
-        "last4": "",
-        "date": "Aug 07, 2025, 20:03 PM",
-        "iconType": "bank"
-    },
-    {
-        "id": "aad99fd-d1bf-4b0b...3e23",
-        "status": "Pending",
-        "amount": "$1,089.73",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "3415",
-        "date": "Aug 07, 2025, 13:08 PM",
-        "iconType": "visa"
-    },
-    {
-        "id": "4343e2f-7f66-4e72...016b",
-        "status": "Succeeded",
-        "amount": "$1,735.66",
-        "currency": "USD",
-        "method": "Mercado Pago",
-        "last4": "",
-        "date": "Aug 06, 2025, 11:06 AM",
-        "iconType": "mercadopago"
-    },
-    {
-        "id": "8d7e938-371c-4364...aed0",
-        "status": "Pending",
-        "amount": "$3,728.73",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "8790",
-        "date": "Aug 05, 2025, 05:29 AM",
-        "iconType": "visa"
-    },
-    {
-        "id": "0c44029-ec98-4aef...474f",
-        "status": "Succeeded",
-        "amount": "$40,186.83",
-        "currency": "USD",
-        "method": "Visa",
-        "last4": "4435",
-        "date": "Aug 03, 2025, 12:13 PM",
-        "iconType": "visa"
-    },
-    {
-        "id": "746c204-d827-4208...3217",
-        "status": "Pending",
-        "amount": "$1,798.73",
-        "currency": "USD",
-        "method": "NuPay",
-        "last4": "",
-        "date": "Aug 01, 2025, 15:33 PM",
-        "iconType": "nupay"
-    }
+  {
+    "id": "dc2f862-86c2-4eb3...dfda",
+    "status": "Succeeded",
+    "amount": "$4,984.20",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Mar 22, 2026, 20:17 PM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "ba43cb9-9dea-4928...66ab",
+    "status": "Succeeded",
+    "amount": "$2,057.95",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "7027",
+    "date": "Mar 20, 2026, 19:16 PM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "59c3d95-8fdb-42ca...5c04",
+    "status": "Pending",
+    "amount": "$1,854.70",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Mar 16, 2026, 07:27 AM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "7c5e2f5-284f-4c84...ce75",
+    "status": "Succeeded",
+    "amount": "$45,858.72",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Mar 13, 2026, 13:09 PM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "4e83fbb-61b0-44ff...f5d4",
+    "status": "Succeeded",
+    "amount": "$4,579.68",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Mar 08, 2026, 16:52 PM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "0d4aa69-e7dd-4277...4991",
+    "status": "Succeeded",
+    "amount": "$195.07",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "6392",
+    "date": "Mar 06, 2026, 21:19 PM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "53540ac-ed72-4509...46f0",
+    "status": "Succeeded",
+    "amount": "$531.20",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Mar 05, 2026, 19:24 PM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "72486a4-322a-46c4...829c",
+    "status": "Declined",
+    "amount": "$1,287.07",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Mar 05, 2026, 00:26 AM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "b92f8dc-39bf-45eb...f152",
+    "status": "Succeeded",
+    "amount": "$3,574.28",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "7459",
+    "date": "Mar 03, 2026, 23:13 PM",
+    "iconType": "visa"
+  },
+  {
+    "id": "b3c456d-908d-4937...7aab",
+    "status": "Succeeded",
+    "amount": "$344.74",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "7705",
+    "date": "Mar 01, 2026, 09:08 AM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "4268077-b608-41ed...141a",
+    "status": "Refunded",
+    "amount": "$2,550.64",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "8304",
+    "date": "Feb 28, 2026, 15:07 PM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "0fbfd87-9565-4360...d0b6",
+    "status": "Succeeded",
+    "amount": "$3,432.76",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "6664",
+    "date": "Feb 27, 2026, 14:02 PM",
+    "iconType": "visa"
+  },
+  {
+    "id": "3bd2adc-822d-40ed...f997",
+    "status": "Succeeded",
+    "amount": "$302.92",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "5168",
+    "date": "Feb 27, 2026, 05:44 AM",
+    "iconType": "visa"
+  },
+  {
+    "id": "8a41590-a36b-4f3e...f7a8",
+    "status": "Succeeded",
+    "amount": "$33,479.66",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "7498",
+    "date": "Feb 26, 2026, 17:24 PM",
+    "iconType": "visa"
+  },
+  {
+    "id": "e39a9fa-a3e2-4ec0...0ee9",
+    "status": "Declined",
+    "amount": "$3,109.82",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Feb 22, 2026, 13:24 PM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "b6d98a7-1eeb-4761...6e34",
+    "status": "Succeeded",
+    "amount": "$4,743.70",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Feb 20, 2026, 06:58 AM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "3e7894b-6b92-4d4b...8442",
+    "status": "Declined",
+    "amount": "$117.92",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "4690",
+    "date": "Feb 20, 2026, 05:07 AM",
+    "iconType": "visa"
+  },
+  {
+    "id": "6391484-1fc3-4165...f4a6",
+    "status": "Succeeded",
+    "amount": "$2,317.13",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Feb 20, 2026, 00:22 AM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "91d9a61-47c7-4f91...a0a8",
+    "status": "Succeeded",
+    "amount": "$36,816.45",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Feb 19, 2026, 09:54 AM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "50cb8ca-6ea9-4e1b...cf59",
+    "status": "Succeeded",
+    "amount": "$25,318.42",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Feb 19, 2026, 09:35 AM",
+    "iconType": "bank"
+  },
+  {
+    "id": "1ced123-fad0-4634...ef7a",
+    "status": "Succeeded",
+    "amount": "$50,827.80",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "4605",
+    "date": "Feb 15, 2026, 01:36 AM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "b260f41-d43a-4429...f0ba",
+    "status": "Create",
+    "amount": "$4,482.74",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "5598",
+    "date": "Feb 14, 2026, 20:59 PM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "e99773a-e568-46c8...508f",
+    "status": "Succeeded",
+    "amount": "$30,919.20",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Feb 14, 2026, 10:35 AM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "8983e27-639d-44c5...6a7c",
+    "status": "Succeeded",
+    "amount": "$51,547.84",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "9509",
+    "date": "Feb 13, 2026, 08:52 AM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "9ab5506-d994-437b...3c04",
+    "status": "Succeeded",
+    "amount": "$4,669.56",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Feb 11, 2026, 17:23 PM",
+    "iconType": "bank"
+  },
+  {
+    "id": "f8c83b0-851d-483d...5f5a",
+    "status": "Pending",
+    "amount": "$1,386.66",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Feb 10, 2026, 00:21 AM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "062cbc6-015a-433d...6350",
+    "status": "Succeeded",
+    "amount": "$1,787.51",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "9940",
+    "date": "Feb 08, 2026, 11:50 AM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "df15678-3efa-4115...ae8d",
+    "status": "Succeeded",
+    "amount": "$1,782.97",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Feb 07, 2026, 20:32 PM",
+    "iconType": "bank"
+  },
+  {
+    "id": "e3396af-7e4d-402c...67ff",
+    "status": "Succeeded",
+    "amount": "$1,366.63",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "4753",
+    "date": "Feb 06, 2026, 18:53 PM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "d386182-2280-480f...0990",
+    "status": "Pending",
+    "amount": "$25,770.10",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Feb 05, 2026, 06:47 AM",
+    "iconType": "bank"
+  },
+  {
+    "id": "4e4e52d-2d30-48ee...0ded",
+    "status": "Succeeded",
+    "amount": "$4,400.80",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Feb 05, 2026, 01:44 AM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "b4315e7-2790-4890...ac85",
+    "status": "Declined",
+    "amount": "$2,631.43",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "6493",
+    "date": "Feb 04, 2026, 23:39 PM",
+    "iconType": "visa"
+  },
+  {
+    "id": "8571215-67b9-423e...6572",
+    "status": "Succeeded",
+    "amount": "$818.34",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Feb 04, 2026, 15:17 PM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "53cfa4f-5790-430f...af40",
+    "status": "Refunded",
+    "amount": "$3,254.06",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Feb 01, 2026, 10:14 AM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "bb656c2-0089-423b...b62b",
+    "status": "Succeeded",
+    "amount": "$3,415.00",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Feb 01, 2026, 02:35 AM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "4ff4a50-3988-43d7...6933",
+    "status": "Pending",
+    "amount": "$2,326.34",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "5372",
+    "date": "Feb 01, 2026, 00:15 AM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "b2979f6-e751-4b49...ddc9",
+    "status": "Succeeded",
+    "amount": "$2,476.16",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Jan 29, 2026, 20:25 PM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "ab7032d-0232-4fc4...f448",
+    "status": "Pending",
+    "amount": "$4,802.30",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Jan 29, 2026, 08:34 AM",
+    "iconType": "bank"
+  },
+  {
+    "id": "29e09bc-554b-4934...b430",
+    "status": "Succeeded",
+    "amount": "$9,957.90",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Jan 29, 2026, 04:01 AM",
+    "iconType": "bank"
+  },
+  {
+    "id": "8311703-759b-4332...300f",
+    "status": "Declined",
+    "amount": "$2,562.81",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "1133",
+    "date": "Jan 28, 2026, 13:52 PM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "303cc68-0c82-455b...b5b6",
+    "status": "Succeeded",
+    "amount": "$544.67",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Jan 27, 2026, 23:49 PM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "e82698c-3c97-4fe1...3fa3",
+    "status": "Succeeded",
+    "amount": "$4,241.50",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Jan 27, 2026, 15:41 PM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "27be085-e574-47a7...6fed",
+    "status": "Create",
+    "amount": "$842.62",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "7083",
+    "date": "Jan 26, 2026, 19:42 PM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "c8adf2e-d944-4e5d...03f4",
+    "status": "Succeeded",
+    "amount": "$2,254.99",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "1265",
+    "date": "Jan 25, 2026, 02:23 AM",
+    "iconType": "visa"
+  },
+  {
+    "id": "5aef9fe-4dee-4963...e355",
+    "status": "Succeeded",
+    "amount": "$491.73",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Jan 24, 2026, 12:15 PM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "ac89ddc-ebe8-4b4e...ee12",
+    "status": "Succeeded",
+    "amount": "$51,634.20",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Jan 24, 2026, 01:14 AM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "3876fb2-b347-4a64...8bd8",
+    "status": "Succeeded",
+    "amount": "$1,247.71",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "6164",
+    "date": "Jan 23, 2026, 01:42 AM",
+    "iconType": "visa"
+  },
+  {
+    "id": "d538181-8b30-439f...f43e",
+    "status": "Succeeded",
+    "amount": "$4,727.16",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "6182",
+    "date": "Jan 23, 2026, 00:36 AM",
+    "iconType": "visa"
+  },
+  {
+    "id": "55749c1-4196-462d...7ca9",
+    "status": "Pending",
+    "amount": "$2,225.03",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Jan 22, 2026, 14:30 PM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "02bc4cf-e8b5-4686...9bf9",
+    "status": "Succeeded",
+    "amount": "$168.08",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "5987",
+    "date": "Jan 21, 2026, 13:51 PM",
+    "iconType": "visa"
+  },
+  {
+    "id": "def156f-ab3c-446c...7650",
+    "status": "Refunded",
+    "amount": "$3,399.59",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Jan 19, 2026, 05:52 AM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "1f06bbf-da20-439b...9206",
+    "status": "Succeeded",
+    "amount": "$1,367.95",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Jan 16, 2026, 23:30 PM",
+    "iconType": "bank"
+  },
+  {
+    "id": "558f45f-1817-4cfd...9bc3",
+    "status": "Succeeded",
+    "amount": "$3,841.87",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "9535",
+    "date": "Jan 13, 2026, 17:56 PM",
+    "iconType": "visa"
+  },
+  {
+    "id": "a45ebd4-1078-4749...a52b",
+    "status": "Pending",
+    "amount": "$28,641.24",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Jan 08, 2026, 14:46 PM",
+    "iconType": "bank"
+  },
+  {
+    "id": "2be79f2-24ba-4153...0657",
+    "status": "Pending",
+    "amount": "$4,186.42",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Jan 07, 2026, 04:22 AM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "4f243a7-4f8a-4f9a...a65e",
+    "status": "Succeeded",
+    "amount": "$3,150.46",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Jan 06, 2026, 12:54 PM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "29bbf19-9436-4efd...4415",
+    "status": "Pending",
+    "amount": "$4,397.63",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Jan 05, 2026, 00:52 AM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "ba60d92-9ff6-4a29...c2e1",
+    "status": "Pending",
+    "amount": "$51,343.33",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "6706",
+    "date": "Jan 03, 2026, 09:30 AM",
+    "iconType": "visa"
+  },
+  {
+    "id": "7986918-f165-415c...047b",
+    "status": "Succeeded",
+    "amount": "$1,244.12",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "2794",
+    "date": "Jan 02, 2026, 19:56 PM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "04ae97f-c698-4cbd...dd22",
+    "status": "Declined",
+    "amount": "$1,976.61",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Jan 01, 2026, 17:25 PM",
+    "iconType": "bank"
+  },
+  {
+    "id": "0666777-09c6-4f91...9577",
+    "status": "Declined",
+    "amount": "$17,871.32",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Dec 31, 2025, 07:03 AM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "87e8552-747a-4947...40a3",
+    "status": "Succeeded",
+    "amount": "$1,105.98",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "8433",
+    "date": "Dec 31, 2025, 03:43 AM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "98accc7-946c-4b6a...a32f",
+    "status": "Succeeded",
+    "amount": "$3,763.49",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Dec 30, 2025, 21:41 PM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "a4d8927-45fe-429c...fce9",
+    "status": "Declined",
+    "amount": "$4,892.14",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "3649",
+    "date": "Dec 29, 2025, 17:11 PM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "05c7a01-0442-4905...8273",
+    "status": "Succeeded",
+    "amount": "$4,549.90",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Dec 29, 2025, 09:30 AM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "e8d6773-2306-4413...2c81",
+    "status": "Succeeded",
+    "amount": "$242.74",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Dec 27, 2025, 18:38 PM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "a91f227-7532-4740...bfcb",
+    "status": "Succeeded",
+    "amount": "$8,280.05",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Dec 21, 2025, 08:38 AM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "07a5f15-e529-490a...9858",
+    "status": "Succeeded",
+    "amount": "$2,874.22",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "1247",
+    "date": "Dec 17, 2025, 15:07 PM",
+    "iconType": "visa"
+  },
+  {
+    "id": "e228dfe-da5e-4ddb...a6ad",
+    "status": "Succeeded",
+    "amount": "$531.87",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Dec 17, 2025, 03:37 AM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "1129bd2-88cb-4d72...787e",
+    "status": "Succeeded",
+    "amount": "$58,535.94",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "4643",
+    "date": "Dec 07, 2025, 20:40 PM",
+    "iconType": "visa"
+  },
+  {
+    "id": "e12d085-e981-4ece...d643",
+    "status": "Succeeded",
+    "amount": "$411.33",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "1186",
+    "date": "Dec 06, 2025, 00:07 AM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "d496eba-830c-4a59...6c22",
+    "status": "Declined",
+    "amount": "$1,917.65",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Dec 04, 2025, 22:59 PM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "695356e-3db3-43f2...fb06",
+    "status": "Succeeded",
+    "amount": "$598.56",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "1848",
+    "date": "Dec 03, 2025, 20:54 PM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "129b56c-ebb4-4b36...9bfc",
+    "status": "Create",
+    "amount": "$1,791.99",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Dec 03, 2025, 09:05 AM",
+    "iconType": "bank"
+  },
+  {
+    "id": "9862cb2-e40c-4e25...9a13",
+    "status": "Pending",
+    "amount": "$1,644.29",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "2221",
+    "date": "Dec 02, 2025, 16:53 PM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "6706d6c-38b9-4e2b...4c66",
+    "status": "Succeeded",
+    "amount": "$969.20",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Nov 30, 2025, 14:49 PM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "38c0f41-b2fb-4c9d...2588",
+    "status": "Succeeded",
+    "amount": "$51,073.97",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Nov 28, 2025, 01:27 AM",
+    "iconType": "bank"
+  },
+  {
+    "id": "e7f8ce2-9bad-4f1c...1c8b",
+    "status": "Succeeded",
+    "amount": "$720.22",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "2581",
+    "date": "Nov 27, 2025, 08:55 AM",
+    "iconType": "visa"
+  },
+  {
+    "id": "b78b94b-08c6-4fad...155d",
+    "status": "Succeeded",
+    "amount": "$2,791.73",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "9149",
+    "date": "Nov 27, 2025, 01:06 AM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "c687ee7-ac70-461f...2cc2",
+    "status": "Succeeded",
+    "amount": "$3,116.62",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Nov 26, 2025, 22:17 PM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "9ee0ab6-60f4-4758...d5c9",
+    "status": "Succeeded",
+    "amount": "$4,016.94",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Nov 26, 2025, 16:15 PM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "0f85e48-bcac-4262...dd4e",
+    "status": "Pending",
+    "amount": "$48,235.67",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Nov 25, 2025, 16:15 PM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "fcd525b-84a9-4b29...a75d",
+    "status": "Succeeded",
+    "amount": "$2,610.65",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "3096",
+    "date": "Nov 23, 2025, 05:36 AM",
+    "iconType": "visa"
+  },
+  {
+    "id": "b925cd1-4e85-4829...7847",
+    "status": "Succeeded",
+    "amount": "$3,193.29",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "9100",
+    "date": "Nov 22, 2025, 21:06 PM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "c02e06e-455a-4829...b043",
+    "status": "Succeeded",
+    "amount": "$39,572.81",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "2622",
+    "date": "Nov 21, 2025, 20:27 PM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "c053fad-cf8d-4c0a...7b27",
+    "status": "Succeeded",
+    "amount": "$50,997.14",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "4279",
+    "date": "Nov 21, 2025, 13:45 PM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "c505de1-3cf4-485a...2962",
+    "status": "Succeeded",
+    "amount": "$12,729.42",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "7749",
+    "date": "Nov 18, 2025, 13:47 PM",
+    "iconType": "visa"
+  },
+  {
+    "id": "ad733e7-2bd9-4486...285c",
+    "status": "Succeeded",
+    "amount": "$2,738.94",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Nov 17, 2025, 20:23 PM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "9265031-ee39-4708...80aa",
+    "status": "Succeeded",
+    "amount": "$508.56",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Nov 17, 2025, 20:04 PM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "54c492c-e986-441a...f936",
+    "status": "Declined",
+    "amount": "$4,596.30",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Nov 17, 2025, 15:22 PM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "b488301-929b-494d...0d5c",
+    "status": "Succeeded",
+    "amount": "$20,499.76",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Nov 17, 2025, 13:29 PM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "49a9f62-0a3a-4618...08a6",
+    "status": "Create",
+    "amount": "$3,298.33",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Nov 16, 2025, 20:48 PM",
+    "iconType": "bank"
+  },
+  {
+    "id": "107e732-8b60-4b6b...26d6",
+    "status": "Succeeded",
+    "amount": "$736.48",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Nov 16, 2025, 11:04 AM",
+    "iconType": "bank"
+  },
+  {
+    "id": "a3644b9-ee08-415b...2973",
+    "status": "Succeeded",
+    "amount": "$903.70",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "8949",
+    "date": "Nov 14, 2025, 14:40 PM",
+    "iconType": "visa"
+  },
+  {
+    "id": "44df92e-d235-4e3b...dd24",
+    "status": "Succeeded",
+    "amount": "$1,743.50",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "5386",
+    "date": "Nov 10, 2025, 06:46 AM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "27c10b6-f2af-417a...ff78",
+    "status": "Succeeded",
+    "amount": "$4,807.40",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "3666",
+    "date": "Nov 09, 2025, 09:46 AM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "26a2596-4127-4186...db76",
+    "status": "Succeeded",
+    "amount": "$2,123.32",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "3168",
+    "date": "Nov 07, 2025, 02:38 AM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "d7b6cf8-4848-4a2d...80c7",
+    "status": "Pending",
+    "amount": "$2,530.28",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "3241",
+    "date": "Nov 04, 2025, 19:36 PM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "2a61ada-d00c-4d73...6769",
+    "status": "Create",
+    "amount": "$32,417.87",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Nov 03, 2025, 22:42 PM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "aed7de2-b30e-49ae...ea6d",
+    "status": "Succeeded",
+    "amount": "$2,070.44",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "2981",
+    "date": "Oct 31, 2025, 09:56 AM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "b1bd96a-d5c9-42bf...f9dc",
+    "status": "Declined",
+    "amount": "$809.84",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "5779",
+    "date": "Oct 30, 2025, 17:20 PM",
+    "iconType": "visa"
+  },
+  {
+    "id": "ca82b1f-fefc-4cfc...6829",
+    "status": "Succeeded",
+    "amount": "$2,991.43",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "5308",
+    "date": "Oct 26, 2025, 15:02 PM",
+    "iconType": "visa"
+  },
+  {
+    "id": "61313fb-69ba-4c0a...e4ef",
+    "status": "Succeeded",
+    "amount": "$2,824.34",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Oct 20, 2025, 23:51 PM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "12c041d-4ef7-44ce...4895",
+    "status": "Pending",
+    "amount": "$18,177.13",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "4143",
+    "date": "Oct 16, 2025, 20:02 PM",
+    "iconType": "visa"
+  },
+  {
+    "id": "b5c3bcb-da13-4c05...ce63",
+    "status": "Succeeded",
+    "amount": "$95.47",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Oct 16, 2025, 14:17 PM",
+    "iconType": "bank"
+  },
+  {
+    "id": "c23279d-0994-4c3b...8c5c",
+    "status": "Succeeded",
+    "amount": "$4,166.33",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Oct 15, 2025, 15:32 PM",
+    "iconType": "bank"
+  },
+  {
+    "id": "1b3447f-ef4a-4889...e5b0",
+    "status": "Succeeded",
+    "amount": "$37,692.71",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "2221",
+    "date": "Oct 15, 2025, 03:14 AM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "e6fa7e8-7aec-45b5...2f07",
+    "status": "Succeeded",
+    "amount": "$42,322.27",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Oct 11, 2025, 19:42 PM",
+    "iconType": "bank"
+  },
+  {
+    "id": "210b901-d2e6-46ea...5021",
+    "status": "Succeeded",
+    "amount": "$904.26",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Oct 11, 2025, 14:22 PM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "a22b8d3-62bb-4c59...cdb8",
+    "status": "Succeeded",
+    "amount": "$35,577.44",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Oct 11, 2025, 02:49 AM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "46b72e8-4666-4c78...940e",
+    "status": "Succeeded",
+    "amount": "$931.42",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "1948",
+    "date": "Oct 09, 2025, 13:18 PM",
+    "iconType": "visa"
+  },
+  {
+    "id": "faf8091-c784-42e9...02ae",
+    "status": "Succeeded",
+    "amount": "$6,793.52",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Oct 06, 2025, 13:32 PM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "c251a5c-4364-4d48...b6f4",
+    "status": "Succeeded",
+    "amount": "$48,348.49",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "4505",
+    "date": "Oct 05, 2025, 01:26 AM",
+    "iconType": "visa"
+  },
+  {
+    "id": "57ff6c7-1b1c-4cee...f568",
+    "status": "Succeeded",
+    "amount": "$25,171.38",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Oct 01, 2025, 01:39 AM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "55f9460-6624-4511...9fab",
+    "status": "Refunded",
+    "amount": "$29,013.25",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Sep 30, 2025, 20:38 PM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "53b29a9-0a60-441e...9496",
+    "status": "Refunded",
+    "amount": "$57,660.46",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Sep 29, 2025, 05:14 AM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "022fe81-3357-4ec1...0acc",
+    "status": "Pending",
+    "amount": "$10,414.32",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Sep 29, 2025, 01:06 AM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "cd26bea-409b-4817...206f",
+    "status": "Succeeded",
+    "amount": "$494.02",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "9427",
+    "date": "Sep 26, 2025, 00:06 AM",
+    "iconType": "visa"
+  },
+  {
+    "id": "42aa746-2a88-4eee...84e2",
+    "status": "Declined",
+    "amount": "$1,624.84",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Sep 25, 2025, 22:25 PM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "f66db11-1454-497a...fb13",
+    "status": "Succeeded",
+    "amount": "$1,473.40",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Sep 23, 2025, 17:16 PM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "2502319-1d5a-4be6...83a7",
+    "status": "Create",
+    "amount": "$686.01",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "1434",
+    "date": "Sep 19, 2025, 00:48 AM",
+    "iconType": "visa"
+  },
+  {
+    "id": "e29a2d6-29f6-426b...0803",
+    "status": "Succeeded",
+    "amount": "$33,024.78",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Sep 19, 2025, 00:31 AM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "3451c92-1233-48de...b6ad",
+    "status": "Pending",
+    "amount": "$37,479.30",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Sep 18, 2025, 16:51 PM",
+    "iconType": "bank"
+  },
+  {
+    "id": "19a713e-de04-4ce2...f6d6",
+    "status": "Succeeded",
+    "amount": "$3,113.69",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Sep 18, 2025, 00:11 AM",
+    "iconType": "bank"
+  },
+  {
+    "id": "7e537f1-359b-41f9...9708",
+    "status": "Create",
+    "amount": "$3,956.19",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Sep 17, 2025, 04:42 AM",
+    "iconType": "bank"
+  },
+  {
+    "id": "d7cd045-6a75-4813...4a57",
+    "status": "Declined",
+    "amount": "$20,451.68",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Sep 11, 2025, 20:25 PM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "cc10535-51cf-40de...ae4e",
+    "status": "Succeeded",
+    "amount": "$50,364.54",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "8847",
+    "date": "Sep 08, 2025, 17:54 PM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "49ea7ab-3e5b-4ae4...20ce",
+    "status": "Succeeded",
+    "amount": "$29,248.56",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Sep 03, 2025, 17:20 PM",
+    "iconType": "bank"
+  },
+  {
+    "id": "2c47574-c19b-4b83...b787",
+    "status": "Declined",
+    "amount": "$810.99",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Sep 02, 2025, 16:45 PM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "95ae211-fbed-4437...cebc",
+    "status": "Succeeded",
+    "amount": "$239.46",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "2021",
+    "date": "Aug 31, 2025, 23:45 PM",
+    "iconType": "visa"
+  },
+  {
+    "id": "57cee41-df1b-4488...a0de",
+    "status": "Succeeded",
+    "amount": "$3,435.27",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Aug 27, 2025, 09:57 AM",
+    "iconType": "bank"
+  },
+  {
+    "id": "bd70118-cdf7-425f...5971",
+    "status": "Create",
+    "amount": "$1,972.63",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "9528",
+    "date": "Aug 27, 2025, 03:41 AM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "ebfbf26-7544-4a2e...3e58",
+    "status": "Succeeded",
+    "amount": "$22,379.06",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Aug 26, 2025, 04:54 AM",
+    "iconType": "bank"
+  },
+  {
+    "id": "1160b9b-e326-4c53...400d",
+    "status": "Declined",
+    "amount": "$959.09",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Aug 25, 2025, 15:45 PM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "d843cee-b0d4-4739...bd9e",
+    "status": "Pending",
+    "amount": "$3,944.55",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Aug 25, 2025, 00:13 AM",
+    "iconType": "bank"
+  },
+  {
+    "id": "e1826c5-da00-4141...b6ae",
+    "status": "Refunded",
+    "amount": "$35,296.31",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "8106",
+    "date": "Aug 23, 2025, 23:50 PM",
+    "iconType": "visa"
+  },
+  {
+    "id": "7d5f1cf-3efd-4926...f656",
+    "status": "Succeeded",
+    "amount": "$4,162.80",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "6381",
+    "date": "Aug 23, 2025, 11:00 AM",
+    "iconType": "visa"
+  },
+  {
+    "id": "553b2b4-801d-4bfd...f496",
+    "status": "Succeeded",
+    "amount": "$4,022.85",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Aug 22, 2025, 14:28 PM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "72a4ba7-c0f3-4e9c...7280",
+    "status": "Pending",
+    "amount": "$10,468.01",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "3444",
+    "date": "Aug 17, 2025, 18:42 PM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "1a13337-1f70-4eb0...b6e6",
+    "status": "Succeeded",
+    "amount": "$3,460.26",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Aug 17, 2025, 15:06 PM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "456a18c-c0c7-4574...24cd",
+    "status": "Pending",
+    "amount": "$285.46",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "4619",
+    "date": "Aug 16, 2025, 21:35 PM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "16e9eba-6f03-481b...12b5",
+    "status": "Succeeded",
+    "amount": "$3,464.51",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Aug 13, 2025, 15:41 PM",
+    "iconType": "nupay"
+  },
+  {
+    "id": "afef867-2192-43de...a5e0",
+    "status": "Declined",
+    "amount": "$1,669.24",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "9217",
+    "date": "Aug 12, 2025, 00:49 AM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "3ccc6f4-b5c4-45ac...a23f",
+    "status": "Pending",
+    "amount": "$2,713.70",
+    "currency": "USD",
+    "method": "Mastercard",
+    "last4": "2945",
+    "date": "Aug 09, 2025, 09:51 AM",
+    "iconType": "mastercard"
+  },
+  {
+    "id": "4d823f2-7332-450c...884a",
+    "status": "Succeeded",
+    "amount": "$33,605.15",
+    "currency": "USD",
+    "method": "Bank transfer",
+    "last4": "",
+    "date": "Aug 07, 2025, 20:03 PM",
+    "iconType": "bank"
+  },
+  {
+    "id": "aad99fd-d1bf-4b0b...3e23",
+    "status": "Pending",
+    "amount": "$1,089.73",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "3415",
+    "date": "Aug 07, 2025, 13:08 PM",
+    "iconType": "visa"
+  },
+  {
+    "id": "4343e2f-7f66-4e72...016b",
+    "status": "Succeeded",
+    "amount": "$1,735.66",
+    "currency": "USD",
+    "method": "Mercado Pago",
+    "last4": "",
+    "date": "Aug 06, 2025, 11:06 AM",
+    "iconType": "mercadopago"
+  },
+  {
+    "id": "8d7e938-371c-4364...aed0",
+    "status": "Pending",
+    "amount": "$3,728.73",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "8790",
+    "date": "Aug 05, 2025, 05:29 AM",
+    "iconType": "visa"
+  },
+  {
+    "id": "0c44029-ec98-4aef...474f",
+    "status": "Succeeded",
+    "amount": "$40,186.83",
+    "currency": "USD",
+    "method": "Visa",
+    "last4": "4435",
+    "date": "Aug 03, 2025, 12:13 PM",
+    "iconType": "visa"
+  },
+  {
+    "id": "746c204-d827-4208...3217",
+    "status": "Pending",
+    "amount": "$1,798.73",
+    "currency": "USD",
+    "method": "NuPay",
+    "last4": "",
+    "date": "Aug 01, 2025, 15:33 PM",
+    "iconType": "nupay"
+  }
 ]

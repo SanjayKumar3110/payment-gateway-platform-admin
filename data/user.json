@@ -14,9 +14,9 @@
     "businessName": "TechPay Solutions",
     "phone": "+91 99887 76655",
     "role": "client",
-    "rz_key_id": "http://127.0.0.1:8000/api/User_103/v1",
-    "rz_key_secret": "my_super_secret_123",
-    "rz_webhook_secret": "DEMO",
-    "rz_account_id": "DEMO"
+    "key_id": "http://127.0.0.1:8000/api/User_103/v1",
+    "key_secret": "my_super_secret_123",
+    "webhook_secret": "DEMO",
+    "account_id": "DEMO"
   }
 ]

@@ -80,7 +80,7 @@ router.post('/signup', (req: Request, res: Response) => {
 
 // Update Razorpay Keys Route
 router.post('/update-keys', (req: Request, res: Response) => {
-  const { email, rz_key_id, rz_key_secret, rz_webhook_secret, rz_account_id } = req.body;
+  const { email, key_id, key_secret, webhook_secret, account_id } = req.body;
   
   if (!email) {
     return res.status(400).json({ error: 'Email is required to identify the user.' });
@@ -98,10 +98,10 @@ router.post('/update-keys', (req: Request, res: Response) => {
     // Assign new keys to user record
     users[userIndex] = {
       ...users[userIndex],
-      rz_key_id: rz_key_id || '',
-      rz_key_secret: rz_key_secret || '',
-      rz_webhook_secret: rz_webhook_secret || '',
-      rz_account_id: rz_account_id || ''
+      key_id: key_id || '',
+      key_secret: key_secret || '',
+      webhook_secret: webhook_secret || '',
+      account_id: account_id || ''
     };
 
     fs.writeFileSync(USER_FILE, JSON.stringify(users, null, 2));
