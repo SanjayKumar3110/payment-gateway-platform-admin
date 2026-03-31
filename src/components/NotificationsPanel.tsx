@@ -23,58 +23,16 @@ interface Notification {
   hasAction?: boolean;
 }
 
-const mockNotifications: Notification[] = [
-  {
-    id: '1',
-    type: 'update',
-    user: { name: 'System' },
-    title: 'recent updates',
-    description: 'v1.0.2 has been deployed successfully.',
-    time: '36 mins ago',
-    read: false,
-  },
-  {
-    id: '2',
-    type: 'update',
-    user: { name: 'System' },
-    title: 'Server Maintenance',
-    description: 'Weekly backup completed at 100% success rate.',
-    time: '2 hours ago',
-    read: false,
-  },
-  {
-    id: '3',
-    type: 'setup',
-    user: { name: 'Admin', avatar: 'https://ui-avatars.com/api/?name=Admin&background=f3f4f6' },
-    title: 'setup completed',
-    description: 'Your payment gateway setup is fully configured.',
-    time: '3 hours ago',
-    read: true,
-    hasAction: true,
-  },
-  {
-    id: '4',
-    type: 'setup',
-    user: { name: 'Compliance' },
-    title: 'KYC Document Received',
-    description: 'Your verification document is under review.',
-    time: '1 day ago',
-    read: true,
-  },
-  {
-    id: '5',
-    type: 'update',
-    user: { name: 'System' },
-    title: 'Security Alert',
-    description: 'New login detected from Mumbai, India.',
-    time: '2 days ago',
-    read: true,
-  }
-];
+interface NotificationsPanelProps {
+  darkMode?: boolean;
+  notifications: Notification[];
+  onToggleRead: (id: string) => void;
+  onMarkAllRead: () => void;
+  onClearAll: () => void;
+}
 
-export function NotificationsPanel({ darkMode }: { darkMode?: boolean }) {
+export function NotificationsPanel({ darkMode, notifications, onToggleRead, onMarkAllRead, onClearAll }: NotificationsPanelProps) {
   const [activeFilter, setActiveFilter] = useState<'all' | 'unread' | 'archived'>('all');
-  const [notifications, setNotifications] = useState(mockNotifications);
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredNotifications = useMemo(() => {
@@ -96,17 +54,15 @@ export function NotificationsPanel({ darkMode }: { darkMode?: boolean }) {
   }, [notifications, activeFilter, searchQuery]);
 
   const markAllAsRead = () => {
-    setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+    onMarkAllRead();
   };
 
   const clearNotifications = () => {
-    setNotifications([]);
+    onClearAll();
   };
 
   const toggleRead = (id: string) => {
-    setNotifications(prev => prev.map(n => 
-      n.id === id ? { ...n, read: !n.read } : n
-    ));
+    onToggleRead(id);
   };
 
   const getIcon = (type: string) => {

@@ -1,0 +1,48 @@
+[
+  {
+    "id": "1",
+    "type": "update",
+    "user": { "name": "System" },
+    "title": "recent updates",
+    "description": "v1.0.2 has been deployed successfully.",
+    "time": "36 mins ago",
+    "read": false
+  },
+  {
+    "id": "2",
+    "type": "update",
+    "user": { "name": "System" },
+    "title": "Server Maintenance",
+    "description": "Weekly backup completed at 100% success rate.",
+    "time": "2 hours ago",
+    "read": false
+  },
+  {
+    "id": "3",
+    "type": "setup",
+    "user": { "name": "Admin", "avatar": "https://ui-avatars.com/api/?name=Admin&background=f3f4f6" },
+    "title": "setup completed",
+    "description": "Your payment gateway setup is fully configured.",
+    "time": "3 hours ago",
+    "read": true,
+    "hasAction": true
+  },
+  {
+    "id": "4",
+    "type": "setup",
+    "user": { "name": "Compliance" },
+    "title": "KYC Document Received",
+    "description": "Your verification document is under review.",
+    "time": "1 day ago",
+    "read": true
+  },
+  {
+    "id": "5",
+    "type": "update",
+    "user": { "name": "System" },
+    "title": "Security Alert",
+    "description": "New login detected from Mumbai, India.",
+    "time": "2 days ago",
+    "read": true
+  }
+]

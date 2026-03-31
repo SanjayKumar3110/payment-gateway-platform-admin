@@ -15,39 +15,19 @@ interface Notification {
   hasAction?: boolean;
 }
 
-const mockNotifications: Notification[] = [
-  {
-    id: '1',
-    type: 'update',
-    user: { name: 'System' },
-    title: 'recent updates',
-    description: 'v1.0.2 has been deployed successfully.',
-    time: '36 mins ago',
-    read: false,
-  },
-  {
-    id: '3',
-    type: 'setup',
-    user: { name: 'Admin', avatar: 'https://ui-avatars.com/api/?name=Admin&background=f3f4f6' },
-    title: 'setup completed',
-    description: 'Your payment gateway setup is fully configured.',
-    time: '3 hours ago',
-    read: true,
-    hasAction: true,
-  }
-];
-
 interface NotificationPanelProps {
   onClose: () => void;
   darkMode?: boolean;
+  notifications: Notification[];
+  onToggleRead: (id: string) => void;
+  onMarkAllRead: () => void;
 }
 
-export function NotificationPanel({ darkMode }: NotificationPanelProps) {
+export function NotificationPanel({ darkMode, notifications, onToggleRead, onMarkAllRead }: NotificationPanelProps) {
   const [activeTab, setActiveTab] = useState<'inbox' | 'archived'>('inbox');
-  const [notifications, setNotifications] = useState(mockNotifications);
 
   const markAllAsRead = () => {
-    setNotifications(notifications.map(n => ({ ...n, read: true })));
+    onMarkAllRead();
   };
 
   const getIcon = (type: string) => {
@@ -118,10 +98,11 @@ export function NotificationPanel({ darkMode }: NotificationPanelProps) {
         <Settings size={16} color="var(--text-secondary)" style={{ cursor: 'pointer' }} />
       </div>
 
-      {/* List */}
       <div style={{ zIndex: 11, maxHeight: '350px', overflowY: 'auto' }}>
         {notifications.map((notif) => (
-          <div key={notif.id} style={{ display: 'flex', gap: '12px', padding: '16px 20px', borderBottom: darkMode ? '1px solid rgba(255,255,255,0.04)' : '1px solid rgba(0,0,0,0.04)', position: 'relative', cursor: 'pointer', alignItems: 'flex-start' }}>
+          <div key={notif.id} 
+               onClick={() => onToggleRead(notif.id)}
+               style={{ display: 'flex', gap: '12px', padding: '16px 20px', borderBottom: darkMode ? '1px solid rgba(255,255,255,0.04)' : '1px solid rgba(0,0,0,0.04)', position: 'relative', cursor: 'pointer', alignItems: 'flex-start' }}>
             <div style={{ position: 'relative' }}>
               {notif.user?.avatar ? (
                 <img src={notif.user.avatar} style={{ width: '40px', height: '40px', borderRadius: '50%' }} alt="" />
