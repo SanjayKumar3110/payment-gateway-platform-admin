@@ -161,12 +161,16 @@ body {
   height: 18px;
 }
 
+.sep-line{
+  border-bottom: 1px solid var(--border);
+  padding: 8px;
+}
 .sidebar-bottom {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-top: auto;
-  padding-top: 20px;
+  padding-top: 8px;
   border-top: 1px solid var(--border);
 }
 

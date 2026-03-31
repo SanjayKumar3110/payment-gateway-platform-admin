@@ -3,7 +3,7 @@ import './App.css';
 import {
   LayoutDashboard, CreditCard, ListOrdered, FileText,
   Settings, Bell, Moon, Sun, Search,
-  Hexagon, LogOut, Menu, X,
+  Hexagon, LogOut, HelpCircle
 } from 'lucide-react';
 
 import { Payments } from './components/PaymentsPanel';
@@ -11,6 +11,8 @@ import { Dashboard } from './components/DashboardView';
 import { Analytics } from './components/AnalyticsPanel';
 import { Invoices } from './components/InvoicesPanel';
 import { SettingsPanel } from './components/SettingsPanel';
+import { NotificationPanel } from './components/NotificationPanel';
+import { SupportPanel } from './components/SupportPanel';
 import { LoginPage } from './Login/login';
 
 interface UserData {
@@ -22,18 +24,19 @@ interface UserData {
   role: string;
 }
 
-type Tab = 'dashboard' | 'analytics' | 'payments' | 'invoices' | 'settings';
+type Tab = 'dashboard' | 'analytics' | 'payments' | 'invoices' | 'settings' | 'Support';
 
 const PAGE_TITLES: Record<Tab, string> = {
   dashboard: 'Dashboard',
   analytics: 'Analytics',
   payments: 'Payments',
   invoices: 'Invoices',
-  settings: 'Settings'
+  settings: 'Settings',
+  Support: 'Support'
 };
 
 export default function App() {
-// 1. Check localStorage before defaulting to null
+  // 1. Check localStorage before defaulting to null
   const [token, setToken] = useState<string | null>(() => {
     return localStorage.getItem('payplatform_token');
   });
@@ -46,9 +49,11 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [darkMode, setDarkMode] = useState(true);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const menuRef = useRef<HTMLDivElement>(null);
+  const notifRef = useRef<HTMLDivElement>(null);
 
   // Close sidebar by default on small screens
   useEffect(() => {
@@ -64,6 +69,9 @@ export default function App() {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setShowProfileMenu(false);
       }
+      if (notifRef.current && !notifRef.current.contains(event.target as Node)) {
+        setShowNotifications(false);
+      }
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -71,13 +79,13 @@ export default function App() {
     };
   }, []);
 
-  
+
   // 3. Handle the Login/Signup Action
   const handleLogin = (_email: string, receivedToken: string, user: UserData) => {
     console.log("Login successful! Token received:", receivedToken);
     setToken(receivedToken);
     setUserData(user);
-    
+
     // Save both token and user data
     localStorage.setItem('payplatform_token', receivedToken);
     localStorage.setItem('payplatform_user', JSON.stringify(user));
@@ -87,9 +95,9 @@ export default function App() {
   const handleLogout = () => {
     setToken(null);
     setUserData(null);
-    setShowProfileMenu(false); 
-    setActiveTab('dashboard'); 
-    
+    setShowProfileMenu(false);
+    setActiveTab('dashboard');
+
     // Wipe token and user data from the browser
     localStorage.removeItem('payplatform_token');
     localStorage.removeItem('payplatform_user');
@@ -98,13 +106,6 @@ export default function App() {
   if (!token) {
     return <LoginPage onLogin={handleLogin} />;
   }
-  const navItems = [
-    { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-    { id: 'analytics', icon: CreditCard, label: 'Analytics' },
-    { id: 'payments', icon: ListOrdered, label: 'Payments' },
-    { id: 'invoices', icon: FileText, label: 'Invoices' },
-  ];
-
   return (
     <div className={`app-container${darkMode ? ' dark' : ''}`}>
       {/* Mobile sidebar backdrop */}
@@ -119,37 +120,89 @@ export default function App() {
           <span>PayPlatform</span>
         </div>
 
-        <nav className="sidebar-nav">
-          {navItems.map(item => (
+        <nav className="sidebar-nav" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div className='sep-line'>
+            <h3 style={{ fontSize: '11px', color: 'var(--text-secondary, #888)', padding: '1px 12px', marginBottom: '8px', fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase' }}>Main Menu</h3>
             <button
-              key={item.id}
-              className={`nav-btn ${activeTab === item.id ? 'active' : ''}`}
-              onClick={() => setActiveTab(item.id as Tab)}
+              style={{ fontSize: '14px'}}
+              className={`nav-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
+              onClick={() => setActiveTab('dashboard')}
             >
-              <item.icon className="icon" />
-              <span>{item.label}</span>
+              <LayoutDashboard className="icon" />
+              <span>Dashboard</span>
             </button>
-          ))}
+            <button
+              style={{ fontSize: '14px'}}
+              className={`nav-btn ${activeTab === 'analytics' ? 'active' : ''}`}
+              onClick={() => setActiveTab('analytics')}
+            >
+              <CreditCard className="icon" />
+              <span>Analytics</span>
+            </button>
+          </div>
+
+          <div className='sep-line'>
+            <h3 style={{ fontSize: '11px', color: 'var(--text-secondary, #888)', padding: '0 12px', marginBottom: '8px', fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase' }}>Transaction</h3>
+            <button
+              style={{ fontSize: '14px'}}
+              className={`nav-btn ${activeTab === 'payments' ? 'active' : ''}`}
+              onClick={() => setActiveTab('payments')}
+            >
+              <ListOrdered className="icon" />
+              <span>Payments</span>
+            </button>
+            <button
+              style={{ fontSize: '14px'}}
+              className={`nav-btn ${activeTab === 'invoices' ? 'active' : ''}`}
+              onClick={() => setActiveTab('invoices')}
+            >
+              <FileText className="icon" />
+              <span>Invoices</span>
+            </button>
+          </div>
+
+          <div>
+            <h3 style={{ fontSize: '11px', color: 'var(--text-secondary, #888)', padding: '0 12px', marginBottom: '8px', fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase' }}>General</h3>
+            <button className="nav-btn" style={{ fontSize: '14px'}} onClick={() => setShowNotifications(true)}>
+              <Bell className="icon" />
+              <span>Notifications</span>
+            </button>
+            {/* <button className={`nav-btn ${activeTab === 'Support' ? 'active' : ''}`} style={{ fontSize: '14px'}} onClick={() => setActiveTab('Support')}>
+              <MessageSquare className="icon" />
+              <span>Support</span>
+            </button> */}
+
+            <button
+              className="nav-btn"
+              style={{ fontSize: '14px'}}
+              title={darkMode ? 'Light Mode' : 'Dark Mode'}
+              onClick={() => setDarkMode(prev => !prev)}
+            >
+              {darkMode ? <Sun className="icon" /> : <Moon className="icon" />}
+              <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
+            </button>
+
+
+            <button 
+              className={`nav-btn ${activeTab === 'settings' ? 'active' : ''}`} onClick={() => setActiveTab('settings')}
+              style={{ fontSize: '14px'}}>
+              <Settings className="icon" />
+              <span>Settings</span>
+            </button>
+          </div>
         </nav>
 
         <div className="sidebar-bottom">
-          {/* Dark Mode Toggle — functional */}
-          <button
-            className="nav-btn"
-            title={darkMode ? 'Light Mode' : 'Dark Mode'}
-            onClick={() => setDarkMode(prev => !prev)}
-          >
-            {darkMode ? <Sun className="icon" /> : <Moon className="icon" />}
-            <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
+          <button className={`nav-btn ${activeTab === 'Support' ? 'active' : ''}`} style={{ fontSize: '14px'}}
+          onClick={() => setActiveTab('Support')}>
+            <HelpCircle className="icon" />
+            <span>Support</span>
           </button>
-          <button className="nav-btn" title="Settings" onClick={() => setActiveTab('settings')}>
-            <Settings className="icon" />
-            <span>Setting</span>
-          </button>
-          <button className="nav-btn" style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 12px', margin: 0, color: '#FF4444', border: 'none', backgroundColor: 'transparent', cursor: 'pointer' }} 
-          onClick={() => handleLogout()}>
+          <button className="nav-btn" style={{ fontSize: '14px',width: '100%', justifyContent: 'flex-start', padding: '10px 12px', margin: 0, color: '#FF4444', border: 'none', backgroundColor: 'transparent', cursor: 'pointer' }}
+            
+            onClick={() => handleLogout()}>
             <LogOut className="icon" size={16} color="#FF4444" />
-            <span color='#FF4444'>Sign Out</span>
+            <span style={{ color: '#FF4444' }}>Logout</span>
           </button>
         </div>
       </aside>
@@ -159,10 +212,6 @@ export default function App() {
 
         {/* Topbar */}
         <header className="topbar">
-          {/* Hamburger — visible on mobile */}
-          <button className="hamburger-btn" onClick={() => setSidebarOpen(prev => !prev)}>
-            {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
           <h1 className="page-title">{PAGE_TITLES[activeTab]}</h1>
 
           <div className="top-search-container">
@@ -174,7 +223,15 @@ export default function App() {
 
           <div className="top-actions">
             {/* <button className="btn-create">Create</button> */}
-            <button className="icon-btn-circle"><Bell size={18} /></button>
+            <div style={{ position: 'relative' }} ref={notifRef}>
+              <button className="icon-btn-circle" onClick={() => setShowNotifications(!showNotifications)}>
+                <Bell size={18} />
+                <div style={{ position: 'absolute', top: 5, right: 5, width: 8, height: 8, backgroundColor: '#FF4444', borderRadius: '50%' }} />
+              </button>
+              {showNotifications && (
+                <NotificationPanel onClose={() => setShowNotifications(false)} darkMode={darkMode} />
+              )}
+            </div>
             {/* <button className="icon-btn-circle"><MessageSquare size={18} /></button> */}
             <div className="avatar-container" style={{ position: 'relative' }} ref={menuRef}>
               <div className="avatar" onClick={() => setShowProfileMenu(!showProfileMenu)} style={{ cursor: 'pointer' }}>
@@ -216,8 +273,8 @@ export default function App() {
                     <span>Settings</span>
                   </button>
 
-                  <button className="nav-btn" style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 12px', margin: 0, color: '#FF4444', border: 'none', backgroundColor: 'transparent', cursor: 'pointer' }} 
-                  onClick={() => { handleLogout()}}>
+                  <button className="nav-btn" style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 12px', margin: 0, color: '#FF4444', border: 'none', backgroundColor: 'transparent', cursor: 'pointer' }}
+                    onClick={() => { handleLogout() }}>
                     <LogOut className="icon" size={16} color="#FF4444" />
                     <span>Sign Out</span>
                   </button>
@@ -236,6 +293,7 @@ export default function App() {
           {activeTab === 'payments' && <Payments />}
           {activeTab === 'invoices' && <Invoices />}
           {activeTab === 'settings' && <SettingsPanel userData={userData} />}
+          {activeTab === 'Support' && <SupportPanel darkMode={darkMode} />}
         </main>
 
       </div>
