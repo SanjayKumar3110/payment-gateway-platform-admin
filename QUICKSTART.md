@@ -63,13 +63,7 @@ Once the payment is simulated, you can verify it across the platform:
 When you are ready for real payments:
 1. Get your **Key ID** and **Key Secret** from the [Razorpay Dashboard](https://dashboard.razorpay.com/app/keys).
 2. Update them in the **Settings** panel of this app.
-3. The system will automatically switch from "Demo Mode" to real Razorpay processing.
-
----
-
-## 🛑 Stopping Local Hosts Safely
-
-Sometimes, background processes (such as Node.js ports like 5000 or 5173) can remain active even if you close the terminal window or experience a crash (`EADDRINUSE` error). It is best practice to end these processes safely.
+3. The system will automatically switch from "Demo Mod
 
 **Windows (PowerShell):**
 ```powershell
@@ -86,4 +80,4 @@ kill -9 $(lsof -t -i:5173)
 **Quick Tip:** By running these commands, you free up the ports so they can be securely used again the next time you start the server. You should also make sure to use `Ctrl + C` in the terminal to gracefully stop the current processes before closing the window.
 
 ---
-*Created by Antigravity - Your Agentic Coding Assistant*
+*Created by Antigravity - Your Agentic Coding Assistant*

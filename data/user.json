@@ -18,5 +18,14 @@
     "key_secret": "my_super_secret_123",
     "webhook_secret": "DEMO",
     "account_id": "DEMO"
+  },
+  {
+    "id": "USR-3108",
+    "email": "test@test.com",
+    "password": "password",
+    "name": "Admin",
+    "businessName": "",
+    "phone": "",
+    "role": "client"
   }
 ]

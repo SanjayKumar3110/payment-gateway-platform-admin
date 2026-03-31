@@ -163,14 +163,17 @@ body {
 
 .sep-line{
   border-bottom: 1px solid var(--border);
-  padding: 8px;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 .sidebar-bottom {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
   margin-top: auto;
-  padding-top: 8px;
+  padding: 8px;
   border-top: 1px solid var(--border);
 }
 

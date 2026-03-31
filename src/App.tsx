@@ -12,6 +12,7 @@ import { Analytics } from './components/AnalyticsPanel';
 import { Invoices } from './components/InvoicesPanel';
 import { SettingsPanel } from './components/SettingsPanel';
 import { NotificationPanel } from './components/NotificationPanel';
+import { NotificationsPanel } from './components/NotificationsPanel';
 import { SupportPanel } from './components/SupportPanel';
 import { LoginPage } from './Login/login';
 
@@ -24,7 +25,7 @@ interface UserData {
   role: string;
 }
 
-type Tab = 'dashboard' | 'analytics' | 'payments' | 'invoices' | 'settings' | 'Support';
+type Tab = 'dashboard' | 'analytics' | 'payments' | 'invoices' | 'settings' | 'Support' | 'notifications';
 
 const PAGE_TITLES: Record<Tab, string> = {
   dashboard: 'Dashboard',
@@ -32,7 +33,8 @@ const PAGE_TITLES: Record<Tab, string> = {
   payments: 'Payments',
   invoices: 'Invoices',
   settings: 'Settings',
-  Support: 'Support'
+  Support: 'Support',
+  notifications: 'Notifications'
 };
 
 export default function App() {
@@ -161,9 +163,13 @@ export default function App() {
             </button>
           </div>
 
-          <div>
+          <div className='sep-line'>
             <h3 style={{ fontSize: '11px', color: 'var(--text-secondary, #888)', padding: '0 12px', marginBottom: '8px', fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase' }}>General</h3>
-            <button className="nav-btn" style={{ fontSize: '14px'}} onClick={() => setShowNotifications(true)}>
+            <button 
+              className={`nav-btn ${activeTab === 'notifications' ? 'active' : ''}`} 
+              style={{ fontSize: '14px'}} 
+              onClick={() => setActiveTab('notifications')}
+            >
               <Bell className="icon" />
               <span>Notifications</span>
             </button>
@@ -294,6 +300,7 @@ export default function App() {
           {activeTab === 'invoices' && <Invoices />}
           {activeTab === 'settings' && <SettingsPanel userData={userData} />}
           {activeTab === 'Support' && <SupportPanel darkMode={darkMode} />}
+          {activeTab === 'notifications' && <NotificationsPanel darkMode={darkMode} />}
         </main>
 
       </div>

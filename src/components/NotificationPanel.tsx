@@ -121,7 +121,7 @@ export function NotificationPanel({ darkMode }: NotificationPanelProps) {
       {/* List */}
       <div style={{ zIndex: 11, maxHeight: '350px', overflowY: 'auto' }}>
         {notifications.map((notif) => (
-          <div key={notif.id} style={{ display: 'flex', gap: '12px', padding: '16px 20px', borderBottom: darkMode ? '1px solid rgba(255,255,255,0.04)' : '1px solid rgba(0,0,0,0.04)', position: 'relative', cursor: 'pointer' }}>
+          <div key={notif.id} style={{ display: 'flex', gap: '12px', padding: '16px 20px', borderBottom: darkMode ? '1px solid rgba(255,255,255,0.04)' : '1px solid rgba(0,0,0,0.04)', position: 'relative', cursor: 'pointer', alignItems: 'flex-start' }}>
             <div style={{ position: 'relative' }}>
               {notif.user?.avatar ? (
                 <img src={notif.user.avatar} style={{ width: '40px', height: '40px', borderRadius: '50%' }} alt="" />
@@ -130,8 +130,8 @@ export function NotificationPanel({ darkMode }: NotificationPanelProps) {
                   {getIcon(notif.type)}
                 </div>
               )}
-              {notif.type === 'update' && <div style={{ position: 'absolute', bottom: -2, right: -2, width: '12px', height: '12px', borderRadius: '50%', background: '#8b5cf6', border: darkMode ? '2px solid #14141c' : '2px solid #ffffff' }} />}
-              {notif.type === 'setup' && <div style={{ position: 'absolute', bottom: -2, right: -2, width: '12px', height: '12px', borderRadius: '50%', background: '#10b981', border: darkMode ? '2px solid #14141c' : '2px solid #ffffff' }} />}
+              {notif.type === 'update' && <div style={{ position: 'absolute', bottom: 1, right: 1, width: '11px', height: '11px', borderRadius: '50%', background: '#8b5cf6', border: darkMode ? '2px solid #14141c' : '2px solid #ffffff', boxShadow: '0 1px 2px rgba(0,0,0,0.1)' }} />}
+              {notif.type === 'setup' && <div style={{ position: 'absolute', bottom: 1, right: 1, width: '11px', height: '11px', borderRadius: '50%', background: '#10b981', border: darkMode ? '2px solid #14141c' : '2px solid #ffffff', boxShadow: '0 1px 2px rgba(0,0,0,0.1)' }} />}
             </div>
 
             <div style={{ flex: 1, paddingRight: '16px' }}>
