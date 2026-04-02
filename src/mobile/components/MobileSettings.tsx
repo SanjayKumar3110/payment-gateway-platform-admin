@@ -48,8 +48,25 @@ export const MobileSettings: React.FC<MobileSettingsProps> = ({
             </div>
             <span style={{ fontWeight: 700, fontSize: '15px' }}>Dark Mode</span>
           </div>
-          <div style={{ width: '48px', height: '24px', borderRadius: '20px', background: darkMode ? 'var(--accent)' : 'var(--border)', position: 'relative', transition: '0.3s' }}>
-            <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: 'white', position: 'absolute', top: '2px', left: darkMode ? '26px' : '2px', transition: '0.3s' }} />
+          <div style={{ 
+            width: '48px', 
+            height: '24px', 
+            borderRadius: '20px', 
+            background: darkMode ? 'var(--accent)' : 'rgba(0,0,0,0.1)', 
+            position: 'relative', 
+            transition: '0.3s' 
+          }}>
+            <div style={{ 
+              width: '18px', 
+              height: '18px', 
+              borderRadius: '50%', 
+              background: 'white', 
+              position: 'absolute', 
+              top: '3px', 
+              left: darkMode ? '27px' : '3px', 
+              transition: '0.3s',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            }} />
           </div>
         </div>
 
