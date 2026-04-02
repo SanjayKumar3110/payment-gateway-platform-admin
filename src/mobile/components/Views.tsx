@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import type { PaymentItem } from '../../shared/types';
-import { getStatusBadge, getMethodIcon } from '../../components/utils/PaymentUtils.tsx';
+import { getMethodIcon } from '../../components/utils/PaymentUtils.tsx';
 
 interface MobileDashboardProps {
   stats: {

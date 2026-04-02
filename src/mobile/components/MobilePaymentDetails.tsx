@@ -1,16 +1,6 @@
 import React from 'react';
-import { X, Copy, ExternalLink, Calendar, ShieldCheck, CreditCard, Hash } from 'lucide-react';
+import { X, Copy, Calendar, ShieldCheck, CreditCard, Hash, Download, MessageCircle } from 'lucide-react';
 
-import { 
-  X, 
-  Copy, 
-  Calendar, 
-  ShieldCheck, 
-  CreditCard,
-  Hash,
-  Download,
-  MessageCircle
-} from 'lucide-react';
 import { motion } from 'framer-motion';
 import type { PaymentItem } from '../../shared/types';
 import { getStatusBadge, getMethodIcon } from '../../components/utils/PaymentUtils.tsx';
@@ -22,14 +12,14 @@ interface MobilePaymentDetailsProps {
 
 export const MobilePaymentDetails: React.FC<MobilePaymentDetailsProps> = ({ payment, onClose }) => {
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="mobile-modal-overlay" 
+      className="mobile-modal-overlay"
       onClick={onClose}
     >
-      <motion.div 
+      <motion.div
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
@@ -40,20 +30,20 @@ export const MobilePaymentDetails: React.FC<MobilePaymentDetailsProps> = ({ paym
         onDragEnd={(_, info) => {
           if (info.offset.y > 100) onClose();
         }}
-        className="mobile-bottom-sheet" 
+        className="mobile-bottom-sheet"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="sheet-handle" />
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
           <h3 style={{ fontSize: '22px', fontWeight: 900, margin: 0, letterSpacing: '-0.5px' }}>Transaction details</h3>
-          <button 
-            onClick={onClose} 
-            style={{ 
-              background: 'var(--accent-soft)', 
-              border: 'none', 
-              borderRadius: '14px', 
-              padding: '10px', 
+          <button
+            onClick={onClose}
+            style={{
+              background: 'var(--accent-soft)',
+              border: 'none',
+              borderRadius: '14px',
+              padding: '10px',
               cursor: 'pointer',
               color: 'var(--accent)'
             }}
@@ -62,19 +52,14 @@ export const MobilePaymentDetails: React.FC<MobilePaymentDetailsProps> = ({ paym
           </button>
         </div>
 
-        <div style={{ textAlign: 'center', padding: '10px 0 30px' }}>
-          <div style={{
-            width: '64px', height: '64px', borderRadius: '20px',
-            backgroundColor: 'var(--accent-soft)', margin: '0 auto 16px',
-            display: 'flex', alignItems: 'center', justifyContent: 'center'
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.1 }}
           style={{ textAlign: 'center', padding: '10px 0 32px' }}
         >
-          <div style={{ 
-            width: '72px', height: '72px', borderRadius: '24px', 
+          <div style={{
+            width: '72px', height: '72px', borderRadius: '24px',
             backgroundColor: 'var(--accent-soft)', margin: '0 auto 20px',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             boxShadow: '0 8px 16px var(--accent-soft)'
@@ -96,14 +81,9 @@ export const MobilePaymentDetails: React.FC<MobilePaymentDetailsProps> = ({ paym
           <DetailRow label="Security status" value="Verified & Encrypted" icon={<ShieldCheck size={14} />} success />
         </div>
 
-        <div style={{ marginTop: '20px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-          <button style={{
-            padding: '14px', borderRadius: '14px', border: '1.5px solid var(--border)',
-            background: 'var(--surface)', fontWeight: 700, fontSize: '14px', color: 'var(--text-primary)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'
         <div style={{ marginTop: '24px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-          <button style={{ 
-            padding: '16px', borderRadius: '20px', border: '1px solid var(--border)', 
+          <button style={{
+            padding: '16px', borderRadius: '20px', border: '1px solid var(--border)',
             background: 'var(--surface-solid)', fontWeight: 800, fontSize: '15px', color: 'var(--text-primary)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
             boxShadow: 'var(--shadow-sm)'
@@ -111,12 +91,9 @@ export const MobilePaymentDetails: React.FC<MobilePaymentDetailsProps> = ({ paym
             <Download size={18} />
             E-Receipt
           </button>
+
           <button style={{
-            padding: '14px', borderRadius: '14px', border: 'none',
-            background: 'var(--accent)', fontWeight: 700, fontSize: '14px', color: 'white'
-          }}>
-          <button style={{ 
-            padding: '16px', borderRadius: '20px', border: 'none', 
+            padding: '16px', borderRadius: '20px', border: 'none',
             background: 'var(--accent-gradient)', fontWeight: 800, fontSize: '15px', color: 'white',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
             boxShadow: '0 10px 20px var(--accent-soft)'
@@ -146,9 +123,9 @@ const DetailRow: React.FC<DetailRowProps> = ({ label, value, icon, mono, copyabl
       <span>{label}</span>
     </div>
     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-      <span style={{ 
-        fontWeight: 700, 
-        fontSize: '14px', 
+      <span style={{
+        fontWeight: 700,
+        fontSize: '14px',
         fontFamily: mono ? 'monospace' : 'inherit',
         color: success ? '#10B981' : 'var(--text-primary)'
       }}>{value}</span>

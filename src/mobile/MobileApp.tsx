@@ -1,23 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './MobileApp.css';
-import { 
-  MobileHeader
-} from './components/Navigation';
-import { 
-  MobileDashboard, 
-  MobilePaymentList 
-} from './components/Views';
+import { MobileHeader } from './components/Navigation';
+import { MobileDashboard, MobilePaymentList } from './components/Views';
 import { MobileNotifications } from './components/MobileNotifications';
 import { MobileSettings } from './components/MobileSettings';
 import { MobilePaymentDetails } from './components/MobilePaymentDetails';
 import { LoginPage } from '../Login/login';
-import type { 
-  UserData, 
-  Notification, 
-  AppTab, 
-  PaymentItem 
-} from '../shared/types';
+import type { UserData, Notification, AppTab, PaymentItem } from '../shared/types';
 import NOTIFICATIONS_DATA from '../../data/notifications.json';
 import PAYMENTS_DATA from '../../data/payments.json';
 
