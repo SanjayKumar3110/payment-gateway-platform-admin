@@ -139,6 +139,18 @@ body {
   font-weight: 500;
   transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
   width: 100%;
+  position: relative;
+  overflow: visible;
+}
+
+.nav-btn .icon {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s ease;
+}
+
+.nav-btn:hover .icon {
+  transform: scale(1.15);
 }
 
 .nav-btn:hover {
@@ -154,6 +166,20 @@ body {
   background-color: var(--border);
   color: var(--text-primary);
   font-weight: 600;
+  box-shadow: 0 0 15px rgba(79, 70, 229, 0.15);
+}
+
+.nav-btn.active::before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 20px;
+  background: #4F46E5;
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 0 10px #4F46E5;
 }
 
 .nav-btn .icon {
@@ -175,6 +201,28 @@ body {
   margin-top: auto;
   padding: 8px;
   border-top: 1px solid var(--border);
+}
+
+.nav-badge {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background-color: #FF4444;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(255, 68, 68, 0.4);
+  animation: badge-pulse 2s infinite;
+}
+
+@keyframes badge-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }
 
 /* Main Area */
