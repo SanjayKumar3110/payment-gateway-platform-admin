@@ -6,7 +6,7 @@ import './css/components.css';
 
 import dashboardData from '@data/dashboard.json';
 import PAYMENTS_DATA from '@data/payments.json';
-import { getStatusBadge, getMethodIcon } from './utils/utils.tsx';
+import { getStatusBadge, getMethodIcon } from './utils/PaymentUtils.tsx';
 
 const { pieData, barData, pieColors: PIE_COLORS } = dashboardData;
 
@@ -37,7 +37,7 @@ export function Dashboard({ showMorePayments }: DashboardProps) {
 
     // Establish WebSocket Connection
     const socket = io('http://localhost:5000');
-    
+
     socket.on('newPayment', (payment) => {
       setRealPayments(prev => [payment, ...prev]);
     });

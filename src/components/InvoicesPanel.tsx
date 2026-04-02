@@ -3,7 +3,7 @@ import { Calendar, Filter, ChevronDown, Download, ChevronLeft, ChevronRight } fr
 // import { BarChart, Bar, XAxis, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
 import INVOICE_DATA from '@data/invoices.json';
 import './css/components.css';
-import InvoiceChart from './utils/InvoiceChart';
+import InvoiceChart from './utils/InvoiceUtils';
 
 const { invoices } = INVOICE_DATA;
 

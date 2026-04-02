@@ -6,6 +6,7 @@ import {
   Hexagon, LogOut, HelpCircle
 } from 'lucide-react';
 
+import { LoginPage } from './Login/login';
 import { Payments } from './components/PaymentsPanel';
 import { Dashboard } from './components/DashboardView';
 import { Analytics } from './components/AnalyticsPanel';
@@ -14,8 +15,7 @@ import { SettingsPanel } from './components/SettingsPanel';
 import { NotifyWindow } from './components/NotificationWindow';
 import { NotificationsPanel } from './components/NotificationsPanel';
 import { SupportPanel } from './components/SupportPanel';
-import { LoginPage } from './Login/login';
-import NOTIFICATIONS_DATA from '../data/notifications.json';
+import { useNotifications } from './components/utils/NotifyUtils';
 
 interface UserData {
   id: string;
@@ -24,20 +24,6 @@ interface UserData {
   businessName?: string;
   phone?: string;
   role: string;
-}
-
-export interface Notification {
-  id: string;
-  type: 'update' | 'setup';
-  title: string;
-  description: string;
-  time: string;
-  read: boolean;
-  user?: {
-    name: string;
-    avatar?: string;
-  };
-  hasAction?: boolean;
 }
 
 type Tab = 'dashboard' | 'analytics' | 'payments' | 'invoices' | 'settings' | 'Support' | 'notifications';
@@ -68,21 +54,13 @@ export default function App() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [notifications, setNotifications] = useState<Notification[]>(NOTIFICATIONS_DATA as Notification[]);
-
-  const unreadCount = notifications.filter(n => !n.read).length;
-
-  const toggleNotificationRead = (id: string) => {
-    setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: !n.read } : n));
-  };
-
-  const markAllNotificationsRead = () => {
-    setNotifications(prev => prev.map(n => ({ ...n, read: true })));
-  };
-
-  const clearNotifications = () => {
-    setNotifications([]);
-  };
+  const {
+    notifications,
+    unreadCount,
+    toggleNotificationRead,
+    markAllNotificationsRead,
+    clearNotifications
+  } = useNotifications();
 
   const menuRef = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
@@ -195,9 +173,9 @@ export default function App() {
 
           <div>
             <h3 style={{ fontSize: '11px', color: 'var(--text-secondary, #888)', padding: '0 12px', marginBottom: '8px', fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase' }}>General</h3>
-            <button 
-              className={`nav-btn ${activeTab === 'notifications' ? 'active' : ''}`} 
-              style={{ fontSize: '14px', position: 'relative' }} 
+            <button
+              className={`nav-btn ${activeTab === 'notifications' ? 'active' : ''}`}
+              style={{ fontSize: '14px', position: 'relative' }}
               onClick={() => setActiveTab('notifications')}
             >
               <Bell className="icon" />
@@ -214,7 +192,6 @@ export default function App() {
               {darkMode ? <Sun className="icon" /> : <Moon className="icon" />}
               <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
             </button>
-
 
             <button
               className={`nav-btn ${activeTab === 'settings' ? 'active' : ''}`} onClick={() => setActiveTab('settings')}
@@ -262,12 +239,13 @@ export default function App() {
                 <div style={{ position: 'absolute', top: 5, right: 5, width: 8, height: 8, backgroundColor: '#FF4444', borderRadius: '50%' }} />
               </button>
               {showNotifications && (
-                <NotificationPanel 
-                  onClose={() => setShowNotifications(false)} 
-                  darkMode={darkMode} 
+                <NotifyWindow
+                  onClose={() => setShowNotifications(false)}
+                  darkMode={darkMode}
                   notifications={notifications}
                   onToggleRead={toggleNotificationRead}
                   onMarkAllRead={markAllNotificationsRead}
+                  onNavigate={(tab) => { setActiveTab(tab as any); setShowNotifications(false); }}
                 />
               )}
             </div>
@@ -334,8 +312,8 @@ export default function App() {
           {activeTab === 'settings' && <SettingsPanel userData={userData} />}
           {activeTab === 'Support' && <SupportPanel darkMode={darkMode} />}
           {activeTab === 'notifications' && (
-            <NotificationsPanel 
-              darkMode={darkMode} 
+            <NotificationsPanel
+              darkMode={darkMode}
               notifications={notifications}
               onToggleRead={toggleNotificationRead}
               onMarkAllRead={markAllNotificationsRead}

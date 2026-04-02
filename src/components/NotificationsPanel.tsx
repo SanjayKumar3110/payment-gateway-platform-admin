@@ -1,13 +1,5 @@
 import { useState, useMemo } from 'react';
-import { 
-  Bell, 
-  Search, 
-  CheckCircle2, 
-  ArrowUpCircle, 
-  Trash2, 
-  MoreVertical,
-  Check
-} from 'lucide-react';
+import { Bell, Search, CheckCircle2, ArrowUpCircle, Trash2, MoreVertical, Check } from 'lucide-react';
 
 interface Notification {
   id: string;
@@ -37,15 +29,15 @@ export function NotificationsPanel({ darkMode, notifications, onToggleRead, onMa
 
   const filteredNotifications = useMemo(() => {
     let result = [...notifications];
-    
+
     if (activeFilter === 'unread') {
       result = result.filter(n => !n.read);
     }
-    
+
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
-      result = result.filter(n => 
-        n.title.toLowerCase().includes(q) || 
+      result = result.filter(n =>
+        n.title.toLowerCase().includes(q) ||
         n.description.toLowerCase().includes(q)
       );
     }
@@ -74,13 +66,13 @@ export function NotificationsPanel({ darkMode, notifications, onToggleRead, onMa
   };
 
   return (
-    <div className="base-card" style={{ 
-      minHeight: '100%', 
-      display: 'flex', 
+    <div className="base-card" style={{
+      minHeight: '100%',
+      display: 'flex',
       flexDirection: 'column',
       padding: '32px'
     }}>
-      
+
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
         <div>
@@ -88,24 +80,24 @@ export function NotificationsPanel({ darkMode, notifications, onToggleRead, onMa
           <p style={{ fontSize: '14px', color: 'var(--text-secondary)', marginTop: '4px' }}>Stay updated with system activities and security alerts.</p>
         </div>
         <div style={{ display: 'flex', gap: '12px' }}>
-          <button 
+          <button
             onClick={markAllAsRead}
-            style={{ 
-              display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', 
-              backgroundColor: 'var(--surface)', border: '1px solid var(--border)', 
-              borderRadius: '8px', color: 'var(--text-primary)', fontSize: '14px', 
-              fontWeight: 500, cursor: 'pointer' 
+            style={{
+              display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px',
+              backgroundColor: 'var(--surface)', border: '1px solid var(--border)',
+              borderRadius: '8px', color: 'var(--text-primary)', fontSize: '14px',
+              fontWeight: 500, cursor: 'pointer'
             }}
           >
             <Check size={16} /> Mark all as read
           </button>
-          <button 
+          <button
             onClick={clearNotifications}
-            style={{ 
-              display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', 
-              backgroundColor: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', 
-              borderRadius: '8px', color: '#ef4444', fontSize: '14px', 
-              fontWeight: 500, cursor: 'pointer' 
+            style={{
+              display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px',
+              backgroundColor: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)',
+              borderRadius: '8px', color: '#ef4444', fontSize: '14px',
+              fontWeight: 500, cursor: 'pointer'
             }}
           >
             <Trash2 size={16} /> Clear list
@@ -116,7 +108,7 @@ export function NotificationsPanel({ darkMode, notifications, onToggleRead, onMa
       {/* Filters & Search */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
         <div style={{ display: 'flex', gap: '8px', backgroundColor: 'var(--surface)', padding: '4px', borderRadius: '10px', border: '1px solid var(--border)' }}>
-          {['all', 'unread', 'archived'].map((f) => (
+          {['all', 'unread'].map((f) => (
             <button
               key={f}
               onClick={() => setActiveFilter(f as any)}
@@ -140,10 +132,10 @@ export function NotificationsPanel({ darkMode, notifications, onToggleRead, onMa
             placeholder="Search notifications..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            style={{ 
-              width: '100%', padding: '10px 12px 10px 40px', 
-              backgroundColor: 'var(--surface)', border: '1px solid var(--border)', 
-              borderRadius: '10px', fontSize: '14px', color: 'var(--text-primary)', outline: 'none' 
+            style={{
+              width: '100%', padding: '10px 12px 10px 40px',
+              backgroundColor: 'var(--surface)', border: '1px solid var(--border)',
+              borderRadius: '10px', fontSize: '14px', color: 'var(--text-primary)', outline: 'none'
             }}
           />
         </div>
@@ -160,11 +152,11 @@ export function NotificationsPanel({ darkMode, notifications, onToggleRead, onMa
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', background: 'var(--border)', borderRadius: '12px', overflow: 'hidden' }}>
             {filteredNotifications.map((notif) => (
-              <div 
-                key={notif.id} 
+              <div
+                key={notif.id}
                 onClick={() => toggleRead(notif.id)}
-                style={{ 
-                  display: 'flex', gap: '16px', padding: '20px 24px', 
+                style={{
+                  display: 'flex', gap: '16px', padding: '20px 24px',
                   backgroundColor: notif.read ? 'var(--surface)' : (darkMode ? 'rgba(99, 102, 241, 0.05)' : 'rgba(99, 102, 241, 0.02)'),
                   transition: 'all 0.2s', cursor: 'pointer', position: 'relative',
                   alignItems: 'flex-start'
@@ -185,9 +177,9 @@ export function NotificationsPanel({ darkMode, notifications, onToggleRead, onMa
                       {getIcon(notif.type)}
                     </div>
                   )}
-                  <div style={{ 
-                    position: 'absolute', bottom: 1, right: 1, width: '13px', height: '13px', 
-                    borderRadius: '50%', background: notif.type === 'update' ? '#8b5cf6' : '#10b981', 
+                  <div style={{
+                    position: 'absolute', bottom: 1, right: 1, width: '13px', height: '13px',
+                    borderRadius: '50%', background: notif.type === 'update' ? '#8b5cf6' : '#10b981',
                     border: darkMode ? '2px solid #1a1a24' : '2px solid #ffffff',
                     boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
                   }} />
@@ -208,15 +200,15 @@ export function NotificationsPanel({ darkMode, notifications, onToggleRead, onMa
 
                   {notif.hasAction && (
                     <div style={{ display: 'flex', gap: '10px', marginTop: '16px' }}>
-                      <button style={{ 
-                        padding: '8px 20px', borderRadius: '8px', border: '1px solid var(--border)', 
-                        background: 'transparent', color: 'var(--text-primary)', fontSize: '13px', 
-                        fontWeight: 600, cursor: 'pointer' 
+                      <button style={{
+                        padding: '8px 20px', borderRadius: '8px', border: '1px solid var(--border)',
+                        background: 'transparent', color: 'var(--text-primary)', fontSize: '13px',
+                        fontWeight: 600, cursor: 'pointer'
                       }}>Ignore</button>
-                      <button style={{ 
-                        padding: '8px 20px', borderRadius: '8px', border: 'none', 
-                        background: '#8b5cf6', color: '#ffffff', fontSize: '13px', 
-                        fontWeight: 600, cursor: 'pointer' 
+                      <button style={{
+                        padding: '8px 20px', borderRadius: '8px', border: 'none',
+                        background: '#8b5cf6', color: '#ffffff', fontSize: '13px',
+                        fontWeight: 600, cursor: 'pointer'
                       }}>Review</button>
                     </div>
                   )}

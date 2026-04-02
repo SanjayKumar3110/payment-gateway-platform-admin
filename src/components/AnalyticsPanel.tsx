@@ -4,7 +4,7 @@ import {
   AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, LineChart, Line
 } from 'recharts';
 
-import InvoiceChart from './utils/InvoiceChart';
+import InvoiceChart from './utils/InvoiceUtils';
 
 import DASHBOARD_DATA from '@data/dashboard.json';
 import PAYMENTS_DATA from '@data/payments.json';

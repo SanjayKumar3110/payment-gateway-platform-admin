@@ -1,11 +1,11 @@
 import React from 'react';
-import { 
-  TrendingUp, 
-  CheckCircle2, 
+import {
+  TrendingUp,
+  CheckCircle2,
   Clock
 } from 'lucide-react';
 import type { PaymentItem } from '../../shared/types';
-import { getStatusBadge, getMethodIcon } from '../../components/utils/utils.tsx';
+import { getStatusBadge, getMethodIcon } from '../../components/utils/PaymentUtils.tsx';
 
 interface MobileDashboardProps {
   stats: {
@@ -85,7 +85,7 @@ export const MobilePaymentList: React.FC<MobilePaymentListProps> = ({ payments, 
 
       <div className="filter-container">
         {filterOptions.map(opt => (
-          <button 
+          <button
             key={opt}
             className={`filter-pill ${filter === opt ? 'active' : ''}`}
             onClick={() => setFilter(opt)}
@@ -94,20 +94,20 @@ export const MobilePaymentList: React.FC<MobilePaymentListProps> = ({ payments, 
           </button>
         ))}
       </div>
-      
+
       {filteredPayments.map((payment) => (
-        <div 
-          key={payment.id} 
-          className="mobile-card" 
+        <div
+          key={payment.id}
+          className="mobile-card"
           style={{ padding: '16px', marginBottom: '12px', cursor: 'pointer' }}
           onClick={() => onViewDetails(payment.id)}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <div style={{ display: 'flex', gap: '12px' }}>
-              <div style={{ 
-                width: '44px', height: '44px', borderRadius: '12px', 
-                backgroundColor: 'var(--accent-soft)', 
-                display: 'flex', alignItems: 'center', justifyContent: 'center' 
+              <div style={{
+                width: '44px', height: '44px', borderRadius: '12px',
+                backgroundColor: 'var(--accent-soft)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center'
               }}>
                 {getMethodIcon(payment.iconType)}
               </div>

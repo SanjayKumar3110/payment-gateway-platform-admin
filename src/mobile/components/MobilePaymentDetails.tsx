@@ -1,15 +1,8 @@
 import React from 'react';
-import { 
-  X, 
-  Copy, 
-  ExternalLink, 
-  Calendar, 
-  ShieldCheck, 
-  CreditCard,
-  Hash
-} from 'lucide-react';
+import { X, Copy, ExternalLink, Calendar, ShieldCheck, CreditCard, Hash } from 'lucide-react';
+
 import type { PaymentItem } from '../../shared/types';
-import { getStatusBadge, getMethodIcon } from '../../components/utils/utils.tsx';
+import { getStatusBadge, getMethodIcon } from '../../components/utils/PaymentUtils.tsx';
 
 interface MobilePaymentDetailsProps {
   payment: PaymentItem;
@@ -21,7 +14,7 @@ export const MobilePaymentDetails: React.FC<MobilePaymentDetailsProps> = ({ paym
     <div className="mobile-modal-overlay" onClick={onClose}>
       <div className="mobile-bottom-sheet" onClick={(e) => e.stopPropagation()}>
         <div className="sheet-handle" />
-        
+
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
           <h3 style={{ fontSize: '20px', fontWeight: 800, margin: 0 }}>Payment Details</h3>
           <button onClick={onClose} style={{ background: 'var(--border)', border: 'none', borderRadius: '50%', padding: '6px', cursor: 'pointer' }}>
@@ -30,8 +23,8 @@ export const MobilePaymentDetails: React.FC<MobilePaymentDetailsProps> = ({ paym
         </div>
 
         <div style={{ textAlign: 'center', padding: '10px 0 30px' }}>
-          <div style={{ 
-            width: '64px', height: '64px', borderRadius: '20px', 
+          <div style={{
+            width: '64px', height: '64px', borderRadius: '20px',
             backgroundColor: 'var(--accent-soft)', margin: '0 auto 16px',
             display: 'flex', alignItems: 'center', justifyContent: 'center'
           }}>
@@ -83,16 +76,16 @@ export const MobilePaymentDetails: React.FC<MobilePaymentDetailsProps> = ({ paym
         </div>
 
         <div style={{ marginTop: '20px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-          <button style={{ 
-            padding: '14px', borderRadius: '14px', border: '1.5px solid var(--border)', 
+          <button style={{
+            padding: '14px', borderRadius: '14px', border: '1.5px solid var(--border)',
             background: 'var(--surface)', fontWeight: 700, fontSize: '14px', color: 'var(--text-primary)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'
           }}>
             <ExternalLink size={16} />
             Receipt
           </button>
-          <button style={{ 
-            padding: '14px', borderRadius: '14px', border: 'none', 
+          <button style={{
+            padding: '14px', borderRadius: '14px', border: 'none',
             background: 'var(--accent)', fontWeight: 700, fontSize: '14px', color: 'white'
           }}>
             Support

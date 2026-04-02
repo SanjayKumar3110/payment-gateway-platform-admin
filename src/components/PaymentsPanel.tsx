@@ -3,7 +3,7 @@ import { CloudDownload, Plus, Search, ChevronDown, Clock, CreditCard, ChevronRig
 import { io } from 'socket.io-client';
 import PAYMENTS_DATA from '@data/payments.json';
 import './css/components.css';
-import { getStatusBadge, getMethodIcon } from './utils/utils.tsx';
+import { getStatusBadge, getMethodIcon } from './utils/PaymentUtils.tsx';
 
 const TABS = ['All payments', 'Succeeded', 'Refunded'];
 
@@ -85,7 +85,7 @@ export function Payments() {
 
     // Establish WebSocket Connection
     const socket = io('http://localhost:5000');
-    
+
     socket.on('newPayment', (payment) => {
       console.log('Live Payment Received:', payment);
       setRealPayments(prev => [payment, ...prev]);
@@ -248,7 +248,7 @@ export function Payments() {
               <th style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>AMOUNT</th>
               <th style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>PAYMENT METHOD</th>
               <th style={{ padding: '16px 12px', color: 'var(--text-secondary)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>CREATION DATE</th>
-              
+
             </tr>
           </thead>
           <tbody>

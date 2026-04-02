@@ -177,9 +177,7 @@ body {
   transform: translateY(-50%);
   width: 4px;
   height: 20px;
-  background: #4F46E5;
   border-radius: 0 4px 4px 0;
-  box-shadow: 0 0 10px #4F46E5;
 }
 
 .nav-btn .icon {
@@ -187,13 +185,14 @@ body {
   height: 18px;
 }
 
-.sep-line{
+.sep-line {
   border-bottom: 1px solid var(--border);
   padding: 12px 8px;
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
+
 .sidebar-bottom {
   display: flex;
   flex-direction: column;
@@ -220,9 +219,17 @@ body {
 }
 
 @keyframes badge-pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* Main Area */

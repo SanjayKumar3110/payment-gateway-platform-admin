@@ -21,10 +21,11 @@ interface NotificationPanelProps {
   notifications: Notification[];
   onToggleRead: (id: string) => void;
   onMarkAllRead: () => void;
+  onNavigate?: (tab: string) => void;
 }
 
-export function NotificationPanel({ darkMode, notifications, onToggleRead, onMarkAllRead }: NotificationPanelProps) {
-  const [activeTab, setActiveTab] = useState<'inbox' | 'archived'>('inbox');
+export function NotifyWindow({ darkMode, notifications, onToggleRead, onMarkAllRead, onClose, onNavigate }: NotificationPanelProps) {
+  const [activeTab, setActiveTab] = useState<'inbox' | 'unread' | 'Settings'>('inbox');
 
   const markAllAsRead = () => {
     onMarkAllRead();
@@ -99,12 +100,12 @@ export function NotificationPanel({ darkMode, notifications, onToggleRead, onMar
           Inbox {unreadCount > 0 && <span style={{ background: '#111', color: '#fff', fontSize: '11px', padding: '2px 6px', borderRadius: '10px' }}>{unreadCount}</span>}
         </button>
         <button
-          onClick={() => setActiveTab('archived')}
-          style={{ display: 'flex', alignItems: 'center', padding: '12px 16px', background: 'none', border: 'none', borderBottom: activeTab === 'archived' ? '2px solid var(--text-primary)' : '2px solid transparent', color: activeTab === 'archived' ? 'var(--text-primary)' : 'var(--text-secondary)', fontWeight: 500, cursor: 'pointer' }}>
-          Archived
+          onClick={() => setActiveTab('unread')}
+          style={{ display: 'flex', alignItems: 'center', padding: '12px 16px', background: 'none', border: 'none', borderBottom: activeTab === 'unread' ? '2px solid var(--text-primary)' : '2px solid transparent', color: activeTab === 'unread' ? 'var(--text-primary)' : 'var(--text-secondary)', fontWeight: 500, cursor: 'pointer' }}>
+          Unread
         </button>
         <div style={{ flex: 1 }} />
-        <button 
+        <button
           onClick={() => { onNavigate?.('settings'); onClose(); }}
           title="Notification Settings"
           style={{ background: 'none', border: 'none', padding: 0, display: 'flex', cursor: 'pointer' }}
@@ -114,10 +115,10 @@ export function NotificationPanel({ darkMode, notifications, onToggleRead, onMar
       </div>
 
       <div style={{ zIndex: 11, maxHeight: '350px', overflowY: 'auto' }}>
-        {notifications.map((notif) => (
-          <div key={notif.id} 
-               onClick={() => onToggleRead(notif.id)}
-               style={{ display: 'flex', gap: '12px', padding: '16px 20px', borderBottom: darkMode ? '1px solid rgba(255,255,255,0.04)' : '1px solid rgba(0,0,0,0.04)', position: 'relative', cursor: 'pointer', alignItems: 'flex-start' }}>
+        {(activeTab === 'unread' ? notifications.filter(n => !n.read) : notifications).slice(0, 3).map((notif) => (
+          <div key={notif.id}
+            onClick={() => onToggleRead(notif.id)}
+            style={{ display: 'flex', gap: '12px', padding: '16px 20px', borderBottom: darkMode ? '1px solid rgba(255,255,255,0.04)' : '1px solid rgba(0,0,0,0.04)', position: 'relative', cursor: 'pointer', alignItems: 'flex-start' }}>
             <div style={{ position: 'relative' }}>
               {notif.user?.avatar ? (
                 <img src={notif.user.avatar} style={{ width: '40px', height: '40px', borderRadius: '50%' }} alt="" />
