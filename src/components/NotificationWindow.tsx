@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Settings, CheckCircle2, ArrowUpCircle } from 'lucide-react';
+import { Settings, CheckCircle2, ArrowUpCircle, CheckCheck, Maximize2 } from 'lucide-react';
 
 interface Notification {
   id: string;
@@ -40,9 +40,10 @@ const mockNotifications: Notification[] = [
 interface NotificationPanelProps {
   onClose: () => void;
   darkMode?: boolean;
+  onNavigate?: (tab: any) => void;
 }
 
-export function NotificationPanel({ darkMode }: NotificationPanelProps) {
+export function NotifyWindow({ darkMode, onClose, onNavigate }: NotificationPanelProps) {
   const [activeTab, setActiveTab] = useState<'inbox' | 'archived'>('inbox');
   const [notifications, setNotifications] = useState(mockNotifications);
 
@@ -95,11 +96,20 @@ export function NotificationPanel({ darkMode }: NotificationPanelProps) {
       {/* Header */}
       <div style={{ zIndex: 11, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', borderBottom: darkMode ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.08)' }}>
         <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: 'var(--text-primary)' }}>Notifications</h3>
-        <button
-          onClick={markAllAsRead}
-          style={{ background: 'none', border: 'none', fontSize: '13px', color: 'var(--text-secondary)', cursor: 'pointer' }}>
-          Mark all as read
-        </button>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <button
+            onClick={markAllAsRead}
+            title="Mark all as read"
+            style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: 0, display: 'flex' }}>
+            <CheckCheck size={18} />
+          </button>
+          <button
+            onClick={() => { onNavigate?.('notifications'); onClose(); }}
+            title="Show all notifications"
+            style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: 0, display: 'flex' }}>
+            <Maximize2 size={16} />
+          </button>
+        </div>
       </div>
 
       {/* Tabs */}
@@ -115,7 +125,13 @@ export function NotificationPanel({ darkMode }: NotificationPanelProps) {
           Archived
         </button>
         <div style={{ flex: 1 }} />
-        <Settings size={16} color="var(--text-secondary)" style={{ cursor: 'pointer' }} />
+        <button 
+          onClick={() => { onNavigate?.('settings'); onClose(); }}
+          title="Notification Settings"
+          style={{ background: 'none', border: 'none', padding: 0, display: 'flex', cursor: 'pointer' }}
+        >
+          <Settings size={16} color="var(--text-secondary)" />
+        </button>
       </div>
 
       {/* List */}

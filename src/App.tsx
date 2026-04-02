@@ -11,7 +11,7 @@ import { Dashboard } from './components/DashboardView';
 import { Analytics } from './components/AnalyticsPanel';
 import { Invoices } from './components/InvoicesPanel';
 import { SettingsPanel } from './components/SettingsPanel';
-import { NotificationPanel } from './components/NotificationPanel';
+import { NotifyWindow } from './components/NotificationWindow';
 import { NotificationsPanel } from './components/NotificationsPanel';
 import { SupportPanel } from './components/SupportPanel';
 import { LoginPage } from './Login/login';
@@ -126,7 +126,7 @@ export default function App() {
           <div className='sep-line'>
             <h3 style={{ fontSize: '11px', color: 'var(--text-secondary, #888)', padding: '1px 12px', marginBottom: '8px', fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase' }}>Main Menu</h3>
             <button
-              style={{ fontSize: '14px'}}
+              style={{ fontSize: '14px' }}
               className={`nav-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
               onClick={() => setActiveTab('dashboard')}
             >
@@ -134,7 +134,7 @@ export default function App() {
               <span>Dashboard</span>
             </button>
             <button
-              style={{ fontSize: '14px'}}
+              style={{ fontSize: '14px' }}
               className={`nav-btn ${activeTab === 'analytics' ? 'active' : ''}`}
               onClick={() => setActiveTab('analytics')}
             >
@@ -146,7 +146,7 @@ export default function App() {
           <div className='sep-line'>
             <h3 style={{ fontSize: '11px', color: 'var(--text-secondary, #888)', padding: '0 12px', marginBottom: '8px', fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase' }}>Transaction</h3>
             <button
-              style={{ fontSize: '14px'}}
+              style={{ fontSize: '14px' }}
               className={`nav-btn ${activeTab === 'payments' ? 'active' : ''}`}
               onClick={() => setActiveTab('payments')}
             >
@@ -154,7 +154,7 @@ export default function App() {
               <span>Payments</span>
             </button>
             <button
-              style={{ fontSize: '14px'}}
+              style={{ fontSize: '14px' }}
               className={`nav-btn ${activeTab === 'invoices' ? 'active' : ''}`}
               onClick={() => setActiveTab('invoices')}
             >
@@ -163,24 +163,20 @@ export default function App() {
             </button>
           </div>
 
-          <div className='sep-line'>
+          <div>
             <h3 style={{ fontSize: '11px', color: 'var(--text-secondary, #888)', padding: '0 12px', marginBottom: '8px', fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase' }}>General</h3>
-            <button 
-              className={`nav-btn ${activeTab === 'notifications' ? 'active' : ''}`} 
-              style={{ fontSize: '14px'}} 
+            <button
+              className={`nav-btn ${activeTab === 'notifications' ? 'active' : ''}`}
+              style={{ fontSize: '14px' }}
               onClick={() => setActiveTab('notifications')}
             >
               <Bell className="icon" />
               <span>Notifications</span>
             </button>
-            {/* <button className={`nav-btn ${activeTab === 'Support' ? 'active' : ''}`} style={{ fontSize: '14px'}} onClick={() => setActiveTab('Support')}>
-              <MessageSquare className="icon" />
-              <span>Support</span>
-            </button> */}
 
             <button
               className="nav-btn"
-              style={{ fontSize: '14px'}}
+              style={{ fontSize: '14px' }}
               title={darkMode ? 'Light Mode' : 'Dark Mode'}
               onClick={() => setDarkMode(prev => !prev)}
             >
@@ -189,9 +185,9 @@ export default function App() {
             </button>
 
 
-            <button 
+            <button
               className={`nav-btn ${activeTab === 'settings' ? 'active' : ''}`} onClick={() => setActiveTab('settings')}
-              style={{ fontSize: '14px'}}>
+              style={{ fontSize: '14px' }}>
               <Settings className="icon" />
               <span>Settings</span>
             </button>
@@ -199,13 +195,13 @@ export default function App() {
         </nav>
 
         <div className="sidebar-bottom">
-          <button className={`nav-btn ${activeTab === 'Support' ? 'active' : ''}`} style={{ fontSize: '14px'}}
-          onClick={() => setActiveTab('Support')}>
+          <button className={`nav-btn ${activeTab === 'Support' ? 'active' : ''}`} style={{ fontSize: '14px' }}
+            onClick={() => setActiveTab('Support')}>
             <HelpCircle className="icon" />
             <span>Support</span>
           </button>
-          <button className="nav-btn" style={{ fontSize: '14px',width: '100%', justifyContent: 'flex-start', padding: '10px 12px', margin: 0, color: '#FF4444', border: 'none', backgroundColor: 'transparent', cursor: 'pointer' }}
-            
+          <button className="nav-btn" style={{ fontSize: '14px', width: '100%', justifyContent: 'flex-start', padding: '10px 12px', margin: 0, color: '#FF4444', border: 'none', backgroundColor: 'transparent', cursor: 'pointer' }}
+
             onClick={() => handleLogout()}>
             <LogOut className="icon" size={16} color="#FF4444" />
             <span style={{ color: '#FF4444' }}>Logout</span>
@@ -235,7 +231,11 @@ export default function App() {
                 <div style={{ position: 'absolute', top: 5, right: 5, width: 8, height: 8, backgroundColor: '#FF4444', borderRadius: '50%' }} />
               </button>
               {showNotifications && (
-                <NotificationPanel onClose={() => setShowNotifications(false)} darkMode={darkMode} />
+                <NotifyWindow 
+                  onClose={() => setShowNotifications(false)} 
+                  darkMode={darkMode} 
+                  onNavigate={(tab) => { setActiveTab(tab); setShowNotifications(false); }} 
+                />
               )}
             </div>
             {/* <button className="icon-btn-circle"><MessageSquare size={18} /></button> */}
