@@ -16,6 +16,7 @@
     "skipLibCheck": true,
     /* --- ADD THESE THREE LINES --- */
     "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
     "paths": {
       "@data/*": [
         "./data/*"
