@@ -1,8 +1,8 @@
 :root {
   --mobile-safe-top: env(safe-area-inset-top, 20px);
   --mobile-safe-bottom: env(safe-area-inset-bottom, 20px);
-  --mobile-header-height: clamp(160px, 22vh, 190px);
-  --mobile-header-collapsed: clamp(80px, 11vh, 95px);
+  --mobile-header-height: calc(var(--mobile-safe-top) + 88px);
+  --mobile-header-collapsed: calc(var(--mobile-safe-top) + 44px);
 
   /* Fluid Typography */
   --font-xs: clamp(10px, 2.5vw, 11px);
@@ -98,7 +98,7 @@
   left: 0;
   right: 0;
   height: var(--mobile-header-height);
-  padding: calc(var(--mobile-safe-top) + 8px) 0 0;
+  padding: calc(var(--mobile-safe-top) + 4px) 4vw 0;
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
@@ -119,14 +119,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 4vw;
-  height: 48px;
+  padding: 0;
+  height: 40px;
   transition: all 0.3s ease;
 }
 
 .mobile-header.collapsed .header-top-bar {
   opacity: 0;
-  transform: translateY(-20px);
+  height: 0;
+  transform: translateY(-10px);
   pointer-events: none;
 }
 
@@ -142,15 +143,15 @@
 
 .header-nav-bar {
   margin-top: auto;
-  padding: 0 4px;
+  height: 40px;
+  padding: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
-  transition: all 0.4s ease;
+  align-items: stretch;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .mobile-header.collapsed .header-nav-bar {
-  transform: translateY(-32px);
   padding-bottom: 0px;
 }
 
@@ -166,9 +167,10 @@
 
 .top-nav-item {
   flex: 1;
+  height: 100%;
   border: none;
   background: none;
-  padding: 14px 1px;
+  padding: 0 1px;
   font-size: clamp(10px, 2.8vw, 12px);
   font-weight: 700;
   color: var(--text-secondary);
@@ -190,11 +192,10 @@
 .nav-active-bg {
   position: absolute;
   bottom: -1px;
-  height: 3px;
-  background: var(--accent-gradient);
-  border-radius: 100px 100px 0 0;
-  box-shadow: 0 -2px 10px var(--accent-soft);
-  z-index: 10;
+  height: 1px;
+  background: var(--accent);
+  box-shadow: 0 0 10px 1px var(--accent);
+  z-index: 20;
 }
 
 /* Card Styles: Liquid Glass */

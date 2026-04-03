@@ -6,9 +6,13 @@ import path from 'path'
 export default defineConfig({
   plugins: [react()],
   base: './',
+  server: {
+    port: 5173,
+    strictPort: true,
+    host: '127.0.0.1'
+  },
   resolve: {
     alias: {
-      // This tells Vite: when you see @data, look in the root data folder
       '@data': path.resolve(__dirname, './data'),
     },
   },

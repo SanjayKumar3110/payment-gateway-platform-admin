@@ -87,7 +87,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({
                   <motion.div
                     layoutId="top-nav-active"
                     className="nav-active-bg"
-                    style={{ left: '15%', right: '15%' }}
+                    style={{ left: 0, right: 0 }}
                     transition={{ type: 'spring', stiffness: 500, damping: 35 }}
                   />
                 )}
