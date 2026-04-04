@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Save, Key, User, Shield, Bell, Building2, Mail, Phone, Hash, Eye, EyeOff } from 'lucide-react';
+import { User, Shield, HelpCircle, Eye, EyeOff, Copy, Cloud, Check, Sun, Monitor, Moon, UserCircle, MoreHorizontal, Link2, Smartphone, QrCode, Wallet, CreditCard, IndianRupee, Download, Upload, UploadCloud } from 'lucide-react';
 import './css/components.css';
 
 interface UserData {
@@ -17,58 +17,47 @@ interface UserData {
 
 interface SettingsPanelProps {
     userData: UserData | null;
+    darkMode?: boolean;
+    setDarkMode?: (dark: boolean) => void;
 }
 
-export function SettingsPanel({ userData }: SettingsPanelProps) {
-    const [activeSection, setActiveSection] = useState('profile');
+export function SettingsPanel({ userData, darkMode, setDarkMode }: SettingsPanelProps) {
+    const [activeSection, setActiveSection] = useState('General');
+
+    // General state
+    const [pushNotifs, setPushNotifs] = useState(true);
+    const [emailNotifs, setEmailNotifs] = useState(true);
+    const [smsNotifs, setSmsNotifs] = useState(false);
+    const [theme, setThemeState] = useState<'light' | 'auto' | 'dark'>(darkMode ? 'dark' : 'light');
+    const [showQR, setShowQR] = useState(false);
+    const [razorpayConn, setRazorpayConn] = useState(() => !!(userData?.rz_key_id || localStorage.getItem('rz_key_id')));
+    const [paytmConn, setPaytmConn] = useState(() => !!localStorage.getItem('paytm_key_id'));
+    const [phonepeConn, setPhonepeConn] = useState(() => !!localStorage.getItem('phonepe_key_id'));
+
+    const [showGatewayPopup, setShowGatewayPopup] = useState<string | null>(null);
+    const [showGatewaySecret, setShowGatewaySecret] = useState(false);
+    const [tempApiKey, setTempApiKey] = useState('');
+    const [tempSecretKey, setTempSecretKey] = useState('');
+
+    const [showExportMenu, setShowExportMenu] = useState(false);
+    const [showImportPopup, setShowImportPopup] = useState(false);
+    const [openSessionMenu, setOpenSessionMenu] = useState<string | null>(null);
+
+    const setTheme = (t: 'light' | 'auto' | 'dark') => {
+        setThemeState(t);
+        if (setDarkMode) {
+            if (t === 'light') setDarkMode(false);
+            if (t === 'dark') setDarkMode(true);
+            if (t === 'auto') {
+                const isDarkMatch = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                setDarkMode(isDarkMatch);
+            }
+        }
+    };
 
     // Razorpay state — load from localStorage
     const [razorpayKeyId, setRazorpayKeyId] = useState(() => userData?.rz_key_id || localStorage.getItem('rz_key_id') || '');
     const [razorpayKeySecret, setRazorpayKeySecret] = useState(() => userData?.rz_key_secret || localStorage.getItem('rz_key_secret') || '');
-    const [razorpayWebhookSecret, setRazorpayWebhookSecret] = useState(() => userData?.rz_webhook_secret || localStorage.getItem('rz_webhook_secret') || '');
-    const [razorpayAccountId, setRazorpayAccountId] = useState(() => userData?.rz_account_id || localStorage.getItem('rz_account_id') || '');
-    const [showSecret, setShowSecret] = useState(false);
-    const [showWebhookSecret, setShowWebhookSecret] = useState(false);
-    const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
-
-    const handleSaveRazorpay = async () => {
-        setSaveStatus('saving');
-        
-        // Save to LocalStorage for quick access
-        localStorage.setItem('rz_key_id', razorpayKeyId);
-        localStorage.setItem('rz_key_secret', razorpayKeySecret);
-        localStorage.setItem('rz_webhook_secret', razorpayWebhookSecret);
-        localStorage.setItem('rz_account_id', razorpayAccountId);
-
-        // Sync to backend user.json persistent storage
-        if (userData?.email) {
-            try {
-                const response = await fetch('http://localhost:5000/api/update-keys', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        email: userData.email,
-                        rz_key_id: razorpayKeyId,
-                        rz_key_secret: razorpayKeySecret,
-                        rz_webhook_secret: razorpayWebhookSecret,
-                        rz_account_id: razorpayAccountId
-                    })
-                });
-                if (response.ok) {
-                    const result = await response.json();
-                    // Update main localized memory with the synced copy back
-                    localStorage.setItem('payplatform_user', JSON.stringify(result.user));
-                }
-            } catch (err) {
-                console.error('Failed to sync keys to backend', err);
-            }
-        }
-
-        setTimeout(() => {
-            setSaveStatus('saved');
-            setTimeout(() => setSaveStatus('idle'), 2000);
-        }, 500);
-    };
 
     /* ── Shared input style ── */
     const inputStyle: React.CSSProperties = {
@@ -79,35 +68,96 @@ export function SettingsPanel({ userData }: SettingsPanelProps) {
     };
 
     const labelStyle: React.CSSProperties = { fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' };
-    // const hintStyle: React.CSSProperties = { fontSize: '12px', color: 'var(--text-secondary)', marginTop: '4px' };
 
-    /* ── Read-only field renderer ── */
-    const ProfileField = ({ icon: Icon, label, value }: { icon: any; label: string; value: string }) => (
-        <div style={{
-            display: 'flex', alignItems: 'center', gap: '16px',
-            padding: '16px 20px', borderRadius: '12px',
-            background: 'var(--input-bg)',
-            backdropFilter: 'var(--glass-blur)',
-            WebkitBackdropFilter: 'var(--glass-blur)',
-            border: '1px solid var(--border)',
-            transition: 'all 0.2s ease'
-        }}>
-            <div style={{
-                width: '40px', height: '40px', borderRadius: '10px',
-                background: 'linear-gradient(135deg, rgba(99,102,241,0.15), rgba(168,85,247,0.15))',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                flexShrink: 0
-            }}>
-                <Icon size={18} style={{ color: '#818CF8' }} />
+    const ProfileRow = ({ label, value, copyable = false }: { label: string; value: string; copyable?: boolean }) => {
+        const [copied, setCopied] = useState(false);
+        const copyToClipboard = () => {
+            navigator.clipboard.writeText(value);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        };
+
+        return (
+            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0' }}>
+                <span style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>{label}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ color: 'var(--text-primary)', fontSize: '14px', fontWeight: 500 }}>{value}</span>
+                    {copyable && (
+                        <button onClick={copyToClipboard} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)' }}>
+                            {copied ? <Check size={16} color="#10b981" /> : <Copy size={16} />}
+                        </button>
+                    )}
+                </div>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', minWidth: 0 }}>
-                <span style={{ fontSize: '12px', fontWeight: 500, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                    {label}
-                </span>
-                <span style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)', wordBreak: 'break-word' }}>
-                    {value || '—'}
-                </span>
+        );
+    };
+
+    const Toggle = ({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) => (
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0' }}>
+            <span style={{ fontSize: '14px', color: 'var(--text-primary)', fontWeight: 500 }}>{label}</span>
+            <div
+                onClick={() => onChange(!checked)}
+                style={{
+                    width: '44px', height: '24px', borderRadius: '12px',
+                    backgroundColor: checked ? '#8b5cf6' : 'var(--border)',
+                    position: 'relative', cursor: 'pointer', transition: 'background-color 0.2s'
+                }}
+            >
+                <div style={{
+                    width: '20px', height: '20px', borderRadius: '50%', backgroundColor: '#fff',
+                    position: 'absolute', top: '2px', left: checked ? '22px' : '2px',
+                    transition: 'left 0.2s', boxShadow: '0 1px 3px rgba(0,0,0,0.2)'
+                }} />
             </div>
+        </div>
+    );
+
+    const ThemeOption = ({ label, icon: Icon, selected, onClick }: { label: string; icon: any; selected: boolean; onClick: () => void }) => (
+        <button
+            onClick={onClick}
+            style={{
+                flex: 1, padding: '24px 16px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px',
+                backgroundColor: selected ? 'rgba(139, 92, 246, 0.1)' : 'transparent',
+                border: selected ? '2px solid #8b5cf6' : '2px solid var(--border)',
+                borderRadius: '12px', cursor: 'pointer', transition: 'all 0.2s',
+                color: selected ? '#8b5cf6' : 'var(--text-secondary)'
+            }}
+        >
+            <Icon size={32} />
+            <span style={{ fontSize: '14px', fontWeight: 600 }}>{label}</span>
+        </button>
+    );
+
+    const SessionMenuButton = ({ id }: { id: string }) => (
+        <div style={{ position: 'relative', justifySelf: 'end' }}>
+            <MoreHorizontal
+                size={16}
+                color="var(--text-secondary)"
+                style={{ cursor: 'pointer', display: 'block' }}
+                onClick={() => setOpenSessionMenu(openSessionMenu === id ? null : id)}
+            />
+            {openSessionMenu === id && (
+                <div style={{
+                    position: 'absolute', top: '100%', right: 0, marginTop: '6px',
+                    background: 'var(--bg)', border: '1px solid var(--border)',
+                    borderRadius: '8px', padding: '4px', zIndex: 50, width: '120px',
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.15)'
+                }}>
+                    <button
+                        onClick={() => setOpenSessionMenu(null)}
+                        style={{
+                            width: '100%', textAlign: 'left', padding: '8px 12px',
+                            background: 'transparent', border: 'none',
+                            color: '#ef4444', fontSize: '13px', fontWeight: 600,
+                            cursor: 'pointer', borderRadius: '4px'
+                        }}
+                        onMouseEnter={e => (e.currentTarget.style.background = 'rgba(239,68,68,0.08)')}
+                        onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                    >
+                        Log out
+                    </button>
+                </div>
+            )}
         </div>
     );
 
@@ -119,10 +169,11 @@ export function SettingsPanel({ userData }: SettingsPanelProps) {
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {[
-                        { id: 'profile', label: 'Business Profile', icon: User },
-                        { id: 'payment', label: 'Payment Integration', icon: Key },
-                        { id: 'notifications', label: 'Notifications', icon: Bell },
-                        { id: 'security', label: 'Security', icon: Shield },
+                        { id: 'General', label: 'General', icon: User },
+                        { id: 'account', label: 'Account', icon: UserCircle },
+                        { id: 'connectors', label: 'Connectors', icon: Link2 },
+                        { id: 'storage', label: 'Storage', icon: Cloud },
+                        { id: 'help', label: 'Get Help', icon: HelpCircle },
                     ].map(sec => (
                         <button
                             key={sec.id}
@@ -144,195 +195,462 @@ export function SettingsPanel({ userData }: SettingsPanelProps) {
             </div>
 
             {/* Settings Content Area */}
-            <div style={{ flex: 1, minWidth: 0 }}>
-                <div className="base-card" style={{ minHeight: '500px' }}>
+            <div style={{ flex: 1, minWidth: 0, maxWidth: '700px' }}>
 
-                    {/* PROFILE SECTION — READ ONLY */}
-                    {activeSection === 'profile' && (
-                        <div style={{ animation: 'fadeIn 0.3s ease' }}>
-                            <h3 className="pv-product-name" style={{ fontSize: '18px', marginBottom: '8px' }}>Business Profile</h3>
-                            <p className="pv-subtext" style={{ marginBottom: '8px' }}>
-                                Your registered business information. This data was provided during sign-up.
-                            </p>
-                            <div style={{
-                                display: 'inline-flex', alignItems: 'center', gap: '6px',
-                                padding: '6px 12px', borderRadius: '20px', marginBottom: '28px',
-                                background: 'rgba(99, 102, 241, 0.08)',
-                                border: '1px solid rgba(99, 102, 241, 0.15)',
-                                fontSize: '12px', fontWeight: 500, color: '#818CF8'
-                            }}>
-                                <Shield size={12} /> Read-only — contact support to update
-                            </div>
-
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxWidth: '520px' }}>
-                                <ProfileField icon={User} label="Owner Name" value={userData?.name || ''} />
-                                <ProfileField icon={Building2} label="Business Name" value={userData?.businessName || ''} />
-                                <ProfileField icon={Mail} label="Email Address" value={userData?.email || ''} />
-                                <ProfileField icon={Phone} label="Phone Number" value={userData?.phone || ''} />
-                                <ProfileField icon={Hash} label="User ID" value={userData?.id || ''} />
+                {/* GENERAL SECTION */}
+                {activeSection === 'General' && (
+                    <div style={{ animation: 'fadeIn 0.3s ease', display: 'flex', flexDirection: 'column', gap: '32px', maxWidth: '600px' }}>
+                        {/* Profile */}
+                        <div>
+                            <h3 style={{ fontSize: '20px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>Profile</h3>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <ProfileRow label="Name" value={userData?.name || '—'} />
+                                <ProfileRow label="Email" value={userData?.email || '—'} />
+                                <ProfileRow label="Phone Number" value={userData?.phone || '—'} />
+                                <ProfileRow label="Business ID" value={userData?.id || '—'} copyable />
                             </div>
                         </div>
-                    )}
 
-                    {/* RAZORPAY INTEGRATION SECTION */}
-                    {activeSection === 'payment' && (
-                        <div style={{ animation: 'fadeIn 0.3s ease' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-                                <h3 className="pv-product-name" style={{ fontSize: '18px', margin: 0 }}>Razorpay Integration</h3>
-                                <img src="https://cdn.razorpay.com/static/assets/logo/payment.svg" alt="Razorpay" style={{ height: '20px', opacity: 0.7 }}
-                                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                        <hr style={{ border: 'none', borderBottom: '1px solid var(--border)', margin: 0 }} />
+
+                        {/* Notifications */}
+                        <div>
+                            <h3 style={{ fontSize: '20px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>Notification</h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                <Toggle label="Push Notifications" checked={pushNotifs} onChange={setPushNotifs} />
+                                <Toggle label="Email Notifications" checked={emailNotifs} onChange={setEmailNotifs} />
+                                <Toggle label="SMS Notifications" checked={smsNotifs} onChange={setSmsNotifs} />
                             </div>
-                            <p className="pv-subtext" style={{ marginBottom: '28px' }}>
-                                Connect your Razorpay account to accept payments. Find your credentials in the{' '}
-                                <a href="https://dashboard.razorpay.com/app/keys" target="_blank" rel="noopener noreferrer" style={{ color: '#818CF8', textDecoration: 'none', fontWeight: 500 }}>
-                                    Razorpay Dashboard → API Keys
-                                </a>.
-                            </p>
+                        </div>
 
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '560px' }}>
-                                {razorpayKeyId === 'DEMO' && (
+                        <hr style={{ border: 'none', borderBottom: '1px solid var(--border)', margin: 0 }} />
+
+                        {/* Appearance */}
+                        <div>
+                            <h3 style={{ fontSize: '20px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '16px' }}>Appearance</h3>
+                            <div style={{ display: 'flex', gap: '16px' }}>
+                                <ThemeOption label="Light" icon={Sun} selected={theme === 'light'} onClick={() => setTheme('light')} />
+                                <ThemeOption label="Auto" icon={Monitor} selected={theme === 'auto'} onClick={() => setTheme('auto')} />
+                                <ThemeOption label="Dark" icon={Moon} selected={theme === 'dark'} onClick={() => setTheme('dark')} />
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* ACCOUNT SECTION */}
+                {activeSection === 'account' && (
+                    <div style={{ animation: 'fadeIn 0.3s ease', display: 'flex', flexDirection: 'column', gap: '32px', maxWidth: '700px' }}>
+                        {/* Account */}
+                        <div>
+                            <h3 style={{ fontSize: '20px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '24px' }}>Account</h3>
+
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                                {/* Organization ID */}
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '8px' }}>
+                                    <span style={{ fontSize: '14px', color: 'var(--text-primary)', fontWeight: 500 }}>Business ID</span>
                                     <div style={{
-                                        padding: '12px 16px', borderRadius: '10px',
-                                        background: 'rgba(99, 102, 241, 0.1)',
-                                        border: '1px solid rgba(99, 102, 241, 0.3)',
-                                        color: '#818CF8', fontSize: '13px', fontWeight: 500,
-                                        display: 'flex', alignItems: 'center', gap: '10px'
+                                        display: 'flex', alignItems: 'center', gap: '12px', background: 'rgba(0,0,0,0.2)',
+                                        padding: '8px 12px', borderRadius: '8px', border: '1px solid var(--border)'
                                     }}>
-                                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#818CF8', animation: 'pulse 2s infinite' }}></div>
-                                        <span>Testing with <strong>Demo Mode</strong>. No real transactions will be processed.</span>
+                                        <span style={{ fontSize: '13px', color: 'var(--text-secondary)', fontFamily: 'monospace' }}>{userData?.id || '—'}</span>
+                                        <Copy size={14} color="var(--text-secondary)" style={{ cursor: 'pointer' }} />
+                                    </div>
+                                </div>
+                                {/* Log out of all devices */}
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <span style={{ fontSize: '14px', color: 'var(--text-primary)', fontWeight: 500 }}>Log out of all devices</span>
+                                    <button style={{
+                                        background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-primary)',
+                                        padding: '8px 16px', borderRadius: '8px', fontSize: '13px', fontWeight: 600, cursor: 'pointer'
+                                    }}>
+                                        Log out
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <hr style={{ border: 'none', borderBottom: '1px solid var(--border)', margin: 0 }} />
+
+                        {/* Active sessions */}
+                        <div>
+                            <h3 style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '16px' }}>Active sessions</h3>
+
+                            <div style={{ width: '100%', borderCollapse: 'collapse', display: 'flex', flexDirection: 'column' }}>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'minmax(200px, 1fr) minmax(200px, 1fr) minmax(200px, 1fr) 40px', paddingBottom: '12px', borderBottom: '1px solid var(--border)' }}>
+                                    <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)', textAlign: 'center' }}>Device</span>
+                                    <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)', textAlign: 'center' }}>Created</span>
+                                    <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)', textAlign: 'center' }}>Updated</span>
+                                    <span></span>
+                                </div>
+
+                                <div style={{ display: 'grid', gridTemplateColumns: 'minmax(200px, 1fr) minmax(200px, 1fr) minmax(200px, 1fr) 40px', paddingTop: '16px', alignItems: 'center' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <span style={{ fontSize: '14px', color: 'var(--text-primary)', fontWeight: 500 }}>Desktop (Windows)</span>
+                                        <span style={{ fontSize: '10px', background: 'var(--border)', color: 'var(--text-secondary)', padding: '2px 6px', borderRadius: '4px' }}>Current</span>
+                                    </div>
+
+                                    <span style={{ padding: '8px 6px', fontSize: '14px', color: 'var(--text-secondary)', textAlign: 'center' }}>Mar 12, 2026, 6:58 PM</span>
+                                    <span style={{ padding: '8px 6px', fontSize: '14px', color: 'var(--text-secondary)', textAlign: 'center' }}>Apr 4, 2026, 11:26 AM</span>
+                                    <SessionMenuButton id="desktop" />
+                                </div>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'minmax(200px, 1fr) minmax(200px, 1fr) minmax(200px, 1fr) 40px', paddingTop: '16px', alignItems: 'center' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <span style={{ fontSize: '14px', color: 'var(--text-primary)', fontWeight: 500 }}>Mobile (Android)</span>
+                                        <span style={{ fontSize: '10px', background: 'var(--border)', color: 'var(--text-secondary)', padding: '2px 6px', borderRadius: '4px' }}>Active</span>
+                                    </div>
+                                    <span style={{ padding: '8px 6px', fontSize: '14px', color: 'var(--text-secondary)', textAlign: 'center' }}>Mar 12, 2026, 6:58 PM</span>
+                                    <span style={{ padding: '8px 6px', fontSize: '14px', color: 'var(--text-secondary)', textAlign: 'center' }}>Apr 4, 2026, 11:26 AM</span>
+                                    <SessionMenuButton id="android" />
+                                </div>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'minmax(200px, 1fr) minmax(200px, 1fr) minmax(200px, 1fr) 40px', paddingTop: '16px', alignItems: 'center' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <span style={{ fontSize: '14px', color: 'var(--text-primary)', fontWeight: 500 }}>Mobile (iOS)</span>
+                                        <span style={{ fontSize: '10px', background: 'var(--border)', color: 'var(--text-secondary)', padding: '2px 6px', borderRadius: '4px' }}>Active</span>
+                                    </div>
+                                    <span style={{ padding: '8px 6px', fontSize: '14px', color: 'var(--text-secondary)', textAlign: 'center' }}>Mar 14, 2026, 6:58 PM</span>
+                                    <span style={{ padding: '8px 6px', fontSize: '14px', color: 'var(--text-secondary)', textAlign: 'center' }}>Apr 4, 2026, 11:26 AM</span>
+                                    <SessionMenuButton id="ios" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* CONNECTORS SECTION */}
+                {activeSection === 'connectors' && (
+                    <div style={{ animation: 'fadeIn 0.3s ease', display: 'flex', flexDirection: 'column', gap: '32px', maxWidth: '700px' }}>
+                        {/* Connect to mobile app */}
+                        <div>
+                            <h3 style={{ fontSize: '20px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '16px' }}>Connect to mobile app</h3>
+
+                            <div style={{
+                                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                                padding: '24px', background: 'var(--surface)', border: '1px solid var(--border)',
+                                borderRadius: '12px'
+                            }}>
+                                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
+                                    <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(139, 92, 246, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                                        <Smartphone size={24} color="#8b5cf6" />
+                                    </div>
+                                    <div>
+                                        <h4 style={{ margin: '0 0 6px 0', fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)' }}>PayPlatform Mobile Admin</h4>
+                                        <p style={{ margin: 0, fontSize: '13px', color: 'var(--text-secondary)' }}>Organization ID <span style={{ fontFamily: 'monospace', marginLeft: '4px' }}>{userData?.id || '—'}</span></p>
+                                    </div>
+                                </div>
+
+                                {!showQR ? (
+                                    <button
+                                        onClick={() => setShowQR(true)}
+                                        style={{
+                                            background: '#8b5cf6', border: 'none', color: '#ffffff',
+                                            padding: '8px 24px', borderRadius: '8px', fontSize: '13px', fontWeight: 600, cursor: 'pointer'
+                                        }}
+                                    >
+                                        Connect
+                                    </button>
+                                ) : (
+                                    <div style={{ padding: '8px', background: '#fff', borderRadius: '8px', border: '1px solid var(--border)', animation: 'fadeIn 0.3s ease' }}>
+                                        <QrCode size={56} color="#000" />
                                     </div>
                                 )}
+                            </div>
 
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                                    {/* Key ID */}
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                        <label style={labelStyle}>Key ID</label>
-                                        <input
-                                            type="text"
-                                            placeholder="rzp_test_xxxxxx"
-                                            value={razorpayKeyId}
-                                            onChange={(e) => setRazorpayKeyId(e.target.value)}
-                                            style={inputStyle}
-                                        />
-                                    </div>
+                        </div>
 
-                                    {/* Key Secret */}
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                        <label style={labelStyle}>Key Secret</label>
-                                        <div style={{ position: 'relative' }}>
-                                            <input
-                                                type={showSecret ? 'text' : 'password'}
-                                                placeholder="••••••••••••"
-                                                value={razorpayKeySecret}
-                                                onChange={(e) => setRazorpayKeySecret(e.target.value)}
-                                                style={{ ...inputStyle, paddingRight: '42px' }}
-                                            />
-                                            <button
-                                                type="button"
-                                                onClick={() => setShowSecret(!showSecret)}
-                                                style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: '4px' }}
-                                            >
-                                                {showSecret ? <EyeOff size={16} /> : <Eye size={16} />}
-                                            </button>
+                        <hr style={{ border: 'none', borderBottom: '1px solid var(--border)', margin: 0 }} />
+
+                        {/* Integrations (Razorpay, Paytm, PhonePe) */}
+                        <div>
+                            <h3 style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '16px' }}>Payment Gateways</h3>
+
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', border: '1px solid var(--border)', borderRadius: '12px', overflow: 'hidden' }}>
+
+                                {/* Razorpay */}
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', background: 'var(--surface)' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                                        <div style={{ width: '40px', height: '40px', borderRadius: '8px', background: 'rgba(59, 130, 246, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <CreditCard size={20} color="#3b82f6" />
+                                        </div>
+                                        <div>
+                                            <h4 style={{ margin: '0 0 4px 0', fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>Razorpay</h4>
+                                            <p style={{ margin: 0, fontSize: '13px', color: 'var(--text-secondary)' }}>Accept domestic and international payments.</p>
                                         </div>
                                     </div>
+                                    <button
+                                        onClick={() => {
+                                            setTempApiKey(razorpayKeyId);
+                                            setTempSecretKey(razorpayKeySecret);
+                                            setShowGatewaySecret(false);
+                                            setShowGatewayPopup('Razorpay');
+                                        }}
+                                        style={{ background: razorpayConn ? 'rgba(16, 185, 129, 0.1)' : 'transparent', border: razorpayConn ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid var(--border)', color: razorpayConn ? '#10b981' : 'var(--text-primary)', padding: '6px 16px', borderRadius: '8px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}
+                                    >
+                                        {razorpayConn ? 'Connected' : 'Connect'}
+                                    </button>
                                 </div>
 
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                                    {/* Webhook Secret */}
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                        <label style={labelStyle}>Webhook Secret</label>
-                                        <div style={{ position: 'relative' }}>
-                                            <input
-                                                type={showWebhookSecret ? 'text' : 'password'}
-                                                placeholder="Optional secret"
-                                                value={razorpayWebhookSecret}
-                                                onChange={(e) => setRazorpayWebhookSecret(e.target.value)}
-                                                style={{ ...inputStyle, paddingRight: '42px' }}
-                                            />
-                                            <button
-                                                type="button"
-                                                onClick={() => setShowWebhookSecret(!showWebhookSecret)}
-                                                style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: '4px' }}
-                                            >
-                                                {showWebhookSecret ? <EyeOff size={16} /> : <Eye size={16} />}
-                                            </button>
+                                {/* Paytm */}
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', background: 'var(--surface)' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                                        <div style={{ width: '40px', height: '40px', borderRadius: '8px', background: 'rgba(6, 182, 212, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <Wallet size={20} color="#06b6d4" />
+                                        </div>
+                                        <div>
+                                            <h4 style={{ margin: '0 0 4px 0', fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>Paytm</h4>
+                                            <p style={{ margin: 0, fontSize: '13px', color: 'var(--text-secondary)' }}>Indian wallet and UPI payment network.</p>
                                         </div>
                                     </div>
-
-                                    {/* Account ID (optional) */}
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                        <label style={labelStyle}>Merchant ID <span style={{ fontWeight: 400, opacity: 0.6 }}>(Optional)</span></label>
-                                        <input
-                                            type="text"
-                                            placeholder="acc_xxxxxx"
-                                            value={razorpayAccountId}
-                                            onChange={(e) => setRazorpayAccountId(e.target.value)}
-                                            style={inputStyle}
-                                        />
-                                    </div>
+                                    <button
+                                        onClick={() => {
+                                            setTempApiKey(localStorage.getItem('paytm_key_id') || '');
+                                            setTempSecretKey(localStorage.getItem('paytm_key_secret') || '');
+                                            setShowGatewaySecret(false);
+                                            setShowGatewayPopup('Paytm');
+                                        }}
+                                        style={{ background: paytmConn ? 'rgba(16, 185, 129, 0.1)' : 'transparent', border: paytmConn ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid var(--border)', color: paytmConn ? '#10b981' : 'var(--text-primary)', padding: '6px 16px', borderRadius: '8px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}
+                                    >
+                                        {paytmConn ? 'Connected' : 'Connect'}
+                                    </button>
                                 </div>
 
-                                <div style={{
-                                    padding: '16px', borderRadius: '12px', background: 'var(--bg)',
-                                    border: '1px solid var(--border)', marginTop: '8px'
+                                {/* PhonePe */}
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', background: 'var(--surface)' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                                        <div style={{ width: '40px', height: '40px', borderRadius: '8px', background: 'rgba(168, 85, 247, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <IndianRupee size={20} color="#a855f7" />
+                                        </div>
+                                        <div>
+                                            <h4 style={{ margin: '0 0 4px 0', fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>PhonePe</h4>
+                                            <p style={{ margin: 0, fontSize: '13px', color: 'var(--text-secondary)' }}>Fast UPI payments via PhonePe.</p>
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={() => {
+                                            setTempApiKey(localStorage.getItem('phonepe_key_id') || '');
+                                            setTempSecretKey(localStorage.getItem('phonepe_key_secret') || '');
+                                            setShowGatewaySecret(false);
+                                            setShowGatewayPopup('PhonePe');
+                                        }}
+                                        style={{ background: phonepeConn ? 'rgba(16, 185, 129, 0.1)' : 'transparent', border: phonepeConn ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid var(--border)', color: phonepeConn ? '#10b981' : 'var(--text-primary)', padding: '6px 16px', borderRadius: '8px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}
+                                    >
+                                        {phonepeConn ? 'Connected' : 'Connect'}
+                                    </button>
+                                </div>
+                            </div>
+                            <div style={{ padding: '16px', borderRadius: '12px', background: 'var(--bg)', border: '1px solid var(--border)', marginTop: '8px' }}>
+                                <h4 style={{ margin: '0 0 12px 0', fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    <Shield size={14} style={{ color: '#818CF8' }} /> Connection Help
+                                </h4>
+                                <div style={{ display: 'flex', gap: '20px' }}>
+                                    <a href="https://dashboard.razorpay.com/app/keys" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#818CF8', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                        Get API Keys →
+                                    </a>
+                                    <a href="https://razorpay.com/docs/webhooks" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#818CF8', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                        Webhook Guide →
+                                    </a>
+                                    <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginLeft: 'auto' }}>
+                                        Use "DEMO" to test without keys.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* STORAGE SECTION */}
+                {activeSection === 'storage' && (
+                    <div style={{ animation: 'fadeIn 0.3s ease', maxWidth: '700px' }}>
+                        {/* Cloud backup */}
+                        <div style={{ marginBottom: '32px' }}>
+                            <h3 style={{ fontSize: '20px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '16px' }}>Cloud Backup</h3>
+                            <div style={{
+                                padding: '20px', background: 'var(--surface)', border: '1px solid var(--border)',
+                                borderRadius: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center'
+                            }}>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                    <h4 style={{ margin: 0, fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)' }}>Last Backup</h4>
+                                    <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>Today at 10:42 AM • 42 MB</span>
+                                </div>
+                                <button style={{
+                                    background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-primary)',
+                                    padding: '8px 16px', borderRadius: '8px', fontSize: '13px', fontWeight: 600, cursor: 'pointer'
                                 }}>
-                                    <h4 style={{ margin: '0 0 12px 0', fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                        <Shield size={14} style={{ color: '#818CF8' }} /> Connection Help
-                                    </h4>
-                                    <div style={{ display: 'flex', gap: '20px' }}>
-                                        <a href="https://dashboard.razorpay.com/app/keys" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#818CF8', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                            Get API Keys →
-                                        </a>
-                                        <a href="https://razorpay.com/docs/webhooks" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#818CF8', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                            Webhook Guide →
-                                        </a>
-                                        <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginLeft: 'auto' }}>
-                                            Use "DEMO" to test without keys.
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Warning banner */}
-                                <div style={{
-                                    display: 'flex', alignItems: 'center', gap: '12px', marginTop: '4px',
-                                    padding: '14px 16px', borderRadius: '10px',
-                                    background: 'rgba(245, 158, 11, 0.08)',
-                                    border: '1px solid rgba(245, 158, 11, 0.2)'
-                                }}>
-                                    <span style={{ fontSize: '16px' }}>⚠️</span>
-                                    <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-                                        <strong style={{ color: 'var(--text-primary)' }}>Warning:</strong> Changing API keys will interrupt any active payment sessions.
-                                    </span>
-                                </div>
-
-                                {/* Save button */}
-                                <button
-                                    className="cv-add-btn"
-                                    onClick={handleSaveRazorpay}
-                                    disabled={saveStatus === 'saving'}
-                                    style={{ alignSelf: 'flex-start', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '8px' }}
-                                >
-                                    <Save size={16} />
-                                    {saveStatus === 'saving' ? 'Saving...' : saveStatus === 'saved' ? '✓ Saved' : 'Save API Keys'}
+                                    Backup Now
                                 </button>
                             </div>
                         </div>
-                    )}
 
-                    {/* OTHER SECTIONS PLACEHOLDERS */}
-                    {(activeSection === 'notifications' || activeSection === 'security') && (
-                        <div style={{ animation: 'fadeIn 0.3s ease', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '300px' }}>
-                            <div style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>
-                                <div style={{ marginBottom: '16px' }}>🚧</div>
-                                <h3>Coming Soon</h3>
-                                <p style={{ fontSize: '14px', marginTop: '8px' }}>This settings pane will be available in the next update.</p>
+                        <hr style={{ border: 'none', borderBottom: '1px solid var(--border)', margin: '0 0 32px 0' }} />
+
+                        {/* External data */}
+                        <div>
+                            <h3 style={{ fontSize: '20px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '16px' }}>External Data</h3>
+
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                                {/* Export */}
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px' }}>
+                                    <div>
+                                        <h4 style={{ margin: '0 0 4px 0', fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>Export Data</h4>
+                                        <p style={{ margin: 0, fontSize: '13px', color: 'var(--text-secondary)' }}>Download a copy of your data locally.</p>
+                                    </div>
+                                    <div style={{ position: 'relative' }}>
+                                        <button
+                                            onClick={() => setShowExportMenu(!showExportMenu)}
+                                            style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-primary)', padding: '8px 16px', borderRadius: '8px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}
+                                        >
+                                            <Download size={16} /> Export
+                                        </button>
+                                        {showExportMenu && (
+                                            <div style={{ position: 'absolute', top: '100%', right: 0, marginTop: '8px', background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '8px', padding: '4px', zIndex: 10, width: '120px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+                                                <button onClick={() => setShowExportMenu(false)} style={{ width: '100%', textAlign: 'left', padding: '8px 12px', background: 'transparent', border: 'none', color: 'var(--text-primary)', fontSize: '13px', cursor: 'pointer', borderRadius: '4px' }}>as JSON</button>
+                                                <button onClick={() => setShowExportMenu(false)} style={{ width: '100%', textAlign: 'left', padding: '8px 12px', background: 'transparent', border: 'none', color: 'var(--text-primary)', fontSize: '13px', cursor: 'pointer', borderRadius: '4px' }}>as CSV</button>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Import */}
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px' }}>
+                                    <div>
+                                        <h4 style={{ margin: '0 0 4px 0', fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>Import Data</h4>
+                                        <p style={{ margin: 0, fontSize: '13px', color: 'var(--text-secondary)' }}>Restore from a previous backup.</p>
+                                    </div>
+                                    <button
+                                        onClick={() => setShowImportPopup(true)}
+                                        style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#8b5cf6', border: 'none', color: '#fff', padding: '8px 16px', borderRadius: '8px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}
+                                    >
+                                        <Upload size={16} /> Import
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    )}
 
-                </div>
+                    </div>
+                )}
+
+                {/* OTHER SECTIONS PLACEHOLDERS */}
+                {activeSection === 'help' && (
+                    <div style={{ animation: 'fadeIn 0.3s ease', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '300px' }}>
+                        <div style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>
+                            <div style={{ marginBottom: '16px' }}>🚧</div>
+                            <h3>Coming Soon</h3>
+                            <p style={{ fontSize: '14px', marginTop: '8px' }}>This settings pane will be available in the next update.</p>
+                        </div>
+                    </div>
+                )}
+
             </div>
+
+            {/* CONNECTION POPUP MODAL */}
+            {showGatewayPopup && (
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, animation: 'fadeIn 0.2s ease' }}>
+                    <div style={{ background: 'var(--bg)', padding: '28px', borderRadius: '16px', width: '420px', border: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '20px', boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }}>
+                        <h3 style={{ margin: 0, color: 'var(--text-primary)', fontSize: '18px', fontWeight: 700 }}>Connect {showGatewayPopup}</h3>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                            <label style={labelStyle}>API Key / Merchant ID</label>
+                            <input type="text" value={tempApiKey} onChange={(e) => setTempApiKey(e.target.value)} style={inputStyle} placeholder="Enter your public API key" />
+                        </div>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                            <label style={labelStyle}>Secret Key</label>
+                            <div style={{ position: 'relative' }}>
+                                <input
+                                    type={showGatewaySecret ? 'text' : 'password'}
+                                    value={tempSecretKey}
+                                    onChange={(e) => setTempSecretKey(e.target.value)}
+                                    style={{ ...inputStyle, paddingRight: '42px' }}
+                                    placeholder="Enter your secret key"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowGatewaySecret(!showGatewaySecret)}
+                                    style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: '4px' }}
+                                >
+                                    {showGatewaySecret ? <EyeOff size={16} /> : <Eye size={16} />}
+                                </button>
+                            </div>
+                        </div>
+
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', marginTop: '12px' }}>
+                            <button onClick={() => setShowGatewayPopup(null)} style={{ background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-primary)', padding: '10px 16px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '13px' }}>Cancel</button>
+                            <button
+                                onClick={() => {
+                                    const isConnected = !!(tempApiKey.trim() && tempSecretKey.trim());
+
+                                    if (showGatewayPopup === 'Razorpay') {
+                                        setRazorpayKeyId(tempApiKey);
+                                        setRazorpayKeySecret(tempSecretKey);
+                                        localStorage.setItem('rz_key_id', tempApiKey);
+                                        localStorage.setItem('rz_key_secret', tempSecretKey);
+                                        setRazorpayConn(isConnected);
+                                    } else if (showGatewayPopup === 'Paytm') {
+                                        localStorage.setItem('paytm_key_id', tempApiKey);
+                                        localStorage.setItem('paytm_key_secret', tempSecretKey);
+                                        setPaytmConn(isConnected);
+                                    } else if (showGatewayPopup === 'PhonePe') {
+                                        localStorage.setItem('phonepe_key_id', tempApiKey);
+                                        localStorage.setItem('phonepe_key_secret', tempSecretKey);
+                                        setPhonepeConn(isConnected);
+                                    }
+
+                                    setShowGatewayPopup(null);
+                                }}
+                                style={{ background: '#8b5cf6', border: 'none', color: '#fff', padding: '10px 16px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '13px' }}
+                            >
+                                Save & Connect
+                            </button>
+                        </div>
+                        {/* Warning banner */}
+                        <div style={{
+                            display: 'flex', alignItems: 'center', gap: '12px', marginTop: '4px',
+                            padding: '14px 16px', borderRadius: '10px',
+                            background: 'rgba(245, 158, 11, 0.08)',
+                            border: '1px solid rgba(245, 158, 11, 0.2)'
+                        }}>
+                            <span style={{ fontSize: '16px' }}>⚠️</span>
+                            <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+                                <strong style={{ color: 'var(--text-primary)' }}>Warning:</strong> Changing API keys will interrupt any active payment sessions.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* IMPORT MODAL */}
+            {showImportPopup && (
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, animation: 'fadeIn 0.2s ease' }}>
+                    <div style={{ background: 'var(--bg)', padding: '32px', borderRadius: '16px', width: '500px', border: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '24px', boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <h3 style={{ margin: 0, color: 'var(--text-primary)', fontSize: '18px', fontWeight: 700 }}>Import Data</h3>
+                            <button onClick={() => setShowImportPopup(false)} style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', fontSize: '18px', cursor: 'pointer' }}>✕</button>
+                        </div>
+
+                        <div style={{
+                            border: '2px dashed var(--border)', borderRadius: '12px', padding: '48px 24px',
+                            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px',
+                            background: 'var(--surface)', cursor: 'pointer', transition: 'border-color 0.2s'
+                        }}>
+                            <UploadCloud size={48} color="#8b5cf6" />
+                            <div style={{ textAlign: 'center' }}>
+                                <p style={{ margin: '0 0 8px 0', fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)' }}>
+                                    Drag and drop files here
+                                </p>
+                                <p style={{ margin: 0, fontSize: '13px', color: 'var(--text-secondary)' }}>
+                                    ZIP folders, JSON, or CSV files supported.
+                                </p>
+                            </div>
+                            <button style={{
+                                marginTop: '8px', background: 'transparent', border: '1px solid var(--border)',
+                                color: 'var(--text-primary)', padding: '8px 16px', borderRadius: '8px', fontSize: '12px', fontWeight: 600, cursor: 'pointer'
+                            }}>
+                                Browse Files
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

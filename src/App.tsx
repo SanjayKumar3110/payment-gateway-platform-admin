@@ -1,10 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import './App.css';
-import {
-  LayoutDashboard, CreditCard, ListOrdered, FileText,
-  Settings, Bell, Moon, Sun, Search,
-  Hexagon, LogOut, HelpCircle
-} from 'lucide-react';
+import { LayoutDashboard, CreditCard, ListOrdered, FileText, Settings, Bell, Moon, Sun, Search, Hexagon, LogOut, HelpCircle } from 'lucide-react';
 
 import { LoginPage } from './Login/login';
 import { Payments } from './components/PaymentsPanel';
@@ -309,7 +305,7 @@ export default function App() {
           {activeTab === 'analytics' && <Analytics />}
           {activeTab === 'payments' && <Payments />}
           {activeTab === 'invoices' && <Invoices />}
-          {activeTab === 'settings' && <SettingsPanel userData={userData} />}
+          {activeTab === 'settings' && <SettingsPanel userData={userData} darkMode={darkMode} setDarkMode={setDarkMode} />}
           {activeTab === 'Support' && <SupportPanel darkMode={darkMode} />}
           {activeTab === 'notifications' && (
             <NotificationsPanel

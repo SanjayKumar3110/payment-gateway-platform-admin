@@ -49,17 +49,6 @@ export function SupportPanel({ darkMode }: { darkMode?: boolean }) {
 
       {/* Background decoration matching reference picture */}
       <div style={{ position: 'relative', width: '100%', maxWidth: '600px', marginTop: '15px' }}>
-        {/* <div style={{
-          position: 'absolute',
-          top: '-20px',
-          left: '-20px',
-          width: '100%',
-          height: '100%',
-          backgroundColor: darkMode ? 'rgba(244, 114, 182, 0.05)' : '#eef2fb',
-          borderRadius: '24px',
-          zIndex: 0
-        }} /> */}
-
         <div style={{
           position: 'relative',
           backgroundColor: darkMode ? '#14141c' : '#ffffff',
@@ -92,18 +81,10 @@ export function SupportPanel({ darkMode }: { darkMode?: boolean }) {
                       type="button"
                       onClick={() => setRating(value)}
                       style={{
-                        flex: 1,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '12px',
-                        padding: '24px 8px',
+                        flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '12px', padding: '24px 8px',
                         backgroundColor: darkMode ? (isSelected ? 'rgba(244, 114, 182, 0.1)' : 'transparent') : (isSelected ? '#fff0f6' : '#ffffff'),
                         border: isSelected ? '2px solid #f472b6' : (darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid #e5e7eb'),
-                        borderRadius: '8px',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s',
+                        borderRadius: '8px', cursor: 'pointer', transition: 'all 0.2s',
                         color: isSelected ? '#f472b6' : 'var(--text-secondary)',
                         boxShadow: isSelected && !darkMode ? '0 4px 12px rgba(244, 114, 182, 0.2)' : 'none'
                       }}
