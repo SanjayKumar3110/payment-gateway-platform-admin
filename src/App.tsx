@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import './App.css';
-import { LayoutDashboard, CreditCard, ListOrdered, FileText, Settings, Bell, Moon, Sun, Search, Hexagon, LogOut, HelpCircle } from 'lucide-react';
+import { LayoutDashboard, CreditCard, ListOrdered, FileText, Settings, Bell, Moon, Sun, Search, Hexagon, LogOut } from 'lucide-react';
 
 import { LoginPage } from './Login/login';
 import { Payments } from './components/PaymentsPanel';
@@ -10,7 +10,6 @@ import { Invoices } from './components/InvoicesPanel';
 import { SettingsPanel } from './components/SettingsPanel';
 import { NotifyWindow } from './components/NotificationWindow';
 import { NotificationsPanel } from './components/NotificationsPanel';
-import { SupportPanel } from './components/SupportPanel';
 import { useNotifications } from './components/utils/NotifyUtils';
 
 interface UserData {
@@ -22,7 +21,7 @@ interface UserData {
   role: string;
 }
 
-type Tab = 'dashboard' | 'analytics' | 'payments' | 'invoices' | 'settings' | 'Support' | 'notifications';
+type Tab = 'dashboard' | 'analytics' | 'payments' | 'invoices' | 'settings' | 'notifications';
 
 const PAGE_TITLES: Record<Tab, string> = {
   dashboard: 'Dashboard',
@@ -30,7 +29,6 @@ const PAGE_TITLES: Record<Tab, string> = {
   payments: 'Payments',
   invoices: 'Invoices',
   settings: 'Settings',
-  Support: 'Support',
   notifications: 'Notifications'
 };
 
@@ -179,15 +177,7 @@ export default function App() {
               {unreadCount > 0 && <span className="nav-badge">{unreadCount}</span>}
             </button>
 
-            <button
-              className="nav-btn"
-              style={{ fontSize: '14px' }}
-              title={darkMode ? 'Light Mode' : 'Dark Mode'}
-              onClick={() => setDarkMode(prev => !prev)}
-            >
-              {darkMode ? <Sun className="icon" /> : <Moon className="icon" />}
-              <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
-            </button>
+
 
             <button
               className={`nav-btn ${activeTab === 'settings' ? 'active' : ''}`} onClick={() => setActiveTab('settings')}
@@ -199,10 +189,14 @@ export default function App() {
         </nav>
 
         <div className="sidebar-bottom">
-          <button className={`nav-btn ${activeTab === 'Support' ? 'active' : ''}`} style={{ fontSize: '14px' }}
-            onClick={() => setActiveTab('Support')}>
-            <HelpCircle className="icon" />
-            <span>Support</span>
+          <button
+            className="nav-btn"
+            style={{ fontSize: '14px' }}
+            title={darkMode ? 'Light Mode' : 'Dark Mode'}
+            onClick={() => setDarkMode(prev => !prev)}
+          >
+            {darkMode ? <Sun className="icon" /> : <Moon className="icon" />}
+            <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
           </button>
           <button className="nav-btn" style={{ fontSize: '14px', width: '100%', justifyContent: 'flex-start', padding: '10px 12px', margin: 0, color: '#FF4444', border: 'none', backgroundColor: 'transparent', cursor: 'pointer' }}
 
@@ -306,7 +300,6 @@ export default function App() {
           {activeTab === 'payments' && <Payments />}
           {activeTab === 'invoices' && <Invoices />}
           {activeTab === 'settings' && <SettingsPanel userData={userData} darkMode={darkMode} setDarkMode={setDarkMode} />}
-          {activeTab === 'Support' && <SupportPanel darkMode={darkMode} />}
           {activeTab === 'notifications' && (
             <NotificationsPanel
               darkMode={darkMode}

@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { User, Shield, HelpCircle, Eye, EyeOff, Copy, Cloud, Check, Sun, Monitor, Moon, UserCircle, MoreHorizontal, Link2, Smartphone, QrCode, Wallet, CreditCard, IndianRupee, Download, Upload, UploadCloud } from 'lucide-react';
+import { User, Shield, HelpCircle, Eye, EyeOff, Copy, Cloud, Check, Sun, Monitor, Moon, UserCircle, MoreHorizontal, Link2, Smartphone, QrCode, Wallet, CreditCard, IndianRupee, Download, Upload, UploadCloud, Mail, Phone, BookOpen, ExternalLink } from 'lucide-react';
 import './css/components.css';
+import { HelpFeedbackForm } from './utils/supportUtil';
 
 interface UserData {
     id: string;
@@ -38,6 +39,9 @@ export function SettingsPanel({ userData, darkMode, setDarkMode }: SettingsPanel
     const [showGatewaySecret, setShowGatewaySecret] = useState(false);
     const [tempApiKey, setTempApiKey] = useState('');
     const [tempSecretKey, setTempSecretKey] = useState('');
+    const [modalKey, setModalKey] = useState(0); // incremented each open to force fresh remount
+    const [confirmDelete, setConfirmDelete] = useState(false);
+    const [gatewayStatus, setGatewayStatus] = useState<'idle' | 'saved' | 'deleted'>('idle');
 
     const [showExportMenu, setShowExportMenu] = useState(false);
     const [showImportPopup, setShowImportPopup] = useState(false);
@@ -55,9 +59,49 @@ export function SettingsPanel({ userData, darkMode, setDarkMode }: SettingsPanel
         }
     };
 
-    // Razorpay state — load from localStorage
-    const [razorpayKeyId, setRazorpayKeyId] = useState(() => userData?.rz_key_id || localStorage.getItem('rz_key_id') || '');
-    const [razorpayKeySecret, setRazorpayKeySecret] = useState(() => userData?.rz_key_secret || localStorage.getItem('rz_key_secret') || '');
+    const handleSaveGatewayKeys = async (newApiId: string, newSecret: string) => {
+        if (!userData?.email) return;
+        try {
+            const response = await fetch('http://localhost:5000/api/update-keys', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: userData.email,
+                    key_id: newApiId,
+                    key_secret: newSecret
+                })
+            });
+            if (response.ok) {
+                const result = await response.json();
+                localStorage.setItem('payplatform_user', JSON.stringify(result.user));
+            }
+        } catch (err) {
+            console.error('Failed to sync gateway keys', err);
+        }
+    };
+
+    // Helper: always read fresh from localStorage so stale React state never leaks into inputs
+    const openGatewayPopup = (gateway: string) => {
+        let apiKey = '';
+        let secretKey = '';
+        if (gateway === 'Razorpay') {
+            apiKey = localStorage.getItem('rz_key_id') ?? '';
+            secretKey = localStorage.getItem('rz_key_secret') ?? '';
+        } else if (gateway === 'Paytm') {
+            apiKey = localStorage.getItem('paytm_key_id') ?? '';
+            secretKey = localStorage.getItem('paytm_key_secret') ?? '';
+        } else if (gateway === 'PhonePe') {
+            apiKey = localStorage.getItem('phonepe_key_id') ?? '';
+            secretKey = localStorage.getItem('phonepe_key_secret') ?? '';
+        }
+        setTempApiKey(apiKey);
+        setTempSecretKey(secretKey);
+        setShowGatewaySecret(false);
+        setConfirmDelete(false);
+        setGatewayStatus('idle');
+        setModalKey(k => k + 1); // force full remount of modal inputs
+        setShowGatewayPopup(gateway);
+    };
 
     /* ── Shared input style ── */
     const inputStyle: React.CSSProperties = {
@@ -137,19 +181,14 @@ export function SettingsPanel({ userData, darkMode, setDarkMode }: SettingsPanel
                 onClick={() => setOpenSessionMenu(openSessionMenu === id ? null : id)}
             />
             {openSessionMenu === id && (
-                <div style={{
-                    position: 'absolute', top: '100%', right: 0, marginTop: '6px',
-                    background: 'var(--bg)', border: '1px solid var(--border)',
-                    borderRadius: '8px', padding: '4px', zIndex: 50, width: '120px',
-                    boxShadow: '0 4px 16px rgba(0,0,0,0.15)'
-                }}>
+                <div>
                     <button
                         onClick={() => setOpenSessionMenu(null)}
                         style={{
-                            width: '100%', textAlign: 'left', padding: '8px 12px',
-                            background: 'transparent', border: 'none',
-                            color: '#ef4444', fontSize: '13px', fontWeight: 600,
-                            cursor: 'pointer', borderRadius: '4px'
+                            background: 'var(--bg)', border: '1px solid var(--border)', color: 'var(--text-primary)',
+                            padding: '8px 16px', borderRadius: '8px', fontSize: '13px', fontWeight: 600, cursor: 'pointer',
+                            position: 'absolute', top: '100%', right: 0, marginTop: '6px', zIndex: 50, width: '120px',
+                            boxShadow: '0 4px 16px rgba(0,0,0,0.15)'
                         }}
                         onMouseEnter={e => (e.currentTarget.style.background = 'rgba(239,68,68,0.08)')}
                         onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
@@ -378,12 +417,7 @@ export function SettingsPanel({ userData, darkMode, setDarkMode }: SettingsPanel
                                         </div>
                                     </div>
                                     <button
-                                        onClick={() => {
-                                            setTempApiKey(razorpayKeyId);
-                                            setTempSecretKey(razorpayKeySecret);
-                                            setShowGatewaySecret(false);
-                                            setShowGatewayPopup('Razorpay');
-                                        }}
+                                        onClick={() => openGatewayPopup('Razorpay')}
                                         style={{ background: razorpayConn ? 'rgba(16, 185, 129, 0.1)' : 'transparent', border: razorpayConn ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid var(--border)', color: razorpayConn ? '#10b981' : 'var(--text-primary)', padding: '6px 16px', borderRadius: '8px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}
                                     >
                                         {razorpayConn ? 'Connected' : 'Connect'}
@@ -402,12 +436,7 @@ export function SettingsPanel({ userData, darkMode, setDarkMode }: SettingsPanel
                                         </div>
                                     </div>
                                     <button
-                                        onClick={() => {
-                                            setTempApiKey(localStorage.getItem('paytm_key_id') || '');
-                                            setTempSecretKey(localStorage.getItem('paytm_key_secret') || '');
-                                            setShowGatewaySecret(false);
-                                            setShowGatewayPopup('Paytm');
-                                        }}
+                                        onClick={() => openGatewayPopup('Paytm')}
                                         style={{ background: paytmConn ? 'rgba(16, 185, 129, 0.1)' : 'transparent', border: paytmConn ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid var(--border)', color: paytmConn ? '#10b981' : 'var(--text-primary)', padding: '6px 16px', borderRadius: '8px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}
                                     >
                                         {paytmConn ? 'Connected' : 'Connect'}
@@ -426,12 +455,7 @@ export function SettingsPanel({ userData, darkMode, setDarkMode }: SettingsPanel
                                         </div>
                                     </div>
                                     <button
-                                        onClick={() => {
-                                            setTempApiKey(localStorage.getItem('phonepe_key_id') || '');
-                                            setTempSecretKey(localStorage.getItem('phonepe_key_secret') || '');
-                                            setShowGatewaySecret(false);
-                                            setShowGatewayPopup('PhonePe');
-                                        }}
+                                        onClick={() => openGatewayPopup('PhonePe')}
                                         style={{ background: phonepeConn ? 'rgba(16, 185, 129, 0.1)' : 'transparent', border: phonepeConn ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid var(--border)', color: phonepeConn ? '#10b981' : 'var(--text-primary)', padding: '6px 16px', borderRadius: '8px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}
                                     >
                                         {phonepeConn ? 'Connected' : 'Connect'}
@@ -529,14 +553,72 @@ export function SettingsPanel({ userData, darkMode, setDarkMode }: SettingsPanel
                     </div>
                 )}
 
-                {/* OTHER SECTIONS PLACEHOLDERS */}
+                {/* GET HELP SECTION */}
                 {activeSection === 'help' && (
-                    <div style={{ animation: 'fadeIn 0.3s ease', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '300px' }}>
-                        <div style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>
-                            <div style={{ marginBottom: '16px' }}>🚧</div>
-                            <h3>Coming Soon</h3>
-                            <p style={{ fontSize: '14px', marginTop: '8px' }}>This settings pane will be available in the next update.</p>
+                    <div style={{ animation: 'fadeIn 0.3s ease', display: 'flex', flexDirection: 'column', gap: '40px' }}>
+
+                        {/* ── About ── */}
+                        <div>
+                            <h3 style={{ fontSize: '20px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4px' }}>About</h3>
+                            <hr style={{ border: 'none', borderBottom: '1px solid var(--border)', margin: '0 0 20px 0' }} />
+                            <div style={{ padding: '24px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '14px', lineHeight: 1.8 }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                                    <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(139,92,246,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Shield size={20} color="#8b5cf6" />
+                                    </div>
+                                    <div>
+                                        <p style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: 'var(--text-primary)' }}>PayPlatform Admin</p>
+                                        <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-secondary)' }}>Version 0.1.0 — Alpha</p>
+                                    </div>
+                                </div>
+                                <p style={{ margin: '0 0 12px 0', fontSize: '14px', color: 'var(--text-secondary)' }}>
+                                    <strong style={{ color: 'var(--text-primary)' }}>PayPlatform Admin</strong> is a powerful, all-in-one payment operations dashboard designed for businesses that process digital transactions. It gives you real-time visibility into payments, automated invoice generation, deep analytics, and seamless integration with India's leading payment gateways — Razorpay, Paytm, and PhonePe.
+                                </p>
+                                <p style={{ margin: '0 0 12px 0', fontSize: '14px', color: 'var(--text-secondary)' }}>
+                                    Built as an Electron-based desktop application, it runs entirely on your local machine for maximum security and performance. Data is stored locally and synced through your configured backend — giving you complete ownership of your business data.
+                                </p>
+                                <p style={{ margin: '0 0 20px 0', fontSize: '14px', color: 'var(--text-secondary)' }}>
+                                    Whether you're tracking live transactions, managing customer invoices, or analysing revenue trends — PayPlatform Admin is built to keep you in control.
+                                </p>
+                                <a
+                                    href="#"
+                                    onClick={(e) => e.preventDefault()}
+                                    style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '13px', fontWeight: 600, color: '#8b5cf6', textDecoration: 'none', padding: '8px 16px', border: '1px solid rgba(139,92,246,0.3)', borderRadius: '8px', background: 'rgba(139,92,246,0.07)' }}
+                                >
+                                    <BookOpen size={14} /> User Manual <ExternalLink size={12} />
+                                </a>
+                            </div>
                         </div>
+
+                        {/* ── Feedback ── */}
+                        <HelpFeedbackForm darkMode={darkMode} />
+
+                        {/* ── Contact ── */}
+                        <div>
+                            <h3 style={{ fontSize: '20px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4px' }}>Contact</h3>
+                            <hr style={{ border: 'none', borderBottom: '1px solid var(--border)', margin: '0 0 20px 0' }} />
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '16px 20px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px' }}>
+                                    <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(139,92,246,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                                        <Mail size={18} color="#8b5cf6" />
+                                    </div>
+                                    <div>
+                                        <p style={{ margin: '0 0 2px 0', fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 500 }}>Email</p>
+                                        <p style={{ margin: 0, fontSize: '14px', color: 'var(--text-primary)', fontWeight: 600 }}>dev@payplatform.in</p>
+                                    </div>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '16px 20px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px' }}>
+                                    <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(16,185,129,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                                        <Phone size={18} color="#10b981" />
+                                    </div>
+                                    <div>
+                                        <p style={{ margin: '0 0 2px 0', fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 500 }}>Phone</p>
+                                        <p style={{ margin: 0, fontSize: '14px', color: 'var(--text-primary)', fontWeight: 600 }}>+91 98765 43210</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 )}
 
@@ -545,20 +627,43 @@ export function SettingsPanel({ userData, darkMode, setDarkMode }: SettingsPanel
             {/* CONNECTION POPUP MODAL */}
             {showGatewayPopup && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, animation: 'fadeIn 0.2s ease' }}>
-                    <div style={{ background: 'var(--bg)', padding: '28px', borderRadius: '16px', width: '420px', border: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '20px', boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }}>
-                        <h3 style={{ margin: 0, color: 'var(--text-primary)', fontSize: '18px', fontWeight: 700 }}>Connect {showGatewayPopup}</h3>
+                    <div key={modalKey} style={{ background: 'var(--bg)', padding: '28px', borderRadius: '16px', width: '420px', border: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '20px', boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <h3 style={{ margin: 0, color: 'var(--text-primary)', fontSize: '18px', fontWeight: 700 }}>Connect {showGatewayPopup}</h3>
+                            <button onClick={() => { setShowGatewayPopup(null); setConfirmDelete(false); setGatewayStatus('idle'); }} style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', fontSize: '18px', cursor: 'pointer' }}>✕</button>
+                        </div>
+
+                        {/* Success / Deleted banner */}
+                        {gatewayStatus === 'saved' && (
+                            <div style={{ padding: '10px 16px', borderRadius: '8px', background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)', color: '#10b981', fontSize: '13px', fontWeight: 600, textAlign: 'center' }}>
+                                ✓ Connected successfully
+                            </div>
+                        )}
+                        {gatewayStatus === 'deleted' && (
+                            <div style={{ padding: '10px 16px', borderRadius: '8px', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#ef4444', fontSize: '13px', fontWeight: 600, textAlign: 'center' }}>
+                                Keys deleted successfully
+                            </div>
+                        )}
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                             <label style={labelStyle}>API Key / Merchant ID</label>
-                            <input type="text" value={tempApiKey} onChange={(e) => setTempApiKey(e.target.value)} style={inputStyle} placeholder="Enter your public API key" />
+                            <input
+                                key={`api-${modalKey}`}
+                                type="text"
+                                defaultValue={tempApiKey}
+                                onChange={(e) => setTempApiKey(e.target.value)}
+                                style={inputStyle}
+                                placeholder="Enter your public API key"
+                            />
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                             <label style={labelStyle}>Secret Key</label>
                             <div style={{ position: 'relative' }}>
                                 <input
+                                    key={`secret-${modalKey}`}
                                     type={showGatewaySecret ? 'text' : 'password'}
-                                    value={tempSecretKey}
+                                    defaultValue={tempSecretKey}
                                     onChange={(e) => setTempSecretKey(e.target.value)}
                                     style={{ ...inputStyle, paddingRight: '42px' }}
                                     placeholder="Enter your secret key"
@@ -573,35 +678,61 @@ export function SettingsPanel({ userData, darkMode, setDarkMode }: SettingsPanel
                             </div>
                         </div>
 
-                        <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', marginTop: '12px' }}>
-                            <button onClick={() => setShowGatewayPopup(null)} style={{ background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-primary)', padding: '10px 16px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '13px' }}>Cancel</button>
-                            <button
-                                onClick={() => {
-                                    const isConnected = !!(tempApiKey.trim() && tempSecretKey.trim());
-
-                                    if (showGatewayPopup === 'Razorpay') {
-                                        setRazorpayKeyId(tempApiKey);
-                                        setRazorpayKeySecret(tempSecretKey);
-                                        localStorage.setItem('rz_key_id', tempApiKey);
-                                        localStorage.setItem('rz_key_secret', tempSecretKey);
-                                        setRazorpayConn(isConnected);
-                                    } else if (showGatewayPopup === 'Paytm') {
-                                        localStorage.setItem('paytm_key_id', tempApiKey);
-                                        localStorage.setItem('paytm_key_secret', tempSecretKey);
-                                        setPaytmConn(isConnected);
-                                    } else if (showGatewayPopup === 'PhonePe') {
-                                        localStorage.setItem('phonepe_key_id', tempApiKey);
-                                        localStorage.setItem('phonepe_key_secret', tempSecretKey);
-                                        setPhonepeConn(isConnected);
-                                    }
-
-                                    setShowGatewayPopup(null);
-                                }}
-                                style={{ background: '#8b5cf6', border: 'none', color: '#fff', padding: '10px 16px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '13px' }}
-                            >
-                                Save & Connect
-                            </button>
-                        </div>
+                        {/* Inline delete confirmation */}
+                        {confirmDelete ? (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                <p style={{ margin: 0, fontSize: '13px', color: '#ef4444', fontWeight: 600, textAlign: 'center' }}>Delete saved API keys for {showGatewayPopup}?</p>
+                                <div style={{ display: 'flex', gap: '10px' }}>
+                                    <button onClick={() => setConfirmDelete(false)} style={{ flex: 1, background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-primary)', padding: '10px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '13px' }}>Cancel</button>
+                                    <button
+                                        onClick={() => {
+                                            const gw = showGatewayPopup;
+                                            // Clear all per-gateway keys
+                                            if (gw === 'Razorpay') { localStorage.removeItem('rz_key_id'); localStorage.removeItem('rz_key_secret'); }
+                                            if (gw === 'Paytm') { localStorage.removeItem('paytm_key_id'); localStorage.removeItem('paytm_key_secret'); }
+                                            if (gw === 'PhonePe') { localStorage.removeItem('phonepe_key_id'); localStorage.removeItem('phonepe_key_secret'); }
+                                            handleSaveGatewayKeys('', '');
+                                            if (gw === 'Razorpay') setRazorpayConn(false);
+                                            if (gw === 'Paytm') setPaytmConn(false);
+                                            if (gw === 'PhonePe') setPhonepeConn(false);
+                                            setConfirmDelete(false);
+                                            setGatewayStatus('deleted');
+                                            setTimeout(() => { setShowGatewayPopup(null); setGatewayStatus('idle'); }, 1200);
+                                        }}
+                                        style={{ flex: 1, background: '#ef4444', border: 'none', color: '#fff', padding: '10px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '13px' }}
+                                    >Confirm Delete</button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', marginTop: '4px' }}>
+                                <button
+                                    onClick={() => setConfirmDelete(true)}
+                                    style={{ background: 'transparent', border: '1px solid #ef4444', color: '#ef4444', padding: '10px 16px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '13px' }}
+                                >
+                                    Delete
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        const gw = showGatewayPopup;
+                                        const apiId = tempApiKey.trim();
+                                        const secret = tempSecretKey.trim();
+                                        // Save to correct localStorage keys per gateway
+                                        if (gw === 'Razorpay') { localStorage.setItem('rz_key_id', apiId); localStorage.setItem('rz_key_secret', secret); }
+                                        if (gw === 'Paytm') { localStorage.setItem('paytm_key_id', apiId); localStorage.setItem('paytm_key_secret', secret); }
+                                        if (gw === 'PhonePe') { localStorage.setItem('phonepe_key_id', apiId); localStorage.setItem('phonepe_key_secret', secret); }
+                                        handleSaveGatewayKeys(apiId, secret);
+                                        if (gw === 'Razorpay') setRazorpayConn(!!(apiId && secret));
+                                        if (gw === 'Paytm') setPaytmConn(!!(apiId && secret));
+                                        if (gw === 'PhonePe') setPhonepeConn(!!(apiId && secret));
+                                        setGatewayStatus('saved');
+                                        setTimeout(() => { setShowGatewayPopup(null); setGatewayStatus('idle'); }, 1200);
+                                    }}
+                                    style={{ background: '#8b5cf6', border: 'none', color: '#fff', padding: '10px 16px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '13px', flex: 1 }}
+                                >
+                                    Save & Connect
+                                </button>
+                            </div>
+                        )}
                         {/* Warning banner */}
                         <div style={{
                             display: 'flex', alignItems: 'center', gap: '12px', marginTop: '4px',
