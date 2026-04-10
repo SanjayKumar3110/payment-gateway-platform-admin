@@ -35,7 +35,7 @@ export function Analytics() {
 
   const fetchPayments = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/payments');
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/payments`);
       if (response.ok) {
         const data = await response.json();
         setRealPayments(data);

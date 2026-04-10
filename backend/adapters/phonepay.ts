@@ -21,7 +21,7 @@ export const syncPhonePePayments = async () => {
         };
 
         // 3. SEND it to your payment.ts internal API
-        await axios.post('http://localhost:5000/api/payments/record', formattedData);
+        await axios.post(`${process.env.API_URL}/api/payments/record`, formattedData);
 
         console.log('PhonePe data synced successfully!');
     } catch (error) {

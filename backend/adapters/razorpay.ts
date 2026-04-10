@@ -26,7 +26,7 @@ export const syncRazorpayPayment = async (razorpayPaymentId: string) => {
 
         // 4. THE CONNECTION: Send the translated data to payment.ts
         // We use 'localhost' because both scripts are running on your machine
-        const response = await axios.post('http://localhost:5000/api/payments/record', standardizedData);
+        const response = await axios.post(`${process.env.API_URL}/api/payments/record`, standardizedData);
 
         console.log('Successfully synced to data.json:', response.data);
     } catch (error) {

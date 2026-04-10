@@ -55,9 +55,10 @@ export function LoginPage({ onLogin }: LoginPageProps) {
     setIsLoading(true);
 
     try {
+      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
       const url = isSignUp
-        ? 'http://localhost:5000/api/signup'
-        : 'http://localhost:5000/api/login';
+        ? `${baseUrl}/api/signup`
+        : `${baseUrl}/api/login`;
 
       const body = isSignUp
         ? { name, businessName, email, phone, password }

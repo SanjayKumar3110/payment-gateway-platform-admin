@@ -20,14 +20,16 @@
     "@supabase/supabase-js": "^2.99.3",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
-    "dotenv": "^17.3.1",
+    "dotenv": "^17.4.1",
     "express": "^5.2.1",
     "framer-motion": "^12.38.0",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.3",
     "lucide-react": "^0.577.0",
     "motion": "^12.38.0",
+    "ngrok": "^5.0.0-beta.2",
     "pg": "^8.20.0",
+    "qrcode": "^1.5.4",
     "razorpay": "^2.9.6",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
@@ -43,6 +45,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.12.0",
     "@types/pg": "^8.18.0",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.0",
@@ -63,6 +66,7 @@
   "build": {
     "appId": "com.paymentgateway.admin",
     "productName": "Payment Gateway Admin",
+    "icon": "src/assets/logo.png",
     "directories": {
       "output": "release"
     },

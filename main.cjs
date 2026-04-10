@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
 const path = require('path');
 const url = require('url');
 
@@ -8,6 +8,7 @@ function createWindow() {
     const win = new BrowserWindow({
         width: 1200,
         height: 800,
+        icon: path.join(__dirname, 'src', 'assets', 'logo.png'),
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -18,6 +19,7 @@ function createWindow() {
         // In dev mode, wait for Vite to start and load the URL
         // We assume Vite runs on port 5173
         win.loadURL('http://localhost:5173');
+        // Menu.setApplicationMenu(null);
         // Open the DevTools.
         // win.webContents.openDevTools();
     } else {

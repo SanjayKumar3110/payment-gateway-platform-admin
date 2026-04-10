@@ -70,7 +70,7 @@ export function Payments() {
   // Fetch real payments from backend
   const fetchPayments = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/payments');
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/payments`);
       if (response.ok) {
         const data = await response.json();
         setRealPayments(data);
@@ -84,7 +84,7 @@ export function Payments() {
     fetchPayments();
 
     // Establish WebSocket Connection
-    const socket = io('http://localhost:5000');
+    const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000');
 
     socket.on('newPayment', (payment) => {
       console.log('Live Payment Received:', payment);

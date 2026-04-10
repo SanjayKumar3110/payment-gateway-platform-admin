@@ -22,7 +22,7 @@ export function Dashboard({ showMorePayments }: DashboardProps) {
 
   const fetchPayments = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/payments');
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/payments`);
       if (response.ok) {
         const data = await response.json();
         setRealPayments(data);
@@ -36,7 +36,7 @@ export function Dashboard({ showMorePayments }: DashboardProps) {
     fetchPayments();
 
     // Establish WebSocket Connection
-    const socket = io('http://localhost:5000');
+    const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000');
 
     socket.on('newPayment', (payment) => {
       setRealPayments(prev => [payment, ...prev]);

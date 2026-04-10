@@ -31,6 +31,8 @@ export function SettingsPanel({ userData, darkMode, setDarkMode }: SettingsPanel
     const [smsNotifs, setSmsNotifs] = useState(false);
     const [theme, setThemeState] = useState<'light' | 'auto' | 'dark'>(darkMode ? 'dark' : 'light');
     const [showQR, setShowQR] = useState(false);
+    const [qrImageUrl, setQrImageUrl] = useState<string | null>(null);
+    const [qrError, setQrError] = useState<string | null>(null);
     const [razorpayConn, setRazorpayConn] = useState(() => !!(userData?.rz_key_id || localStorage.getItem('rz_key_id')));
     const [paytmConn, setPaytmConn] = useState(() => !!localStorage.getItem('paytm_key_id'));
     const [phonepeConn, setPhonepeConn] = useState(() => !!localStorage.getItem('phonepe_key_id'));
@@ -59,10 +61,28 @@ export function SettingsPanel({ userData, darkMode, setDarkMode }: SettingsPanel
         }
     };
 
+    const handleConnectApp = async () => {
+        try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/remote-access`);
+            if (res.ok) {
+                const data = await res.json();
+                setQrImageUrl(data.qrCode);
+                setQrError(null);
+            } else {
+                setQrImageUrl(null);
+                setQrError('no qr to generate');
+            }
+        } catch (err) {
+            setQrImageUrl(null);
+            setQrError('no qr to generate');
+        }
+        setShowQR(true);
+    };
+
     const handleSaveGatewayKeys = async (newApiId: string, newSecret: string) => {
         if (!userData?.email) return;
         try {
-            const response = await fetch('http://localhost:5000/api/update-keys', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/update-keys`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -380,7 +400,7 @@ export function SettingsPanel({ userData, darkMode, setDarkMode }: SettingsPanel
 
                                 {!showQR ? (
                                     <button
-                                        onClick={() => setShowQR(true)}
+                                        onClick={handleConnectApp}
                                         style={{
                                             background: '#8b5cf6', border: 'none', color: '#ffffff',
                                             padding: '8px 24px', borderRadius: '8px', fontSize: '13px', fontWeight: 600, cursor: 'pointer'
@@ -389,8 +409,14 @@ export function SettingsPanel({ userData, darkMode, setDarkMode }: SettingsPanel
                                         Connect
                                     </button>
                                 ) : (
-                                    <div style={{ padding: '8px', background: '#fff', borderRadius: '8px', border: '1px solid var(--border)', animation: 'fadeIn 0.3s ease' }}>
-                                        <QrCode size={56} color="#000" />
+                                    <div style={{ padding: '8px', background: '#fff', borderRadius: '8px', border: '1px solid var(--border)', animation: 'fadeIn 0.3s ease', display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: '74px', minHeight: '74px' }}>
+                                        {qrImageUrl ? (
+                                            <img src={qrImageUrl} alt="QR Code" style={{ width: '80px', height: '80px' }} />
+                                        ) : qrError ? (
+                                            <span style={{ fontSize: '12px', color: '#ef4444', textAlign: 'center' }}>{qrError}</span>
+                                        ) : (
+                                            <QrCode size={56} color="#000" />
+                                        )}
                                     </div>
                                 )}
                             </div>
