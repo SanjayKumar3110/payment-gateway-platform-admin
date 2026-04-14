@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Mail, Lock, Eye, EyeOff, Hexagon, Chrome, Shield, Zap, Globe, User, Building2, Phone } from 'lucide-react';
+import { PassReset } from './passReset';
 import './Login.css';
 
 interface UserData {
@@ -26,6 +27,8 @@ export function LoginPage({ onLogin }: LoginPageProps) {
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [passwordChangedMessage, setPasswordChangedMessage] = useState(false);
 
   const resetForm = () => {
     setEmail('');
@@ -141,12 +144,26 @@ export function LoginPage({ onLogin }: LoginPageProps) {
 
       {/* ═══ RIGHT — Sign-In / Sign-Up Form ═══ */}
       <div className="login-right">
-        <div className="login-form-panel">
+        {isForgotPassword ? (
+          <PassReset 
+            onBack={() => setIsForgotPassword(false)} 
+            onSuccess={() => {
+              setIsForgotPassword(false);
+              setPasswordChangedMessage(true);
+              setTimeout(() => setPasswordChangedMessage(false), 3000);
+            }} 
+          />
+        ) : (
+        <div className="login-form-panel" style={{ position: 'relative' }}>
+          {passwordChangedMessage && (
+            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: '#e6f7edf0', color: '#0d8246', padding: '12px 24px', borderRadius: '8px', zIndex: 10, border: '1px solid #7ce3a2', fontWeight: 500, boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
+              Password changed!
+            </div>
+          )}
           <div className="login-header">
             <h2>{isSignUp ? 'Create Account' : 'Welcome back'}</h2>
             <p>{isSignUp ? 'Sign up to get started with PayPlatform' : 'Sign in to your admin dashboard'}</p>
           </div>
-
           <form className="login-form" onSubmit={handleSubmit}>
             {error && <div className="login-error">{error}</div>}
 
@@ -252,7 +269,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                   />
                   <span>Remember me</span>
                 </label>
-                <button type="button" className="login-forgot">Forgot password?</button>
+                <button type="button" className="login-forgot" onClick={() => setIsForgotPassword(true)}>Forgot password?</button>
               </div>
             )}
 
@@ -287,6 +304,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
             )}
           </div>
         </div>
+        )}
       </div>
 
     </div>

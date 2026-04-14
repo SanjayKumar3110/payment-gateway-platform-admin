@@ -188,8 +188,8 @@ export function Analytics() {
 
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
             <div style={{ fontSize: '24px', fontWeight: 700, color: 'var(--text-primary)' }}>{currentMetrics.totalRevenue}</div>
-            <div style={{ width: '60px', height: '30px' }}>
-              <ResponsiveContainer width="100%" height="100%">
+            <div style={{ width: '60px' }}>
+              <ResponsiveContainer width="100%" aspect={2}>
                 <LineChart data={miniChartUp}>
                   <Line type="monotone" dataKey="v" stroke="#8B5CF6" strokeWidth={2} dot={false} />
                 </LineChart>
@@ -209,8 +209,8 @@ export function Analytics() {
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
             <div style={{ fontSize: '24px', fontWeight: 700, color: 'var(--text-primary)' }}>{currentMetrics.totalCustomers}</div>
-            <div style={{ width: '60px', height: '30px' }}>
-              <ResponsiveContainer width="100%" height="100%">
+            <div style={{ width: '60px' }}>
+              <ResponsiveContainer width="100%" aspect={2}>
                 <LineChart data={miniChartUp}>
                   <Line type="monotone" dataKey="v" stroke="#10B981" strokeWidth={2} dot={false} />
                 </LineChart>
@@ -230,8 +230,8 @@ export function Analytics() {
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
             <div style={{ fontSize: '24px', fontWeight: 700, color: 'var(--text-primary)' }}>{currentMetrics.totalPayments}</div>
-            <div style={{ width: '60px', height: '30px' }}>
-              <ResponsiveContainer width="100%" height="100%">
+            <div style={{ width: '60px' }}>
+              <ResponsiveContainer width="100%" aspect={2}>
                 <LineChart data={miniChartDown}>
                   <Line type="monotone" dataKey="v" stroke="var(--text-secondary)" strokeWidth={2} dot={false} />
                 </LineChart>
@@ -251,8 +251,8 @@ export function Analytics() {
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
             <div style={{ fontSize: '24px', fontWeight: 700, color: 'var(--text-primary)' }}>{currentMetrics.totalProducts}</div>
-            <div style={{ width: '60px', height: '30px' }}>
-              <ResponsiveContainer width="100%" height="100%">
+            <div style={{ width: '60px' }}>
+              <ResponsiveContainer width="100%" aspect={2}>
                 <LineChart data={miniChartUp}>
                   <Line type="monotone" dataKey="v" stroke="#10B981" strokeWidth={2} dot={false} />
                 </LineChart>

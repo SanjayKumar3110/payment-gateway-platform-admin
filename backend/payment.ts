@@ -14,10 +14,6 @@ const USER_FILE = path.join(process.cwd(), 'data', 'user.json');
 
 const readJson = (file: string) => JSON.parse(fs.readFileSync(file, 'utf-8'));
 
-/**
- * THE GATEWAY: /process-external
- * This handles "Pulling" data from an external source or adapter.
- */
 router.post('/process-external', async (req: Request, res: Response) => {
   const { key_id, key_secret, platform, externalUrl, transactionId } = req.body;
 
@@ -72,10 +68,23 @@ router.post('/process-external', async (req: Request, res: Response) => {
   }
 });
 
-/**
- * THE WEBHOOK: /webhook (or /api/webhook)
- * This handles "Push" data sent directly TO our server by external test scripts
- */
+router.get('/payments', (req: Request, res: Response) => {
+  try {
+    // Check if file exists first to prevent crashing
+    if (!fs.existsSync(PAYMENTS_FILE)) {
+      return res.json([]); // Return empty array if no payments exist yet
+    }
+
+    const payments = readJson(PAYMENTS_FILE);
+
+    // Return the payments array
+    res.json(payments);
+  } catch (error: any) {
+    console.error('Error reading payments:', error.message);
+    res.status(500).json({ error: 'Failed to retrieve payments' });
+  }
+});
+
 router.post('/webhook', (req: Request, res: Response) => {
   try {
     const rawData = req.body;

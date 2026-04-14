@@ -1,6 +1,5 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, globalShortcut } = require('electron');
 const path = require('path');
-const url = require('url');
 
 const isDev = !app.isPackaged;
 
@@ -16,26 +15,36 @@ function createWindow() {
     });
 
     if (isDev) {
-        // In dev mode, wait for Vite to start and load the URL
-        // We assume Vite runs on port 5173
         win.loadURL('http://localhost:5173');
-        // Menu.setApplicationMenu(null);
-        // Open the DevTools.
-        // win.webContents.openDevTools();
     } else {
-        // In production, load the built HTML bundle
         win.loadFile(path.join(__dirname, 'dist', 'index.html'));
     }
+
+    Menu.setApplicationMenu(null);
+    return win;
 }
 
 app.whenReady().then(() => {
-    createWindow();
+    const mainWindow = createWindow();
+
+    if (isDev) {
+        globalShortcut.register('CommandOrControl+Shift+I', () => {
+            mainWindow.webContents.toggleDevTools();
+        });
+        globalShortcut.register('CommandOrControl+Shift+R', () => {
+            app.relaunch();
+        });
+    }
 
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) {
             createWindow();
         }
     });
+});
+
+app.on('will-quit', () => {
+    globalShortcut.unregisterAll();
 });
 
 app.on('window-all-closed', () => {

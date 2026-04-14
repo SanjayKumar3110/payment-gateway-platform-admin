@@ -5,6 +5,8 @@ import cors from 'cors';
 import http from 'http';
 import authRoutes from './auth.ts';
 import paymentRoutes from './payment.ts';
+import resetRoutes from './reset.ts';
+
 import { getIo, initializeSocket } from './socket.ts';
 import { initializeRemoteAccess } from './config/qrconfig.ts';
 
@@ -28,6 +30,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/api', authRoutes);
 app.use('/api', paymentRoutes);
+app.use('/api', resetRoutes);
 
 // 3. QR code endpoint
 app.get('/api/remote-access', (req: Request, res: Response) => {
@@ -40,7 +43,7 @@ app.get('/api/remote-access', (req: Request, res: Response) => {
 
 // 4. Start Server
 server.listen(PORT, async () => {
-  console.log(`Backend is running on ${process.env.API_URL}:${PORT}`);
+  console.log(`Backend is running on:${PORT}`);
   console.log(`Socket.io server initialized on ${process.env.API_URL}`);
   console.log(`Webhook URL: ${process.env.API_URL}/api/webhook`);
 

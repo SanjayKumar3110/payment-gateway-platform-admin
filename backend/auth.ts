@@ -2,10 +2,24 @@ import express from 'express';
 import type { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
-import { generateToken } from './utils/jwt.ts'; // Ensure the path matches your structure
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 const USER_FILE = path.join(process.cwd(), 'data', 'user.json');
+const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
+
+interface TokenPayload {
+  userId: string;
+  role: string;
+}
+
+const generateToken = (payload: TokenPayload, expiresIn: string | number = '1d'): string => {
+  return jwt.sign(payload, JWT_SECRET, { expiresIn: expiresIn as any });
+};
+
+// const verifyToken = (token: string): TokenPayload => {
+//   return jwt.verify(token, JWT_SECRET) as TokenPayload;
+// };
 
 // Login Route
 router.post('/login', (req: Request, res: Response) => {

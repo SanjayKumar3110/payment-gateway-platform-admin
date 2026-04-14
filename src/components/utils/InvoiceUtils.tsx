@@ -115,8 +115,8 @@ export default function InvoiceChart() {
                 </div>
             </div>
 
-            <div style={{ flex: 1, minHeight: '180px' }}>
-                <ResponsiveContainer width="100%" height="100%">
+            <div style={{ flex: 1, height: '180px' }}>
+                <ResponsiveContainer width="100%" height={180}>
                     <BarChart data={chartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
                         <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: 'var(--text-secondary)' }} dy={10} />
                         {/* <RechartsTooltip cursor={{ fill: 'transparent' }} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', backgroundColor: 'var(--surface)', color: 'var(--text-primary)' }} /> */}

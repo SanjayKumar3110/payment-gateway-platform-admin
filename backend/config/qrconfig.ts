@@ -10,13 +10,8 @@ interface RemoteAccessData {
     qrCode: string;
 }
 
-/**
- * Automates the Ngrok tunnel and generates a QR code for mobile connection.
- * @param port The local port your Express server is running on (e.g., 5000)
- */
 export const initializeRemoteAccess = async (port: string | number): Promise<RemoteAccessData | null> => {
     try {
-        // 1. Validate Authtoken (Essential for stable connections)
         const authtoken = process.env.NGROK_AUTHTOKEN;
         if (!authtoken) {
             console.warn('⚠️ [Tunnel] No NGROK_AUTHTOKEN found in .env. Tunnel may expire quickly.');
@@ -47,9 +42,6 @@ export const initializeRemoteAccess = async (port: string | number): Promise<Rem
     }
 };
 
-/**
- * Gracefully shuts down the tunnel when the server stops
- */
 export const stopRemoteAccess = async () => {
     await ngrok.kill();
     console.log('🛑 [Tunnel] Remote access tunnel closed.');
