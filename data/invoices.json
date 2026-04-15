@@ -15,6 +15,7 @@
             "clientAddress": "4517 Washington Ave. Manchester, Kentucky 39495",
             "billName": "Software Licensing",
             "type": "Recurring",
+            "method": "Credit Card",
             "note": "Please make the payment on or before the due date to avoid any late payment charges. If you have any questions or concerns about this invoice or the services we provided, please don't hesitate to contact us."
         },
         {
@@ -28,6 +29,7 @@
             "clientAddress": "4517 Washington Ave. Manchester, Kentucky 39495",
             "billName": "Server Backups Expansion",
             "type": "One-Time",
+            "method": "UPI",
             "note": "Payment for Q2 server maintenance and expanded cloud backups."
         },
         {
@@ -41,6 +43,7 @@
             "clientAddress": "239 Oak Street, Springfield, IL 62704",
             "billName": "Vendor Consultation",
             "type": "Installment",
+            "method": "Bank Transfer",
             "note": "If you have any questions about this phase out plan, please communicate with your primary contact."
         },
         {

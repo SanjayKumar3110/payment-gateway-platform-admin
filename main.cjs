@@ -1,5 +1,6 @@
-const { app, BrowserWindow, Menu, globalShortcut } = require('electron');
+const { app, BrowserWindow, Menu, globalShortcut, ipcMain, dialog } = require('electron');
 const path = require('path');
+const fs = require('fs');
 
 const isDev = !app.isPackaged;
 
@@ -23,6 +24,23 @@ function createWindow() {
     Menu.setApplicationMenu(null);
     return win;
 }
+
+// IPC Listener for saving PDFs
+ipcMain.on('save-pdf', async (event, { buffer, filename }) => {
+    const win = BrowserWindow.getFocusedWindow();
+    const { filePath } = await dialog.showSaveDialog(win, {
+        title: 'Save Invoice PDF',
+        defaultPath: filename,
+        filters: [
+            { name: 'PDF Files', extensions: ['pdf'] }
+        ]
+    });
+
+    if (filePath) {
+        fs.writeFileSync(filePath, Buffer.from(buffer));
+        console.log(`Saved PDF to: ${filePath}`);
+    }
+});
 
 app.whenReady().then(() => {
     const mainWindow = createWindow();
@@ -51,4 +69,4 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
     }
-});
+});

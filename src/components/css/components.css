@@ -582,3 +582,8 @@
 .app-container.dark .invoice-item-row {
   border-bottom: 1px solid var(--border);
 }
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
