@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import './App.css';
-import { LayoutDashboard, CreditCard, ListOrdered, FileText, Settings, Bell, Moon, Sun, Search, Hexagon, LogOut } from 'lucide-react';
+import { LayoutDashboard, CreditCard, ListOrdered, FileText, Settings, Bell, Moon, Sun, Search, Hexagon, LogOut, Download } from 'lucide-react';
 
 import { LoginPage } from './Login/login';
 import { Payments } from './components/PaymentsPanel';
@@ -11,6 +11,7 @@ import { SettingsPanel } from './components/SettingsPanel';
 import { NotifyWindow } from './components/NotificationWindow';
 import { NotificationsPanel } from './components/NotificationsPanel';
 import { useNotifications } from './components/utils/NotifyUtils';
+import { useDownloadsManager, DownloadPopup } from './components/utils/DownloadUtil';
 
 interface UserData {
   id: string;
@@ -55,6 +56,8 @@ export default function App() {
     markAllNotificationsRead,
     clearNotifications
   } = useNotifications();
+
+  const { downloadsList, showDownloadPopup, setShowDownloadPopup } = useDownloadsManager();
 
   const menuRef = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
@@ -223,6 +226,18 @@ export default function App() {
 
           <div className="top-actions">
             {/* <button className="btn-create">Create</button> */}
+            
+            {/* Downloads */}
+            <div style={{ position: 'relative' }}>
+              <button className="icon-btn-circle" onClick={() => {
+                 setShowDownloadPopup(!showDownloadPopup);
+              }}>
+                <Download size={18} />
+                {downloadsList.length > 0 && <div style={{ position: 'absolute', top: 5, right: 5, width: 8, height: 8, backgroundColor: '#4F46E5', borderRadius: '50%' }} />}
+              </button>
+              {showDownloadPopup && <DownloadPopup downloads={downloadsList} onClose={() => setShowDownloadPopup(false)} />}
+            </div>
+
             <div style={{ position: 'relative' }} ref={notifRef}>
               <button className="icon-btn-circle" onClick={() => setShowNotifications(!showNotifications)}>
                 <Bell size={18} />

@@ -1,22 +1,34 @@
-import { Page, Text, View, Document, StyleSheet, Font, Image } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet, Font } from '@react-pdf/renderer';
 
 // Register a modern font
+import Inter18Reg from '../../assets/Fonts/Inter/static/Inter_18pt-Regular.ttf';
+import Inter18Bold from '../../assets/Fonts/Inter/static/Inter_18pt-Bold.ttf';
+import Inter28Reg from '../../assets/Fonts/Inter/static/Inter_28pt-Regular.ttf';
+import Inter28Bold from '../../assets/Fonts/Inter/static/Inter_28pt-Bold.ttf';
+
+// Register the "Small/Body" font (for text, addresses, line items)
 Font.register({
-  family: 'Inter',
-  src: 'https://fonts.gstatic.com/s/inter/v12/UcCOjzkauwgkB4K0icoCrYdxb4VA.ttf',
-  fontWeight: 'normal',
+  family: 'Inter-Text',
+  fonts: [
+    { src: Inter18Reg, fontWeight: 'normal' },
+    { src: Inter18Bold, fontWeight: 'bold' },
+  ],
 });
 
+// Register the "Display" font (for big titles like "INVOICE")
 Font.register({
-  family: 'Inter',
-  src: 'https://fonts.gstatic.com/s/inter/v12/UcC7jzkauwgkB4K0icmSlsWdu3cQSYJPRl291vR7nyptvXw.ttf',
-  fontWeight: 'bold',
+  family: 'Inter-Display',
+  fonts: [
+    { src: Inter28Reg, fontWeight: 'normal' },
+    { src: Inter28Bold, fontWeight: 'bold' },
+  ],
 });
 
 const styles = StyleSheet.create({
   page: {
     padding: 40,
-    fontFamily: 'Inter',
+    // Set the default font for the whole document to the 18pt optimized version
+    fontFamily: 'Inter-Text',
     backgroundColor: '#FFFFFF',
     color: '#1F2937',
   },
@@ -32,12 +44,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   logo: {
+    // Use the Display font for the large Logo text
+    fontFamily: 'Inter-Display',
     fontSize: 24,
     fontWeight: 'bold',
     color: '#4F46E5',
     marginBottom: 4,
   },
   companyName: {
+    fontFamily: 'Inter-Text',
     fontSize: 12,
     color: '#6B7280',
     fontWeight: 'normal',
@@ -46,17 +61,21 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   invoiceTitle: {
+    // Use the Display font for the primary "INVOICE" heading
+    fontFamily: 'Inter-Display',
     fontSize: 28,
     fontWeight: 'bold',
     color: '#111827',
     marginBottom: 8,
   },
   invoiceMetaText: {
+    fontFamily: 'Inter-Text',
     fontSize: 10,
     color: '#6B7280',
     marginBottom: 2,
   },
   sectionTitle: {
+    fontFamily: 'Inter-Text',
     fontSize: 12,
     fontWeight: 'bold',
     color: '#374151',
@@ -74,12 +93,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   billingName: {
+    fontFamily: 'Inter-Text',
     fontSize: 14,
     fontWeight: 'bold',
     color: '#111827',
     marginBottom: 4,
   },
   billingAddress: {
+    fontFamily: 'Inter-Text',
     fontSize: 10,
     color: '#6B7280',
     lineHeight: 1.5,
@@ -115,11 +136,13 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   headerText: {
+    fontFamily: 'Inter-Text',
     fontSize: 10,
     fontWeight: 'bold',
     color: '#4B5563',
   },
   rowText: {
+    fontFamily: 'Inter-Text',
     fontSize: 11,
     color: '#1F2937',
   },
@@ -144,6 +167,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   totalText: {
+    fontFamily: 'Inter-Text',
     fontSize: 16,
     fontWeight: 'bold',
     color: '#111827',
@@ -159,10 +183,12 @@ const styles = StyleSheet.create({
     paddingTop: 12,
   },
   footerText: {
+    fontFamily: 'Inter-Text',
     fontSize: 10,
     color: '#9CA3AF',
   },
   statusBadge: {
+    fontFamily: 'Inter-Text',
     fontSize: 10,
     fontWeight: 'bold',
     padding: '4 8',
@@ -177,7 +203,6 @@ const styles = StyleSheet.create({
     color: '#DC2626',
   }
 });
-
 interface InvoiceData {
   id: string;
   name: string;
@@ -189,7 +214,7 @@ interface InvoiceData {
   billName: string;
   type: string;
   note: string;
-  method?: string; // Optional if provided
+  method?: string;
 }
 
 export const SingleInvoiceDoc = ({ invoice }: { invoice: InvoiceData }) => (
@@ -218,11 +243,11 @@ export const SingleInvoiceDoc = ({ invoice }: { invoice: InvoiceData }) => (
         </View>
         <View style={styles.billingBox}>
           <Text style={styles.sectionTitle}>Status</Text>
-          <View style={[styles.statusBadge, invoice.status !== 'PAID' && styles.unpaidBadge]}>
+          <View style={[styles.statusBadge, invoice.status !== 'PAID' ? styles.unpaidBadge : {}]}>
             <Text>{invoice.status}</Text>
           </View>
           {invoice.method && (
-             <Text style={[styles.invoiceMetaText, { marginTop: 10 }]}>Payment Method: {invoice.method}</Text>
+            <Text style={[styles.invoiceMetaText, { marginTop: 10 }]}>Payment Method: {invoice.method}</Text>
           )}
         </View>
       </View>
@@ -299,11 +324,11 @@ export const BulkInvoiceDoc = ({ invoices }: { invoices: InvoiceData[] }) => (
           </View>
           <View style={styles.billingBox}>
             <Text style={styles.sectionTitle}>Status</Text>
-            <View style={[styles.statusBadge, invoice.status !== 'PAID' && styles.unpaidBadge]}>
+            <View style={[styles.statusBadge, invoice.status !== 'PAID' ? styles.unpaidBadge : {}]}>
               <Text>{invoice.status}</Text>
             </View>
             {invoice.method && (
-               <Text style={[styles.invoiceMetaText, { marginTop: 10 }]}>Payment Method: {invoice.method}</Text>
+              <Text style={[styles.invoiceMetaText, { marginTop: 10 }]}>Payment Method: {invoice.method}</Text>
             )}
           </View>
         </View>

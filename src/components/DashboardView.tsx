@@ -4,18 +4,17 @@ import { io } from 'socket.io-client';
 import { Download, Calendar, ChevronDown, ChevronRight } from 'lucide-react';
 import './css/components.css';
 
-import dashboardData from '@data/dashboard.json';
 import PAYMENTS_DATA from '@data/payments.json';
 import { getStatusBadge, getMethodIcon } from './utils/PaymentUtils.tsx';
 
-const { pieData, barData, pieColors: PIE_COLORS } = dashboardData;
+const PIE_COLORS = ["#4CAF50", "#FF4444", "#ff9800", "#6a6a6aff", "#2f46adff"];
 
 interface DashboardProps {
   showMorePayments: () => void;
 }
 
 export function Dashboard({ showMorePayments }: DashboardProps) {
-  const [timeRange, setTimeRange] = useState('This Month');
+  const [timeRange, setTimeRange] = useState('Overall');
   const [showTimeRange, setShowTimeRange] = useState(false);
   const [realPayments, setRealPayments] = useState<any[]>([]);
   const timeRangeRef = useRef<HTMLDivElement>(null);
@@ -57,61 +56,100 @@ export function Dashboard({ showMorePayments }: DashboardProps) {
     return () => document.removeEventListener('mousedown', handleClick);
   }, []);
 
-  const currentPieData = useMemo(() => {
-    if (timeRange === 'This Week') {
-      return [
-        { name: 'Completed', value: 85 },
-        { name: 'Processing', value: 45 },
-        { name: 'Failed', value: 12 }
-      ];
-    } else if (timeRange === 'This Year') {
-      return [
-        { name: 'Completed', value: 4800 },
-        { name: 'Processing', value: 1200 },
-        { name: 'Failed', value: 350 }
-      ];
-    }
-    // If we have real payments, let's use them to populate the pie chart
-    if (realPayments.length > 0) {
-      const counts = { Succeeded: 0, Pending: 0, Failed: 0 };
-      realPayments.forEach(p => {
-        if (p.status === 'Succeeded') counts.Succeeded++;
-        else if (p.status === 'Pending') counts.Pending++;
-        else counts.Failed++;
-      });
-      return [
-        { name: 'Completed', value: counts.Succeeded + pieData[0].value },
-        { name: 'Processing', value: counts.Pending + pieData[1].value },
-        { name: 'Failed', value: counts.Failed + pieData[2].value }
-      ];
-    }
+  const filteredPayments = useMemo(() => {
+    const allData = [...realPayments, ...PAYMENTS_DATA];
+    if (timeRange === 'This Year') return allData;
 
-    // Default This Month
-    return pieData;
+    const now = new Date();
+
+    return allData.filter(p => {
+      const pDate = new Date(p.date);
+      if (isNaN(pDate.getTime())) return true;
+
+      if (timeRange === 'Today') {
+        return pDate.toDateString() === now.toDateString();
+      }
+      if (timeRange === 'This Week') {
+        const startOfWeek = new Date(now);
+        startOfWeek.setDate(now.getDate() - now.getDay());
+        startOfWeek.setHours(0, 0, 0, 0);
+        return pDate >= startOfWeek && pDate <= now;
+      }
+      if (timeRange === 'This Month') {
+        return pDate.getMonth() === now.getMonth() && pDate.getFullYear() === now.getFullYear();
+      }
+      if (timeRange === 'This Year') {
+        return pDate.getFullYear() === now.getFullYear();
+      }
+      return true;
+    });
   }, [timeRange, realPayments]);
 
-  const currentBarData = useMemo(() => {
-    if (timeRange === 'This Week') {
-      return [
-        { label: 'Mon', revenue: 12000 },
-        { label: 'Tue', revenue: 15000 },
-        { label: 'Wed', revenue: 13000 },
-        { label: 'Thu', revenue: 18000 },
-        { label: 'Fri', revenue: 22000 },
-        { label: 'Sat', revenue: 25000 },
-        { label: 'Sun', revenue: 21000 }
-      ];
-    } else if (timeRange === 'This Year') {
-      return barData.map(d => ({ label: d.month, revenue: d.revenue * 5 }));
-    }
-    // Default This Month
+  const currentPieData = useMemo(() => {
+    const counts = { Succeeded: 0, Declined: 0, Refunded: 0, Created: 0, Pending: 0 };
+    filteredPayments.forEach(p => {
+      if (p.status === 'Succeeded') counts.Succeeded++;
+      else if (p.status === 'Declined') counts.Declined++;
+      else if (p.status === 'Pending') counts.Pending++;
+      else if (p.status === 'Refunded') counts.Refunded++;
+      else if (p.status === 'Create') counts.Created++;
+    });
+
     return [
-      { label: 'Week 1', revenue: 63000 },
-      { label: 'Week 2', revenue: 88000 },
-      { label: 'Week 3', revenue: 92000 },
-      { label: 'Week 4', revenue: 104000 }
+      { name: 'Succeeded', value: counts.Succeeded },
+      { name: 'Declined', value: counts.Declined },
+      { name: 'Pending', value: counts.Pending },
+      { name: 'Refunded', value: counts.Refunded },
+      { name: 'Created', value: counts.Created }
     ];
-  }, [timeRange]);
+  }, [filteredPayments]);
+
+  const currentBarData = useMemo(() => {
+    const parseAmt = (amt: string) => parseFloat(amt.replace(/[^0-9.-]+/g, "")) || 0;
+
+    if (timeRange === 'Today') {
+      let total = 0;
+      filteredPayments.forEach(p => total += parseAmt(p.amount));
+      return [{ label: 'Today', revenue: total }];
+    } else if (timeRange === 'This Week') {
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const data = days.map(d => ({ label: d, revenue: 0 }));
+      filteredPayments.forEach(p => {
+        const d = new Date(p.date).getDay();
+        if (!isNaN(d)) data[d].revenue += parseAmt(p.amount);
+      });
+      return data;
+    } else if (timeRange === 'This Month') {
+      const data = [0, 1, 2, 3, 4].map(w => ({ label: `Week ${w + 1}`, revenue: 0 }));
+      filteredPayments.forEach(p => {
+        const dateObj = new Date(p.date);
+        if (!isNaN(dateObj.getTime())) {
+          const week = Math.floor(dateObj.getDate() / 7);
+          if (week < 5) data[week].revenue += parseAmt(p.amount);
+        }
+      });
+      return data;
+    } else if (timeRange === 'This Year') {
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const data = months.map(m => ({ label: m, revenue: 0 }));
+      filteredPayments.forEach(p => {
+        const m = new Date(p.date).getMonth();
+        if (!isNaN(m)) data[m].revenue += parseAmt(p.amount);
+      });
+      return data;
+    } else {
+      const yearMap = new Map<number, number>();
+      filteredPayments.forEach(p => {
+        const yr = new Date(p.date).getFullYear();
+        if (!isNaN(yr)) {
+          yearMap.set(yr, (yearMap.get(yr) || 0) + parseAmt(p.amount));
+        }
+      });
+      const entries = Array.from(yearMap.entries());
+      if (entries.length === 0) return [{ label: 'Overall', revenue: 0 }];
+      return entries.sort((a, b) => a[0] - b[0]).map(([yr, amt]) => ({ label: yr.toString(), revenue: amt }));
+    }
+  }, [filteredPayments, timeRange]);
 
   return (
     <div>
@@ -133,7 +171,7 @@ export function Dashboard({ showMorePayments }: DashboardProps) {
 
             {showTimeRange && (
               <div className="solid-dropdown" style={{ position: 'absolute', top: '100%', right: 0, marginTop: '8px', width: '130px', borderRadius: '8px', zIndex: 100, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                {['This Week', 'This Month', 'This Year'].map(opt => (
+                {['Today', 'This Week', 'This Month', 'This Year', 'Overall'].map(opt => (
                   <button
                     key={opt}
                     onClick={(e) => { e.stopPropagation(); setTimeRange(opt); setShowTimeRange(false); }}
@@ -195,7 +233,7 @@ export function Dashboard({ showMorePayments }: DashboardProps) {
 
         {/* Revenue Bar Chart */}
         <div className="base-card" style={{ flex: 2 }}>
-          <h3 className="pv-product-name" style={{ fontSize: '16px', marginBottom: '4px', padding: '16px' }}>Monthly Revenue</h3>
+          <h3 className="pv-product-name" style={{ fontSize: '16px', marginBottom: '4px', padding: '16px' }}>Shop Revenue</h3>
           {/* <p className="pv-subtext" style={{ marginBottom: '16px' }}>Last 6 months</p> */}
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={currentBarData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>

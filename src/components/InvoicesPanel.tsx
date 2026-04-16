@@ -3,24 +3,24 @@ import { Calendar, Filter, ChevronDown, Download, ChevronLeft, ChevronRight, Che
 import { pdf } from '@react-pdf/renderer';
 import INVOICE_DATA from '@data/invoices.json';
 import './css/components.css';
-import InvoiceChart from './utils/InvoiceUtils';
 import { SingleInvoiceDoc, BulkInvoiceDoc } from './utils/InvoicePDF';
+import { registerDownload } from './utils/DownloadUtil';
 
 const { invoices } = INVOICE_DATA;
 
 const StatusBadge = ({ status }: { status: string }) => {
   const isPaid = status === 'PAID';
   return (
-    <span style={{ 
-      padding: '4px 12px', 
-      color: isPaid ? '#10B981' : '#EF4444', 
+    <span style={{
+      padding: '4px 12px',
+      color: isPaid ? '#10B981' : '#EF4444',
       backgroundColor: isPaid ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
-      borderRadius: '12px', 
-      fontSize: '11px', 
-      fontWeight: 600, 
-      display: 'inline-flex', 
-      alignItems: 'center', 
-      gap: '4px' 
+      borderRadius: '12px',
+      fontSize: '11px',
+      fontWeight: 600,
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '4px'
     }}>
       <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: isPaid ? '#10B981' : '#EF4444' }}></div>
       {status}
@@ -28,7 +28,6 @@ const StatusBadge = ({ status }: { status: string }) => {
   );
 };
 
-// Enhanced Calendar for Range Selection
 // Enhanced Calendar for Range Selection with Presets
 const CalendarDropdown = ({ onSelectRange, rangeStart, rangeEnd }: any) => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -86,7 +85,7 @@ const CalendarDropdown = ({ onSelectRange, rangeStart, rangeEnd }: any) => {
         break;
       default: return;
     }
-    
+
     onSelectRange('CLEAR');
     onSelectRange(formatDate(start));
     onSelectRange(formatDate(end));
@@ -112,8 +111,8 @@ const CalendarDropdown = ({ onSelectRange, rangeStart, rangeEnd }: any) => {
   };
 
   return (
-    <div className="solid-dropdown" style={{ 
-      position: 'absolute', top: '100%', left: 0, marginTop: '8px', 
+    <div className="solid-dropdown" style={{
+      position: 'absolute', top: '100%', left: 0, marginTop: '8px',
       borderRadius: '16px', width: '420px', zIndex: 100,
       display: 'flex', overflow: 'hidden'
     }}>
@@ -127,15 +126,15 @@ const CalendarDropdown = ({ onSelectRange, rangeStart, rangeEnd }: any) => {
           { id: 'thisMonth', label: 'This Month' },
           { id: 'lastMonth', label: 'Last Month' },
         ].map(p => (
-           <button 
+          <button
             key={p.id}
             onClick={(e) => { e.stopPropagation(); applyPreset(p.id); }}
             style={{ width: '100%', textAlign: 'left', padding: '8px 10px', background: 'transparent', border: 'none', color: 'var(--text-primary)', fontSize: '12px', cursor: 'pointer', borderRadius: '8px', transition: 'all 0.2s' }}
             onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(79, 70, 229, 0.08)'}
             onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
-           >
-             {p.label}
-           </button>
+          >
+            {p.label}
+          </button>
         ))}
       </div>
 
@@ -146,12 +145,12 @@ const CalendarDropdown = ({ onSelectRange, rangeStart, rangeEnd }: any) => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-primary)' }}>{monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}</span>
             <div style={{ display: 'flex', gap: '4px' }}>
-              <button 
-                onClick={handlePrev} 
+              <button
+                onClick={handlePrev}
                 style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', color: 'var(--text-secondary)' }}
               ><ChevronLeft size={16} /></button>
-              <button 
-                onClick={handleNext} 
+              <button
+                onClick={handleNext}
                 style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', color: 'var(--text-secondary)' }}
               ><ChevronRight size={16} /></button>
             </div>
@@ -176,12 +175,12 @@ const CalendarDropdown = ({ onSelectRange, rangeStart, rangeEnd }: any) => {
                 key={date}
                 onClick={() => onSelectRange(dateStr)}
                 style={{
-                  padding: '6px 0', 
-                  fontSize: '12px', 
-                  color: active ? 'white' : 'var(--text-primary)', 
+                  padding: '6px 0',
+                  fontSize: '12px',
+                  color: active ? 'white' : 'var(--text-primary)',
                   backgroundColor: active ? '#4F46E5' : inRange ? 'rgba(79, 70, 229, 0.1)' : 'transparent',
-                  cursor: 'pointer', 
-                  borderRadius: '6px', 
+                  cursor: 'pointer',
+                  borderRadius: '6px',
                   transition: 'all 0.1s',
                   textAlign: 'center',
                   fontWeight: active ? 700 : 500
@@ -194,12 +193,12 @@ const CalendarDropdown = ({ onSelectRange, rangeStart, rangeEnd }: any) => {
         </div>
 
         <div style={{ display: 'flex', gap: '8px', marginTop: '16px', paddingTop: '12px', borderTop: '1px solid var(--border)' }}>
-          <button 
+          <button
             onClick={(e) => { e.stopPropagation(); onSelectRange('CLEAR'); }}
             style={{ flex: 1, padding: '8px', border: '1px solid var(--border)', background: 'transparent', color: 'var(--text-secondary)', fontSize: '12px', cursor: 'pointer', borderRadius: '8px', fontWeight: 600 }}
           >Reset</button>
-          <button 
-            onClick={(e) => { e.stopPropagation(); onSelectRange('CLOSE'); }} 
+          <button
+            onClick={(e) => { e.stopPropagation(); onSelectRange('CLOSE'); }}
             style={{ flex: 1, padding: '8px', border: 'none', background: '#4F46E5', color: 'white', fontSize: '12px', cursor: 'pointer', borderRadius: '8px', fontWeight: 600 }}
           >Apply</button>
         </div>
@@ -207,7 +206,6 @@ const CalendarDropdown = ({ onSelectRange, rangeStart, rangeEnd }: any) => {
     </div>
   );
 };
-
 
 export function Invoices() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -317,6 +315,8 @@ export function Invoices() {
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
     }
+    
+    registerDownload(filename);
   };
 
   const handleDownloadSingle = async (invoice: any) => {
@@ -343,16 +343,16 @@ export function Invoices() {
     }
   };
 
-  const itemsPerPage = 8;
+  const itemsPerPage = 5;
   const totalPages = Math.max(1, Math.ceil(filteredInvoices.length / itemsPerPage));
   const paginatedInvoices = filteredInvoices.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <div style={{ display: 'flex', gap: '20px', minHeight: '100%', padding: '24px', backgroundColor: 'var(--bg)' }}>
+    <div style={{ display: 'flex', gap: '20px', minHeight: '100%', padding: '18px', backgroundColor: 'var(--bg)' }}>
 
       {/* Main Content Area */}
-      <div style={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column', gap: '20px', minWidth: 0 }}>
-        
+      <div style={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column', gap: '10px', minWidth: 0 }}>
+
         {/* Statistics & Actions Bar */}
         <div className="base-card" style={{ padding: '24px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -361,14 +361,14 @@ export function Invoices() {
               <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: '4px 0 0 0' }}>Manage, filter, and export transaction invoices with ease.</p>
             </div>
             <div style={{ display: 'flex', gap: '12px' }}>
-              <button 
+              <button
                 onClick={handleExportBulk}
                 disabled={filteredInvoices.length === 0 || isDownloading}
-                style={{ 
-                  display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', 
-                  backgroundColor: filteredInvoices.length > 0 && !isDownloading ? '#4F46E5' : 'var(--surface)', 
-                  border: 'none', 
-                  borderRadius: '10px', color: 'white', 
+                style={{
+                  display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px',
+                  backgroundColor: filteredInvoices.length > 0 && !isDownloading ? '#4F46E5' : 'var(--surface)',
+                  border: 'none',
+                  borderRadius: '10px', color: 'white',
                   fontSize: '14px', fontWeight: 600, cursor: (filteredInvoices.length > 0 && !isDownloading) ? 'pointer' : 'not-allowed',
                   transition: 'all 0.2s',
                   boxShadow: (filteredInvoices.length > 0 && !isDownloading) ? '0 4px 12px rgba(79, 70, 229, 0.3)' : 'none',
@@ -394,14 +394,14 @@ export function Invoices() {
         <div className="base-card" style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: '600px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', padding: '0 4px', zIndex: 100 }}>
             <div style={{ display: 'flex', gap: '12px' }}>
-              
+
               {/* Range Picker */}
               <div style={{ position: 'relative' }} ref={datePickerRef}>
                 <button
                   onClick={() => setShowDatePicker(!showDatePicker)}
                   style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 16px', backgroundColor: (rangeStart || rangeEnd) ? '#1D4ED8' : 'var(--surface)', border: '1.5px solid var(--border)', borderRadius: '10px', color: (rangeStart || rangeEnd) ? 'white' : 'var(--text-primary)', fontSize: '13px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s' }}
                 >
-                  <Calendar size={14} /> 
+                  <Calendar size={14} />
                   {rangeStart && rangeEnd ? `${rangeStart} - ${rangeEnd}` : rangeStart ? `From ${rangeStart}` : 'Date Range'}
                   <ChevronDown size={14} />
                 </button>
@@ -419,7 +419,7 @@ export function Invoices() {
 
                 {showFilterMenu && (
                   <div className="solid-dropdown" style={{ position: 'absolute', top: '100%', left: 0, marginTop: '8px', width: '240px', borderRadius: '14px', zIndex: 100, display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: '12px', boxShadow: '0 10px 40px rgba(0,0,0,0.2)' }}>
-                    
+
                     <div style={{ padding: '8px 4px', fontSize: '11px', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Status</div>
                     {['Paid', 'Unpaid'].map(opt => (
                       <button key={opt} onClick={() => { setActiveStatusFilter(activeStatusFilter === opt ? '' : opt); setCurrentPage(1); }} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px', background: activeStatusFilter === opt ? 'rgba(79, 70, 229, 0.1)' : 'transparent', border: 'none', color: 'var(--text-primary)', fontSize: '13px', cursor: 'pointer', borderRadius: '8px', textAlign: 'left' }}>
@@ -435,7 +435,7 @@ export function Invoices() {
                       </button>
                     ))}
 
-                    <button 
+                    <button
                       onClick={() => { setActiveStatusFilter(''); setActiveMethodFilter(''); setRangeStart(''); setRangeEnd(''); setShowFilterMenu(false); }}
                       style={{ marginTop: '12px', padding: '10px', background: '#FEF2F2', border: 'none', color: '#DC2626', fontSize: '12px', fontWeight: 700, borderRadius: '10px', cursor: 'pointer' }}
                     >
@@ -462,11 +462,11 @@ export function Invoices() {
               </thead>
               <tbody>
                 {paginatedInvoices.map((inv, idx) => (
-                  <tr 
-                    key={idx} 
+                  <tr
+                    key={idx}
                     onClick={() => setSelectedInvoice(inv)}
-                    style={{ 
-                      borderBottom: '1px solid var(--border)', 
+                    style={{
+                      borderBottom: '1px solid var(--border)',
                       cursor: 'pointer',
                       transition: 'background-color 0.2s',
                       backgroundColor: selectedInvoice?.id === inv.id ? 'rgba(79, 70, 229, 0.08)' : 'transparent'
@@ -483,7 +483,7 @@ export function Invoices() {
                     <td style={{ padding: '18px 16px', fontSize: '14px', fontWeight: 700, color: 'var(--text-primary)' }}>{inv.amount}</td>
                     <td style={{ padding: '18px 16px' }}><StatusBadge status={inv.status} /></td>
                     <td style={{ padding: '18px 16px', textAlign: 'right' }}>
-                      <button 
+                      <button
                         onClick={(e) => { e.stopPropagation(); handleDownloadSingle(inv); }}
                         style={{ padding: '8px', borderRadius: '10px', border: 'none', background: 'rgba(79, 70, 229, 0.1)', color: '#4F46E5', cursor: 'pointer', transition: 'all 0.2s' }}
                         title="Download PDF"
@@ -511,16 +511,16 @@ export function Invoices() {
               Showing {filteredInvoices.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0} to {Math.min(currentPage * itemsPerPage, filteredInvoices.length)} of {filteredInvoices.length} results
             </span>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button 
-                disabled={currentPage === 1} 
-                onClick={() => setCurrentPage(p => p - 1)} 
+              <button
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(p => p - 1)}
                 style={{ padding: '8px 16px', borderRadius: '10px', border: '1.5px solid var(--border)', background: 'var(--surface)', color: 'var(--text-primary)', cursor: currentPage === 1 ? 'not-allowed' : 'pointer', opacity: currentPage === 1 ? 0.5 : 1, fontSize: '13px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}
               >
                 <ChevronLeft size={16} /> Previous
               </button>
-              <button 
-                disabled={currentPage === totalPages || filteredInvoices.length === 0} 
-                onClick={() => setCurrentPage(p => p + 1)} 
+              <button
+                disabled={currentPage === totalPages || filteredInvoices.length === 0}
+                onClick={() => setCurrentPage(p => p + 1)}
                 style={{ padding: '8px 16px', borderRadius: '10px', border: '1.5px solid var(--border)', background: 'var(--surface)', color: 'var(--text-primary)', cursor: (currentPage === totalPages || filteredInvoices.length === 0) ? 'not-allowed' : 'pointer', opacity: (currentPage === totalPages || filteredInvoices.length === 0) ? 0.5 : 1, fontSize: '13px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}
               >
                 Next <ChevronRight size={16} />
@@ -534,11 +534,11 @@ export function Invoices() {
       <div style={{ flex: '0 0 380px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
         <div className="base-card" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
-             <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: '#4F46E5', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', fontSize: '20px', boxShadow: '0 4px 12px rgba(79, 70, 229, 0.4)' }}>❋</div>
-             <div>
-               <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 700, letterSpacing: '-0.02em' }}>Invoices Detail</h3>
-               <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>Status & Summary</span>
-             </div>
+            <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: '#4F46E5', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', fontSize: '20px', boxShadow: '0 4px 12px rgba(79, 70, 229, 0.4)' }}>❋</div>
+            <div>
+              <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 700, letterSpacing: '-0.02em' }}>Invoices Detail</h3>
+              <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>Status & Summary</span>
+            </div>
           </div>
 
           {!selectedInvoice ? (
@@ -572,8 +572,8 @@ export function Invoices() {
               <div style={{ marginBottom: '24px' }}>
                 <h4 style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', marginBottom: '14px', color: 'var(--text-secondary)', letterSpacing: '0.08em' }}>Billing To</h4>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-                   <div style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: selectedInvoice.avatarColor, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 700 }}>{selectedInvoice.name[0]}</div>
-                   <p style={{ fontSize: '16px', fontWeight: 700, margin: 0 }}>{selectedInvoice.name}</p>
+                  <div style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: selectedInvoice.avatarColor, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 700 }}>{selectedInvoice.name[0]}</div>
+                  <p style={{ fontSize: '16px', fontWeight: 700, margin: 0 }}>{selectedInvoice.name}</p>
                 </div>
                 <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>{selectedInvoice.clientAddress}</p>
               </div>
@@ -588,20 +588,20 @@ export function Invoices() {
               </div>
 
               <div style={{ marginTop: 'auto' }}>
-                <button 
+                <button
                   onClick={() => handleDownloadSingle(selectedInvoice)}
                   disabled={isDownloading}
-                  style={{ 
-                    width: '100%', padding: '16px', borderRadius: '14px', border: 'none', 
-                    background: isDownloading ? 'var(--surface)' : '#4F46E5', 
-                    color: 'white', fontWeight: 700, fontSize: '15px', 
-                    cursor: isDownloading ? 'not-allowed' : 'pointer', 
-                    transition: 'all 0.2s', 
+                  style={{
+                    width: '100%', padding: '16px', borderRadius: '14px', border: 'none',
+                    background: isDownloading ? 'var(--surface)' : '#4F46E5',
+                    color: 'white', fontWeight: 700, fontSize: '15px',
+                    cursor: isDownloading ? 'not-allowed' : 'pointer',
+                    transition: 'all 0.2s',
                     boxShadow: isDownloading ? 'none' : '0 4px 14px rgba(79, 70, 229, 0.4)',
                     opacity: isDownloading ? 0.7 : 1
                   }}
-                  onMouseEnter={(e) => { if(!isDownloading) e.currentTarget.style.transform = 'translateY(-2px)'; }}
-                  onMouseLeave={(e) => { if(!isDownloading) e.currentTarget.style.transform = 'translateY(0)'; }}
+                  onMouseEnter={(e) => { if (!isDownloading) e.currentTarget.style.transform = 'translateY(-2px)'; }}
+                  onMouseLeave={(e) => { if (!isDownloading) e.currentTarget.style.transform = 'translateY(0)'; }}
                 >
                   {isDownloading ? 'Generating PDF...' : 'Download Current PDF'}
                 </button>
