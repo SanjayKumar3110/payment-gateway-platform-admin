@@ -23,7 +23,7 @@ router.post('/process-external', async (req: Request, res: Response) => {
     const user = users.find((u: any) => u.key_id === key_id && u.key_secret === key_secret);
 
     if (!user) {
-      return res.status(401).json({ error: 'Auth Failed: Check your credentials in user.json' });
+      return res.status(401).json({ error: 'Auth Failed: Check your credentials' });
     }
 
     let finalPaymentData: any = null;

@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Mail, Lock, Eye, EyeOff, Hexagon, Chrome, Shield, Zap, Globe, User, Building2, Phone } from 'lucide-react';
-import { PassReset } from './passReset';
+import { Rocket } from 'lucide-react';
 import './Login.css';
 
 interface UserData {
@@ -17,25 +16,18 @@ interface LoginPageProps {
 }
 
 export function LoginPage({ onLogin }: LoginPageProps) {
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [businessName, setBusinessName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
+  const [agreed, setAgreed] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [isForgotPassword, setIsForgotPassword] = useState(false);
-  const [passwordChangedMessage, setPasswordChangedMessage] = useState(false);
 
   const resetForm = () => {
     setEmail('');
     setPassword('');
     setName('');
-    setBusinessName('');
-    setPhone('');
     setError('');
   };
 
@@ -46,6 +38,10 @@ export function LoginPage({ onLogin }: LoginPageProps) {
     if (isSignUp) {
       if (!name || !email || !password) {
         setError('Name, email, and password are required');
+        return;
+      }
+      if (!agreed) {
+        setError('Please agree to the Terms of Service');
         return;
       }
     } else {
@@ -64,7 +60,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
         : `${baseUrl}/api/login`;
 
       const body = isSignUp
-        ? { name, businessName, email, phone, password }
+        ? { name, email, password }
         : { email, password };
 
       const response = await fetch(url, {
@@ -95,218 +91,157 @@ export function LoginPage({ onLogin }: LoginPageProps) {
 
   return (
     <div className="login-wrapper">
-
-      {/* ═══ LEFT — Immersive Branding Hero ═══ */}
+      {/* ═══ LEFT — Branding Hero ═══ */}
       <div className="login-left">
-        {/* Floating glow orbs */}
-        <div className="login-orb login-orb-1" />
-        <div className="login-orb login-orb-2" />
-        <div className="login-orb login-orb-3" />
-
-        <div className="login-brand">
-          <div className="login-brand-icon">
-            <Hexagon size={36} color="#fff" strokeWidth={2} />
+        <h1 className="left-hero-text">Plan your activities and control your<br/>progress online</h1>
+        <div className="rocket-illustration-container">
+          <div className="stars">
+            <div className="star" style={{top: '10%', left: '30%'}}>✕</div>
+            <div className="star" style={{top: '15%', left: '60%'}}>✕</div>
+            <div className="star" style={{top: '40%', left: '75%'}}>✕</div>
+            <div className="star" style={{top: '55%', left: '20%'}}>✕</div>
+            <div className="star" style={{top: '50%', left: '80%'}}>✕</div>
+            <div className="star" style={{top: '65%', left: '85%'}}>✕</div>
+            <div className="star" style={{top: '30%', left: '15%'}}>✕</div>
           </div>
-          <h1>PayPlatform</h1>
-          <p className="login-brand-tagline">
-            Next-generation payment infrastructure for modern businesses.
-            Real-time analytics, seamless transactions, enterprise-grade security.
-          </p>
-
-          <div className="login-stats">
-            <div className="login-stat">
-              <span className="login-stat-value">12K+</span>
-              <span className="login-stat-label">Transactions</span>
-            </div>
-            <div className="login-stat">
-              <span className="login-stat-value">99.9%</span>
-              <span className="login-stat-label">Uptime</span>
-            </div>
-            <div className="login-stat">
-              <span className="login-stat-value">$2.4M</span>
-              <span className="login-stat-label">Processed</span>
-            </div>
+          <Rocket size={120} color="#fff" strokeWidth={1} className="rocket-icon" />
+          <div className="rocket-clouds">
+            <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+              <path fill="none" stroke="#fff" strokeWidth="1" d="M 20,70 Q 20,40 40,40 Q 50,20 70,20 Q 85,20 90,30 Q 100,5 130,5 Q 160,5 165,30 Q 180,30 185,50 Q 185,70 185,70 Z" />
+              <path fill="none" stroke="#fff" strokeWidth="1" d="M 50,70 Q 50,50 70,50" opacity="0.5"/>
+              <path fill="none" stroke="#fff" strokeWidth="1" d="M 120,70 Q 120,40 140,40" opacity="0.5"/>
+            </svg>
           </div>
-
-          <div className="login-trust">
-            <div className="login-trust-item">
-              <Shield size={14} /> SOC 2 Certified
-            </div>
-            <div className="login-trust-item">
-              <Zap size={14} /> &lt;50ms Latency
-            </div>
-            <div className="login-trust-item">
-              <Globe size={14} /> 40+ Countries
-            </div>
-          </div>
+          <div className="rocket-base-line" />
+        </div>
+        <div className="login-pager">
+          <div className="pager-dot"></div>
+          <div className="pager-dot active"></div>
+          <div className="pager-dot"></div>
+          <div className="pager-dot"></div>
         </div>
       </div>
 
       {/* ═══ RIGHT — Sign-In / Sign-Up Form ═══ */}
       <div className="login-right">
-        {isForgotPassword ? (
-          <PassReset 
-            onBack={() => setIsForgotPassword(false)} 
-            onSuccess={() => {
-              setIsForgotPassword(false);
-              setPasswordChangedMessage(true);
-              setTimeout(() => setPasswordChangedMessage(false), 3000);
-            }} 
-          />
-        ) : (
-        <div className="login-form-panel" style={{ position: 'relative' }}>
-          {passwordChangedMessage && (
-            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: '#e6f7edf0', color: '#0d8246', padding: '12px 24px', borderRadius: '8px', zIndex: 10, border: '1px solid #7ce3a2', fontWeight: 500, boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-              Password changed!
-            </div>
-          )}
-          <div className="login-header">
-            <h2>{isSignUp ? 'Create Account' : 'Welcome back'}</h2>
-            <p>{isSignUp ? 'Sign up to get started with PayPlatform' : 'Sign in to your admin dashboard'}</p>
+        <div className="top-toggle-container">
+          <div className="top-toggle">
+             <button type="button" className={!isSignUp ? 'active' : ''} onClick={() => {setIsSignUp(false); resetForm();}}>Sign In</button>
+             <button type="button" className={isSignUp ? 'active' : ''} onClick={() => {setIsSignUp(true); resetForm();}}>Sign Up</button>
           </div>
+        </div>
+
+        <div className="login-form-panel">
+          <div className="login-header">
+            <h2>
+              {/* If isSignUp is false, highlight Sign In, else highlight Sign Up */}
+              <span className={!isSignUp ? "text-active underline" : "text-inactive"} onClick={() => {setIsSignUp(false); resetForm()}} style={{cursor: 'pointer'}}>Sign In</span>
+              <span className="text-or"> or </span>
+              <span className={isSignUp ? "text-active underline" : "text-inactive"} onClick={() => {setIsSignUp(true); resetForm()}} style={{cursor: 'pointer'}}>Sign Up</span>
+            </h2>
+          </div>
+
           <form className="login-form" onSubmit={handleSubmit}>
             {error && <div className="login-error">{error}</div>}
 
-            {/* ── Sign Up extra fields ── */}
             {isSignUp && (
-              <>
-                <div className="login-input-group">
-                  <label htmlFor="signup-name">Full Name *</label>
-                  <div className="login-input-wrapper">
-                    <User size={18} className="login-input-icon" />
-                    <input
-                      id="signup-name"
-                      type="text"
-                      className="login-input"
-                      placeholder="John Doe"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      autoComplete="name"
-                    />
-                  </div>
+              <div className="login-input-group">
+                <label htmlFor="signup-name">FULL NAME</label>
+                <div className="login-input-wrapper">
+                  <input
+                    id="signup-name"
+                    type="text"
+                    className="login-input"
+                    placeholder="Enter your full name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    autoComplete="name"
+                  />
                 </div>
+              </div>
+            )}
 
-                <div className="login-input-group">
-                  <label htmlFor="signup-business">Business Name</label>
-                  <div className="login-input-wrapper">
-                    <Building2 size={18} className="login-input-icon" />
-                    <input
-                      id="signup-business"
-                      type="text"
-                      className="login-input"
-                      placeholder="Your Company Ltd."
-                      value={businessName}
-                      onChange={(e) => setBusinessName(e.target.value)}
-                    />
-                  </div>
+            {!isSignUp && (
+              <div className="login-input-group">
+                <label htmlFor="login-email">E MAIL</label>
+                <div className="login-input-wrapper">
+                  <input
+                    id="login-email"
+                    type="email"
+                    className="login-input"
+                    placeholder="Your email goes here"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="email"
+                  />
                 </div>
-
-                <div className="login-input-group">
-                  <label htmlFor="signup-phone">Phone Number</label>
-                  <div className="login-input-wrapper">
-                    <Phone size={18} className="login-input-icon" />
-                    <input
-                      id="signup-phone"
-                      type="tel"
-                      className="login-input"
-                      placeholder="+91 98765 43210"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      autoComplete="tel"
-                    />
-                  </div>
-                </div>
-              </>
+              </div>
             )}
 
             <div className="login-input-group">
-              <label htmlFor="login-email">Email *</label>
+              <label htmlFor="login-password">PASSWORD</label>
               <div className="login-input-wrapper">
-                <Mail size={18} className="login-input-icon" />
-                <input
-                  id="login-email"
-                  type="email"
-                  className="login-input"
-                  placeholder="admin@payplatform.in"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  autoComplete="email"
-                />
-              </div>
-            </div>
-
-            <div className="login-input-group">
-              <label htmlFor="login-password">Password *</label>
-              <div className="login-input-wrapper">
-                <Lock size={18} className="login-input-icon" />
                 <input
                   id="login-password"
-                  type={showPassword ? 'text' : 'password'}
+                  type="password"
                   className="login-input"
-                  placeholder="Enter your password"
+                  placeholder=".........."
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete={isSignUp ? 'new-password' : 'current-password'}
                 />
-                <button
-                  type="button"
-                  className="login-password-toggle"
-                  onClick={() => setShowPassword(!showPassword)}
-                  tabIndex={-1}
-                >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
               </div>
             </div>
 
-            {!isSignUp && (
-              <div className="login-options-row">
-                <label className="login-remember">
+            {isSignUp && (
+              <div className="login-input-group">
+                <label htmlFor="signup-email">E MAIL</label>
+                <div className="login-input-wrapper">
                   <input
-                    type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
+                    id="signup-email"
+                    type="email"
+                    className="login-input"
+                    placeholder="Your email goes here"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="email"
                   />
-                  <span>Remember me</span>
-                </label>
-                <button type="button" className="login-forgot" onClick={() => setIsForgotPassword(true)}>Forgot password?</button>
+                </div>
               </div>
             )}
 
-            <button type="submit" className="login-submit-btn" disabled={isLoading}>
-              {isLoading && <span className="login-btn-spinner" />}
-              {isLoading
-                ? (isSignUp ? 'Creating account...' : 'Signing in...')
-                : (isSignUp ? 'Create Account' : 'Sign In')
-              }
-            </button>
-
-            {!isSignUp && (
-              <>
-                <div className="login-divider">
-                  <span>or continue with</span>
-                </div>
-
-                <div className="login-social-row">
-                  <button type="button" className="login-social-btn">
-                    <Chrome size={16} /> Google
-                  </button>
-                </div>
-              </>
+            {isSignUp && (
+              <div className="login-checkbox-group">
+                <label className="login-remember">
+                  <input
+                    type="checkbox"
+                    checked={agreed}
+                    onChange={(e) => setAgreed(e.target.checked)}
+                  />
+                  <span>I agree all statements in <a href="#" className="terms-link">Terms of service</a></span>
+                </label>
+              </div>
             )}
+
+            <div className="login-actions">
+              <button type="submit" className="login-submit-btn" disabled={isLoading}>
+                {isLoading && <span className="login-btn-spinner" />}
+                {isSignUp ? 'Sign Up' : 'Sign In'}
+              </button>
+              
+              {isSignUp ? (
+                <a href="#" className="bottom-link" onClick={(e) => { e.preventDefault(); setIsSignUp(false); resetForm(); }}>
+                  I'm already member
+                </a>
+              ) : (
+                <a href="#" className="bottom-link" onClick={(e) => { e.preventDefault(); setIsSignUp(true); resetForm(); }}>
+                  Create an account
+                </a>
+              )}
+            </div>
           </form>
-
-          <div className="login-footer">
-            {isSignUp ? (
-              <>Already have an account? <a href="#" onClick={(e) => { e.preventDefault(); setIsSignUp(false); resetForm(); }}>Sign In</a></>
-            ) : (
-              <>Don't have an account? <a href="#" onClick={(e) => { e.preventDefault(); setIsSignUp(true); resetForm(); }}>Sign Up</a></>
-            )}
-          </div>
         </div>
-        )}
       </div>
-
     </div>
   );
 }
