@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Folder, Search, MoreHorizontal, X } from 'lucide-react';
 
-export type DownloadItem = { filename: string; date: Date };
+export type DownloadItem = { filename: string; date: Date; seen: boolean };
 
 // Global state for downloads so it's easy to reuse anywhere without prop drilling
 let globalDownloads: DownloadItem[] = [];
@@ -9,9 +9,14 @@ let listeners: ((d: DownloadItem[]) => void)[] = [];
 let popupListeners: (() => void)[] = [];
 
 export const registerDownload = (filename: string) => {
-  globalDownloads = [...globalDownloads, { filename, date: new Date() }];
+  globalDownloads = [...globalDownloads, { filename, date: new Date(), seen: false }];
   listeners.forEach(fn => fn(globalDownloads));
   popupListeners.forEach(fn => fn());
+};
+
+export const markDownloadsSeen = () => {
+  globalDownloads = globalDownloads.map(d => ({ ...d, seen: true }));
+  listeners.forEach(fn => fn(globalDownloads));
 };
 
 export const useDownloadsManager = () => {
@@ -37,7 +42,8 @@ export const useDownloadsManager = () => {
   return {
     downloadsList,
     showDownloadPopup,
-    setShowDownloadPopup
+    setShowDownloadPopup,
+    markDownloadsSeen
   };
 };
 

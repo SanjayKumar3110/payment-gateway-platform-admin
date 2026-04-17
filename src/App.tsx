@@ -57,10 +57,11 @@ export default function App() {
     clearNotifications
   } = useNotifications();
 
-  const { downloadsList, showDownloadPopup, setShowDownloadPopup } = useDownloadsManager();
+  const { downloadsList, showDownloadPopup, setShowDownloadPopup, markDownloadsSeen } = useDownloadsManager();
 
   const menuRef = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
+  const downloadRef = useRef<HTMLDivElement>(null);
 
   // Close sidebar by default on small screens
   useEffect(() => {
@@ -78,6 +79,9 @@ export default function App() {
       }
       if (notifRef.current && !notifRef.current.contains(event.target as Node)) {
         setShowNotifications(false);
+      }
+      if (downloadRef.current && !downloadRef.current.contains(event.target as Node)) {
+        setShowDownloadPopup(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -228,12 +232,13 @@ export default function App() {
             {/* <button className="btn-create">Create</button> */}
             
             {/* Downloads */}
-            <div style={{ position: 'relative' }}>
+            <div style={{ position: 'relative' }} ref={downloadRef}>
               <button className="icon-btn-circle" onClick={() => {
                  setShowDownloadPopup(!showDownloadPopup);
+                 if (!showDownloadPopup) markDownloadsSeen();
               }}>
                 <Download size={18} />
-                {downloadsList.length > 0 && <div style={{ position: 'absolute', top: 5, right: 5, width: 8, height: 8, backgroundColor: '#4F46E5', borderRadius: '50%' }} />}
+                {downloadsList.some(d => !d.seen) && <div style={{ position: 'absolute', top: 5, right: 5, width: 8, height: 8, backgroundColor: '#4F46E5', borderRadius: '50%' }} />}
               </button>
               {showDownloadPopup && <DownloadPopup downloads={downloadsList} onClose={() => setShowDownloadPopup(false)} />}
             </div>
@@ -241,7 +246,7 @@ export default function App() {
             <div style={{ position: 'relative' }} ref={notifRef}>
               <button className="icon-btn-circle" onClick={() => setShowNotifications(!showNotifications)}>
                 <Bell size={18} />
-                <div style={{ position: 'absolute', top: 5, right: 5, width: 8, height: 8, backgroundColor: '#FF4444', borderRadius: '50%' }} />
+                {unreadCount > 0 && <div style={{ position: 'absolute', top: 5, right: 5, width: 8, height: 8, backgroundColor: '#FF4444', borderRadius: '50%' }} />}
               </button>
               {showNotifications && (
                 <NotifyWindow
