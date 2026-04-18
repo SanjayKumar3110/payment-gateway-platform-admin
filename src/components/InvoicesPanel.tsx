@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect, useMemo, memo } from 'react';
 import { Calendar, Filter, ChevronDown, Download, ChevronLeft, ChevronRight, Check } from 'lucide-react';
 import { pdf } from '@react-pdf/renderer';
 import INVOICE_DATA from '@data/invoices.json';
@@ -207,7 +207,7 @@ const CalendarDropdown = ({ onSelectRange, rangeStart, rangeEnd }: any) => {
   );
 };
 
-export function Invoices() {
+export const Invoices = memo(function Invoices() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedInvoice, setSelectedInvoice] = useState(invoices[0]);
 
@@ -348,7 +348,15 @@ export function Invoices() {
   const paginatedInvoices = filteredInvoices.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <div style={{ display: 'flex', gap: '20px', minHeight: '100%', padding: '18px', backgroundColor: 'var(--bg)' }}>
+    <div style={{
+      display: 'flex',
+      gap: '20px',
+      minHeight: '100%',
+      padding: '18px',
+      // Stabilize the background color to prevent glow leakage during layout shifts
+      backgroundColor: '#09090b',
+      contain: 'layout'
+    }}>
 
       {/* Main Content Area */}
       <div style={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column', gap: '10px', minWidth: 0 }}>
@@ -366,13 +374,15 @@ export function Invoices() {
                 disabled={filteredInvoices.length === 0 || isDownloading}
                 style={{
                   display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px',
-                  backgroundColor: filteredInvoices.length > 0 && !isDownloading ? '#4F46E5' : 'var(--surface)',
+                  backgroundColor: filteredInvoices.length > 0 ? '#4F46E5' : 'var(--surface)',
                   border: 'none',
                   borderRadius: '10px', color: 'white',
                   fontSize: '14px', fontWeight: 600, cursor: (filteredInvoices.length > 0 && !isDownloading) ? 'pointer' : 'not-allowed',
                   transition: 'all 0.2s',
-                  boxShadow: (filteredInvoices.length > 0 && !isDownloading) ? '0 4px 12px rgba(79, 70, 229, 0.3)' : 'none',
-                  opacity: (filteredInvoices.length > 0 && !isDownloading) ? 1 : 0.5
+                  boxShadow: filteredInvoices.length > 0 ? '0 4px 12px rgba(79, 70, 229, 0.3)' : 'none',
+                  opacity: (filteredInvoices.length > 0 && !isDownloading) ? 1 : 0.7,
+                  minWidth: '190px',
+                  justifyContent: 'center'
                 }}
               >
                 {isDownloading ? (
@@ -531,7 +541,7 @@ export function Invoices() {
       </div>
 
       {/* Side Profile/Preview Area */}
-      <div style={{ flex: '0 0 380px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <div style={{ flex: '0 0 380px', display: 'flex', flexDirection: 'column', gap: '20px', contain: 'layout' }}>
         <div className="base-card" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
             <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: '#4F46E5', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', fontSize: '20px', boxShadow: '0 4px 12px rgba(79, 70, 229, 0.4)' }}>❋</div>
@@ -593,12 +603,16 @@ export function Invoices() {
                   disabled={isDownloading}
                   style={{
                     width: '100%', padding: '16px', borderRadius: '14px', border: 'none',
-                    background: isDownloading ? 'var(--surface)' : '#4F46E5',
+                    background: '#4F46E5',
                     color: 'white', fontWeight: 700, fontSize: '15px',
                     cursor: isDownloading ? 'not-allowed' : 'pointer',
                     transition: 'all 0.2s',
-                    boxShadow: isDownloading ? 'none' : '0 4px 14px rgba(79, 70, 229, 0.4)',
-                    opacity: isDownloading ? 0.7 : 1
+                    boxShadow: '0 4px 14px rgba(79, 70, 229, 0.4)',
+                    opacity: isDownloading ? 0.7 : 1,
+                    minHeight: '52px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}
                   onMouseEnter={(e) => { if (!isDownloading) e.currentTarget.style.transform = 'translateY(-2px)'; }}
                   onMouseLeave={(e) => { if (!isDownloading) e.currentTarget.style.transform = 'translateY(0)'; }}

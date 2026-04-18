@@ -27,8 +27,17 @@ function createWindow() {
 
 // IPC Listener for saving PDFs
 ipcMain.on('save-pdf', async (event, { buffer, filename }) => {
-    const win = BrowserWindow.getFocusedWindow();
-    const { filePath } = await dialog.showSaveDialog(win, {
+    console.log(`Received save-pdf request for: ${filename}, buffer size: ${buffer.byteLength || (buffer && buffer.length) || 0} bytes`);
+    
+    // Use BrowserWindow.fromWebContents to find the specific window that sent the message
+    const win = BrowserWindow.fromWebContents(event.sender);
+    
+    if (!win) {
+        console.error('No source window found for save-pdf event');
+        return;
+    }
+
+    const { filePath, canceled } = await dialog.showSaveDialog(win, {
         title: 'Save Invoice PDF',
         defaultPath: filename,
         filters: [
@@ -36,9 +45,18 @@ ipcMain.on('save-pdf', async (event, { buffer, filename }) => {
         ]
     });
 
+    if (canceled) {
+        console.log('Save dialog was canceled by user');
+        return;
+    }
+
     if (filePath) {
-        fs.writeFileSync(filePath, Buffer.from(buffer));
-        console.log(`Saved PDF to: ${filePath}`);
+        try {
+            fs.writeFileSync(filePath, Buffer.from(buffer));
+            console.log(`Successfully saved PDF to: ${filePath}`);
+        } catch (err) {
+            console.error(`Failed to write file at ${filePath}:`, err);
+        }
     }
 });
 
