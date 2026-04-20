@@ -354,7 +354,7 @@ export const Invoices = memo(function Invoices() {
       minHeight: '100%',
       padding: '18px',
       // Stabilize the background color to prevent glow leakage during layout shifts
-      backgroundColor: '#09090b',
+      backgroundColor: '#b3b3b300',
       contain: 'layout'
     }}>
 
@@ -628,3 +628,4 @@ export const Invoices = memo(function Invoices() {
     </div>
   );
 }
+)

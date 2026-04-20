@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 /* Custom scrollbar styling for a premium look */
 ::-webkit-scrollbar {
   width: 8px;
@@ -24,8 +26,6 @@
 .app-container.dark ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
   /* Ultra-Premium Glassmorphism Background: Vibrant Tech Mesh */

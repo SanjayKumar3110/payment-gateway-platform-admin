@@ -1,83 +1,130 @@
-# 🚀 Payment Gateway Platform - Quickstart Guide
+# 🚀 Quickstart Guide
 
-Welcome to the Admin Dashboard! This guide will help you get the system running and test a live payment flow in **less than 5 minutes**, even if you don't have a Razorpay account yet.
+Welcome to the Admin Dashboard! This guide will help you get the system running locally and learn how to contribute.
 
 ---
 
-## 🛠️ Step 1: Initial Setup
+## 🛠️ Step 1: Clone from GitHub
 
-Ensure you have [Node.js](https://nodejs.org/) (v20+) installed.
+To get started, you'll need to clone the repository to your local machine:
 
-1. **Install Dependencies**:
-   Open a terminal in the project folder and run:
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd <project-folder>
+   ```
+
+2. **Install Dependencies:**
+   Ensure you have [Node.js](https://nodejs.org/) (v20+) installed. Run:
    ```bash
    npm install
    ```
-2. **Start the System**:
-   Run both the dashboard and the backend server with one command:
+
+---
+
+## 🏃‍♂️ Step 2: Running the Project Locally
+
+There are several options to run the project depending on what you want to work on:
+
+### Start Frontend ONLY
+To run just the Vite frontend server:
+```bash
+npm run dev
+```
+
+### Start Backend ONLY
+To run just the backend Express server:
+```bash
+npm run server
+```
+
+### Start Both (Web Mode)
+To run both the Vite frontend and the backend server concurrently:
+```bash
+npm run dev:all
+```
+
+### Start Electron Desktop App (Full Mode)
+To run the full stack as a desktop application (Frontend, Backend, and Electron shell):
+```bash
+npm run electron:dev
+```
+*The dashboard frontend will run at `http://localhost:5173` and the backend will start at `http://localhost:5000`.*
+
+---
+
+## 🔗 Step 3: Localhost Endpoints
+
+When running locally, here are the default URLs and API endpoints available:
+
+### Core Services
+- **Frontend URL:** `http://localhost:5173`
+- **Backend API Base URL:** `http://localhost:5000`
+- **Standalone Checkout Page:** `http://localhost:5173/checkout.html`
+
+### Backend Endpoints
+All API endpoints are prefixed with `/api` unless otherwise noted.
+
+**Authentication & Settings (`/api`)**
+- `POST /api/login` - Login to the dashboard
+- `POST /api/signup` - Register a new user
+- `POST /api/update-keys` - Update Payment Integration / API Keys
+
+**Payments (`/api`)**
+- `GET /api/payments` - Retrieve transaction logs
+- `POST /api/process-external` - Process/Simulate external payments
+- `POST /api/webhook` - Webhook listener for payment statuses
+
+**Password Reset (`/api`)**
+- `POST /api/forgot-password` - Request password reset code
+- `POST /api/verify-reset-code` - Verify the emailed reset code
+- `POST /api/reset-password` - Set the new password
+
+**Other APIs**
+- `GET /` - Health check route
+- `GET /api/remote-access` - Retrieve ngrok/QR tunneling data for mobile access
+
+---
+
+## 🔄 Step 4: Making Changes and Using Git
+
+Once you've made your changes in the local repository, here is the standard workflow to push your updates back to GitHub:
+
+1. **Check the status of your changes:**
    ```bash
-   npm run dev:all
+   git status
    ```
-   *The dashboard will open at `http://localhost:5173` and the backend will run at `http://localhost:5000`.*
 
----
+2. **Add changes to staging:**
+   ```bash
+   # To add specific files:
+   git add <filename>
 
-## 💳 Step 2: Test a Payment (No Keys Needed)
+   # To add all changed files:
+   git add .
+   ```
 
-We have built a **"Demo Mode"** so you can see the system in action immediately.
+3. **Commit your changes:**
+   ```bash
+   git commit -m "Describe what you accomplished in this commit"
+   ```
 
-1. **Configure Demo Keys**:
-   - In the Admin App, go to **Settings** → **Payment Integration**.
-   - Enter **`DEMO`** in the **Key ID** field.
-   - Enter **`DEMO`** in the **Key Secret** field.
-   - Click **Save API Keys**.
+4. **Pull latest changes from the main branch** (to avoid conflicts):
+   ```bash
+   git pull origin main
+   ```
 
-2. **Open the Checkout Page**:
-   - Visit: [http://localhost:5173/checkout.html](http://localhost:5173/checkout.html)
-   - Enter any amount (e.g., `5000`) and click **Pay with Razorpay**.
-   - Click the green **"Simulate Successful UPI Payment"** button.
-
----
-
-## 📊 Step 3: Verify the Result
-
-Once the payment is simulated, you can verify it across the platform:
-
-- **Dashboard**: Check the **"Recent Payment Log"** at the bottom. Your new payment will appear at the top.
-- **Payments Page**: Go to the **Payments** sidebar. You'll see the full transaction list with the new "DEMO" entry.
-- **Analytics**: Watch the **Total Revenue** and **Total Transactions** counters increase in real-time.
-
----
-
-## 📂 Project Structure
-
-- `/src`: The React frontend (Dashboard, Analytics, Settings).
-- `/backend`: The Express server handling order creation and verification.
-- `/backend/payments.json`: The database where real payments are stored.
-- `/public/checkout.html`: A standalone test environment for customers.
+5. **Push your changes to GitHub:**
+   ```bash
+   git push origin main
+   ```
+*(Note: If you are working on a separate branch, replace `main` with your branch name, e.g., `git push origin my-feature-branch`)*
 
 ---
 
 ## 🛡️ Going Production
 
-When you are ready for real payments:
-1. Get your **Key ID** and **Key Secret** from the [Razorpay Dashboard](https://dashboard.razorpay.com/app/keys).
-2. Update them in the **Settings** panel of this app.
-3. The system will automatically switch from "Demo Mod
-
-**Windows (PowerShell):**
-```powershell
-Stop-Process -Id (Get-NetTCPConnection -LocalPort 5000).OwningProcess -Force
-Stop-Process -Id (Get-NetTCPConnection -LocalPort 5173).OwningProcess -Force
-```
-
-**Mac/Linux:**
-```bash
-kill -9 $(lsof -t -i:5000)
-kill -9 $(lsof -t -i:5173)
-```
-
-**Quick Tip:** By running these commands, you free up the ports so they can be securely used again the next time you start the server. You should also make sure to use `Ctrl + C` in the terminal to gracefully stop the current processes before closing the window.
-
----
-*Created by Antigravity - Your Agentic Coding Assistant*
+When you are ready for real payments instead of Demo mode:
+1. Get your **Key ID** and **Key Secret** from your Payment Provider Dashboard.
+2. Update them in the **Settings** panel of this app under **Payment Integration**.
+3. The system will automatically switch from "Demo Mode" to live transactions.

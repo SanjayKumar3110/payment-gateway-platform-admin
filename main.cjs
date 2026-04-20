@@ -28,10 +28,8 @@ function createWindow() {
 // IPC Listener for saving PDFs
 ipcMain.on('save-pdf', async (event, { buffer, filename }) => {
     console.log(`Received save-pdf request for: ${filename}, buffer size: ${buffer.byteLength || (buffer && buffer.length) || 0} bytes`);
-    
-    // Use BrowserWindow.fromWebContents to find the specific window that sent the message
     const win = BrowserWindow.fromWebContents(event.sender);
-    
+
     if (!win) {
         console.error('No source window found for save-pdf event');
         return;
@@ -69,6 +67,7 @@ app.whenReady().then(() => {
         });
         globalShortcut.register('CommandOrControl+Shift+R', () => {
             app.relaunch();
+            app.exit();
         });
     }
 
@@ -87,4 +86,4 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
     }
-});
+});

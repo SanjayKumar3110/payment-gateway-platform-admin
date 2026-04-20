@@ -128,7 +128,7 @@ export default function App() {
       <aside className={`sidebar${sidebarOpen ? ' sidebar-open' : ' sidebar-closed'}`}>
         <div className="sidebar-logo">
           <Hexagon className="icon" />
-          <span>PayPlatform</span>
+          <span>Quick Look</span>
         </div>
 
         <nav className="sidebar-nav" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>

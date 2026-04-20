@@ -66,7 +66,7 @@ router.post('/signup', (req: Request, res: Response) => {
       return res.status(409).json({ error: 'An account with this email already exists.' });
     }
 
-    const userId = `USR-${Math.floor(1000 + Math.random() * 9000)}`;
+    const userId = `BUSID-${Math.floor(100000 + Math.random() * 900000)}`;
 
     const newUser = {
       id: userId,
@@ -95,7 +95,7 @@ router.post('/signup', (req: Request, res: Response) => {
 // Update Razorpay Keys Route
 router.post('/update-keys', (req: Request, res: Response) => {
   const { email, key_id, key_secret, webhook_secret, account_id } = req.body;
-  
+
   if (!email) {
     return res.status(400).json({ error: 'Email is required to identify the user.' });
   }
@@ -103,7 +103,7 @@ router.post('/update-keys', (req: Request, res: Response) => {
   try {
     const usersData = fs.readFileSync(USER_FILE, 'utf-8');
     const users = JSON.parse(usersData);
-    
+
     const userIndex = users.findIndex((u: any) => u.email === email);
     if (userIndex === -1) {
       return res.status(404).json({ error: 'User not found in system.' });
@@ -124,6 +124,62 @@ router.post('/update-keys', (req: Request, res: Response) => {
     res.json({ message: 'Keys updated successfully', user: safeUser });
   } catch (error) {
     console.error('Update keys error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Verify Business ID
+router.post('/verify-business-id', (req: Request, res: Response) => {
+  const { email, businessId } = req.body;
+
+  if (!email || !businessId) {
+    return res.status(400).json({ error: 'Email and Business ID are required' });
+  }
+
+  try {
+    const usersData = fs.readFileSync(USER_FILE, 'utf-8');
+    const users = JSON.parse(usersData);
+    
+    // Find matching user
+    const user = users.find((u: any) => u.email === email && u.id === businessId);
+    
+    if (!user) {
+      return res.status(404).json({ error: 'Invalid Email or Business ID' });
+    }
+    
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Verify business ID error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Reset Password by ID
+router.post('/reset-password-by-id', (req: Request, res: Response) => {
+  const { email, businessId, newPassword } = req.body;
+
+  if (!email || !businessId || !newPassword) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  try {
+    const usersData = fs.readFileSync(USER_FILE, 'utf-8');
+    const users = JSON.parse(usersData);
+    
+    // Find matching user
+    const userIndex = users.findIndex((u: any) => u.email === email && u.id === businessId);
+    
+    if (userIndex === -1) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Update password (saving in plain text to match existing login mechanism)
+    users[userIndex].password = newPassword;
+    fs.writeFileSync(USER_FILE, JSON.stringify(users, null, 2));
+
+    res.json({ message: 'Password updated successfully' });
+  } catch (error) {
+    console.error('Reset password error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

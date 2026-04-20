@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Eye, EyeOff, ChevronLeft } from 'lucide-react';
-import './Login.css'; // Reusing standard login styles
+import './Login.css';
 
 interface PassResetProps {
   onBack: () => void;
@@ -8,42 +8,39 @@ interface PassResetProps {
 }
 
 export function PassReset({ onBack, onSuccess }: PassResetProps) {
-  const [step, setStep] = useState(1);
-  const [contactInfo, setContactInfo] = useState('');
-  const [code, setCode] = useState(['', '', '', '']);
+  const [step, setStep] = useState(1); // 1: Business ID, 2: New Password
+  const [email, setEmail] = useState('');
+  const [businessId, setBusinessId] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [countdown, setCountdown] = useState(40);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
   const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
-    if (step === 2 && countdown > 0) {
-      timer = setTimeout(() => setCountdown(countdown - 1), 1000);
-    }
-    return () => clearTimeout(timer);
-  }, [step, countdown]);
-
-  const handleEmailSubmit = async (e: React.FormEvent) => {
+  // Step 1: Verify the Business ID
+  const handleBusinessIdSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!contactInfo) return;
+    if (!email || !businessId) return;
+
     setIsLoading(true);
     setError('');
+
     try {
-      const res = await fetch(`${baseUrl}/api/forgot-password`, {
+      // In a local environment, this endpoint checks if the ID exists
+      const res = await fetch(`${baseUrl}/api/verify-business-id`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: contactInfo })
+        body: JSON.stringify({ email, businessId })
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to send code');
 
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Invalid Business ID');
+
+      // If ID is correct, move to password setting step
       setStep(2);
-      setCountdown(40);
-      setCode(['', '', '', '']);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -51,67 +48,25 @@ export function PassReset({ onBack, onSuccess }: PassResetProps) {
     }
   };
 
-  const handleCodeChange = (index: number, value: string) => {
-    if (value.length > 1) return; // limit to 1 char
-    if (!/^\d*$/.test(value)) return; // only digits
-
-    const newCode = [...code];
-    newCode[index] = value;
-    setCode(newCode);
-
-    // auto focus next
-    if (value && index < 3) {
-      const nextInput = document.getElementById(`code-input-${index + 1}`);
-      nextInput?.focus();
-    }
-  };
-
-  const handleCodeKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Backspace' && !code[index] && index > 0) {
-      const prevInput = document.getElementById(`code-input-${index - 1}`);
-      prevInput?.focus();
-    }
-  };
-
-  const verifyCode = async () => {
-    const fullCode = code.join('');
-    if (fullCode.length < 4) return;
-    setIsLoading(true);
-    setError('');
-
-    try {
-      const res = await fetch(`${baseUrl}/api/verify-reset-code`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: contactInfo, code: fullCode })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Invalid code');
-
-      setStep(3);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+  // Step 2: Update the Password
   const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newPassword || newPassword.length < 8) return;
+    if (!newPassword || newPassword.length < 8 || newPassword !== confirmPassword) return;
+
     setIsLoading(true);
     setError('');
 
     try {
-      const res = await fetch(`${baseUrl}/api/reset-password`, {
+      const res = await fetch(`${baseUrl}/api/reset-password-by-id`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: contactInfo, code: code.join(''), newPassword })
+        body: JSON.stringify({ email, businessId, newPassword })
       });
+
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to reset password');
 
-      onSuccess();
+      onSuccess(); // Success! Redirect user
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -124,7 +79,7 @@ export function PassReset({ onBack, onSuccess }: PassResetProps) {
     if (step === 1) {
       onBack();
     } else {
-      setStep(step - 1);
+      setStep(1);
     }
   };
 
@@ -150,113 +105,113 @@ export function PassReset({ onBack, onSuccess }: PassResetProps) {
         <ChevronLeft size={16} style={{ marginRight: '4px' }} /> Back
       </button>
 
+      {/* STEP 1: BUSINESS ID INPUT */}
       {step === 1 && (
         <div className="login-step" style={{ textAlign: 'left' }}>
           <div className="login-header" style={{ marginBottom: '24px' }}>
-            <h2 style={{ textAlign: 'left', marginBottom: '8px' }}>Forgot password</h2>
+            <h2 style={{ textAlign: 'left', marginBottom: '8px' }}>Reset Password</h2>
             <p style={{ textAlign: 'left', fontSize: '14px', color: '#666' }}>
-              Enter the email associated with your account, and we will email you a verification code to reset your password.
+              Enter your Email and Business ID to authorize a password reset.
             </p>
           </div>
+
           {error && <div className="login-error" style={{ marginBottom: '16px' }}>{error}</div>}
-          <form className="login-form" onSubmit={handleEmailSubmit}>
+
+          <form className="login-form" onSubmit={handleBusinessIdSubmit}>
             <div className="login-input-group">
+              <div className="login-input-wrapper" style={{ marginBottom: '16px' }}>
+                <input
+                  id="email"
+                  type="email"
+                  className="login-input"
+                  placeholder="Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  style={{ paddingLeft: '16px' }}
+                />
+              </div>
               <div className="login-input-wrapper">
                 <input
-                  id="reset-contact"
+                  id="business-id"
                   type="text"
                   className="login-input"
-                  placeholder="Email"
-                  value={contactInfo}
-                  onChange={(e) => setContactInfo(e.target.value)}
+                  placeholder="Business ID"
+                  value={businessId}
+                  onChange={(e) => setBusinessId(e.target.value)}
                   style={{ paddingLeft: '16px' }}
                 />
               </div>
             </div>
-            <button type="submit" className="login-submit-btn" disabled={isLoading || !contactInfo} style={{ marginTop: '16px' }}>
-              {isLoading ? <span className="login-btn-spinner" /> : 'Send code'}
+            <button
+              type="submit"
+              className="login-submit-btn"
+              disabled={isLoading || !businessId || !email}
+              style={{ marginTop: '16px' }}
+            >
+              {isLoading ? <span className="login-btn-spinner" /> : 'Continue'}
             </button>
           </form>
         </div>
       )}
 
+      {/* STEP 2: NEW PASSWORD INPUT */}
       {step === 2 && (
         <div className="login-step" style={{ textAlign: 'left' }}>
           <div className="login-header" style={{ marginBottom: '24px' }}>
-            <h2 style={{ textAlign: 'left', marginBottom: '8px' }}>Enter verification code</h2>
+            <h2 style={{ textAlign: 'left', marginBottom: '8px' }}>Set new password</h2>
             <p style={{ textAlign: 'left', fontSize: '14px', color: '#666' }}>
-              The verification code has been sent to email <br /><strong>{contactInfo}</strong>
+              Create a strong password for Business ID: <strong>{businessId}</strong>
             </p>
           </div>
-          {error && <div className="login-error" style={{ marginBottom: '16px' }}>{error}</div>}
-          <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
-            {code.map((digit, index) => (
-              <input
-                key={index}
-                id={`code-input-${index}`}
-                type="text"
-                maxLength={1}
-                value={digit}
-                onChange={(e) => handleCodeChange(index, e.target.value)}
-                onKeyDown={(e) => handleCodeKeyDown(index, e)}
-                style={{
-                  width: '56px',
-                  height: '56px',
-                  fontSize: '24px',
-                  textAlign: 'center',
-                  borderRadius: '8px',
-                  border: '1px solid #d1d5db',
-                  background: 'transparent',
-                  outline: 'none',
-                  color: '#333'
-                }}
-              />
-            ))}
-          </div>
-          <p style={{ fontSize: '14px', color: countdown > 0 ? '#666' : '#0070f3', cursor: countdown > 0 ? 'default' : 'pointer' }}>
-            {countdown > 0 ? `Resend after ${countdown} seconds` : 'Resend code'}
-          </p>
-          {code.join('').length === 4 && (
-            <button type="button" className="login-submit-btn" style={{ marginTop: '24px' }} disabled={isLoading} onClick={verifyCode}>
-              {isLoading ? <span className="login-btn-spinner" /> : 'Verify'}
-            </button>
-          )}
-        </div>
-      )}
 
-      {step === 3 && (
-        <div className="login-step" style={{ textAlign: 'left' }}>
-          <div className="login-header" style={{ marginBottom: '24px' }}>
-            <h2 style={{ textAlign: 'left', marginBottom: '8px' }}>Set password</h2>
-            <p style={{ textAlign: 'left', fontSize: '14px', color: '#666' }}>
-              Password requires a minimum of 8 characters and contains a capital letter, numbers and symbols
-            </p>
-          </div>
           {error && <div className="login-error" style={{ marginBottom: '16px' }}>{error}</div>}
+
           <form className="login-form" onSubmit={handlePasswordSubmit}>
             <div className="login-input-group">
-              <div className="login-input-wrapper">
+              <div className="login-input-wrapper" style={{ marginBottom: '16px' }}>
                 <input
                   id="new-password"
                   type={showPassword ? 'text' : 'password'}
                   className="login-input"
-                  placeholder="Password"
+                  placeholder="New Password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   style={{ paddingLeft: '16px' }}
                 />
-                <button
-                  type="button"
-                  className="login-password-toggle"
-                  onClick={() => setShowPassword(!showPassword)}
+                <div className="input-icon-right"
+                  onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </div>
+              </div>
+              <div className="login-input-wrapper">
+                <input
+                  id="confirm-password"
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  className="login-input"
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  style={{ paddingLeft: '16px' }}
+                />
+                <div
+                  className="input-icon-right"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   tabIndex={-1}
                 >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
+                  {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </div>
               </div>
             </div>
-            <button type="submit" className="login-submit-btn" disabled={isLoading || newPassword.length < 8} style={{ marginTop: '16px' }}>
-              {isLoading ? <span className="login-btn-spinner" /> : 'Continue'}
+            <p style={{ fontSize: '12px', color: '#999', marginTop: '8px' }}>
+              Minimum 8 characters required.
+            </p>
+            <button
+              type="submit"
+              className="login-submit-btn"
+              disabled={isLoading || newPassword.length < 8 || confirmPassword.length < 8 || newPassword !== confirmPassword}
+              style={{ marginTop: '16px' }}
+            >
+              {isLoading ? <span className="login-btn-spinner" /> : 'Update Password'}
             </button>
           </form>
         </div>

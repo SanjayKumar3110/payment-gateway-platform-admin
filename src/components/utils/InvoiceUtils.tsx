@@ -6,24 +6,11 @@ import INVOICE_DATA from '@data/invoices.json';
 const { invoices } = INVOICE_DATA;
 
 export default function InvoiceChart() {
-    const [chartFilter, setChartFilter] = useState('All');
-    const [timeRange, setTimeRange] = useState('1 week');
+    const [timeRange, setTimeRange] = useState('Week');
     const [showTimeDropdown, setShowTimeDropdown] = useState(false);
 
     const chartData = useMemo(() => {
-        // Filter by Type
         let filtered = invoices;
-        if (chartFilter === 'Single') {
-            filtered = invoices.filter(inv => {
-                const t = inv.type.replace(/\s|-/g, '').toLowerCase();
-                return t === 'onetime' || t === 'installment';
-            });
-        } else if (chartFilter === 'Recurring') {
-            filtered = invoices.filter(inv => {
-                const t = inv.type.replace(/\s|-/g, '').toLowerCase();
-                return t === 'recurring' || t === 'subscription' || t === 'quarterly';
-            });
-        }
 
         // Calculate totals matching the filter
         let totalPaid = 0;
@@ -36,28 +23,28 @@ export default function InvoiceChart() {
 
         // Generate buckets proportionally visualizing the calculated totals
         let buckets: any[] = [];
-        if (timeRange === '1 week') {
+        if (timeRange === 'Week') {
             const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
             buckets = days.map((day, i) => ({
                 day,
                 paid: (totalPaid * (0.05 + ((i * 13) % 7) * 0.02)),
                 unpaid: (totalUnpaid * (0.05 + ((i * 17) % 7) * 0.02)),
             }));
-        } else if (timeRange === '1 month') {
+        } else if (timeRange === 'Month') {
             const weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
             buckets = weeks.map((week, i) => ({
                 day: week,
                 paid: (totalPaid * (0.15 + (i % 4) * 0.05)),
                 unpaid: (totalUnpaid * (0.15 + ((i + 2) % 4) * 0.05)),
             }));
-        } else if (timeRange === '3 month') {
+        } else if (timeRange === 'Quater') {
             const months = ['Month 1', 'Month 2', 'Month 3'];
             buckets = months.map((month, i) => ({
                 day: month,
                 paid: (totalPaid * (0.2 + (i % 3) * 0.1)),
                 unpaid: (totalUnpaid * (0.2 + ((i + 1) % 3) * 0.1)),
             }));
-        } else if (timeRange === '1 year') {
+        } else if (timeRange === 'Year') {
             const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             buckets = months.map((month, i) => ({
                 day: month,
@@ -71,24 +58,11 @@ export default function InvoiceChart() {
             paid: Math.round(b.paid),
             unpaid: Math.round(b.unpaid)
         }));
-    }, [chartFilter, timeRange]);
+    }, [ timeRange]);
 
     return (
         <>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px', marginBottom: '20px' }}>
-                <div style={{ display: 'flex', backgroundColor: 'var(--border)', borderRadius: '8px', padding: '4px' }}>
-                    {['All', 'Single', 'Recurring'].map(filter => (
-                        <button key={filter} onClick={() => setChartFilter(filter)} style={{
-                            padding: '6px 16px', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '12px', fontWeight: 500,
-                            backgroundColor: chartFilter === filter ? '#1D4ED8' : 'transparent',
-                            color: chartFilter === filter ? 'white' : 'var(--text-secondary)',
-                            transition: 'all 0.2s'
-                        }}>
-                            {filter}
-                        </button>
-                    ))}
-                </div>
-
                 <div style={{ position: 'relative' }}>
                     <button
                         onClick={() => setShowTimeDropdown(!showTimeDropdown)}
@@ -99,7 +73,7 @@ export default function InvoiceChart() {
 
                     {showTimeDropdown && (
                         <div className="solid-dropdown" style={{ position: 'absolute', top: '100%', right: 0, marginTop: '8px', width: '120px', borderRadius: '8px', zIndex: 100, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                            {['1 week', '1 month', '3 month', '1 year'].map(tr => (
+                            {['Week', 'Month', 'Quater', 'Year'].map(tr => (
                                 <button
                                     key={tr}
                                     onClick={() => { setTimeRange(tr); setShowTimeDropdown(false); }}
@@ -119,7 +93,6 @@ export default function InvoiceChart() {
                 <ResponsiveContainer width="100%" height={180}>
                     <BarChart data={chartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
                         <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: 'var(--text-secondary)' }} dy={10} />
-                        {/* <RechartsTooltip cursor={{ fill: 'transparent' }} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', backgroundColor: 'var(--surface)', color: 'var(--text-primary)' }} /> */}
                         <RechartsTooltip
                             cursor={false}
                             contentStyle={{
