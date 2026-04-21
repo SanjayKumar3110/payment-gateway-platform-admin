@@ -26,85 +26,105 @@ Font.register({
 
 const styles = StyleSheet.create({
   page: {
-    padding: 40,
-    // Set the default font for the whole document to the 18pt optimized version
+    padding: 50,
     fontFamily: 'Inter-Text',
     backgroundColor: '#FFFFFF',
-    color: '#1F2937',
+    color: '#1e293b',
+  },
+  accentBar: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 6,
+    backgroundColor: '#4F46E5',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 40,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
-    paddingBottom: 20,
+    alignItems: 'flex-start',
+    marginBottom: 60,
   },
   logoSection: {
     flexDirection: 'column',
   },
   logo: {
-    // Use the Display font for the large Logo text
     fontFamily: 'Inter-Display',
     fontSize: 24,
     fontWeight: 'bold',
     color: '#4F46E5',
     marginBottom: 4,
   },
-  companyName: {
-    fontFamily: 'Inter-Text',
+  tagline: {
     fontSize: 12,
-    color: '#6B7280',
-    fontWeight: 'normal',
+    color: '#94a3b8',
+    fontWeight: 'medium',
+    marginBottom: 15,
   },
-  invoiceInfo: {
+  senderAddress: {
+    fontSize: 10,
+    color: '#64748b',
+    lineHeight: 1.5,
+  },
+  invoiceDetails: {
     textAlign: 'right',
   },
   invoiceTitle: {
-    // Use the Display font for the primary "INVOICE" heading
     fontFamily: 'Inter-Display',
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
-    color: '#111827',
-    marginBottom: 8,
+    color: '#0f172a',
+    marginBottom: 15,
   },
-  invoiceMetaText: {
-    fontFamily: 'Inter-Text',
+  metaGrid: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginBottom: 4,
+  },
+  metaLabel: {
     fontSize: 10,
-    color: '#6B7280',
-    marginBottom: 2,
-  },
-  sectionTitle: {
-    fontFamily: 'Inter-Text',
-    fontSize: 12,
+    color: '#94a3b8',
     fontWeight: 'bold',
-    color: '#374151',
     textTransform: 'uppercase',
-    marginBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
-    paddingBottom: 4,
+    marginRight: 15,
+  },
+  metaValue: {
+    fontSize: 11,
+    color: '#0f172a',
+    fontWeight: 'bold',
+    width: 100,
+    textAlign: 'right',
   },
   billingSection: {
     flexDirection: 'row',
-    marginBottom: 40,
+    marginBottom: 60,
   },
   billingBox: {
     flex: 1,
   },
+  boxTitle: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    color: '#94a3b8',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f1f5f9',
+    paddingBottom: 6,
+    marginRight: 40,
+  },
   billingName: {
-    fontFamily: 'Inter-Text',
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#111827',
+    color: '#0f172a',
     marginBottom: 4,
   },
   billingAddress: {
-    fontFamily: 'Inter-Text',
-    fontSize: 10,
-    color: '#6B7280',
-    lineHeight: 1.5,
-    maxWidth: 200,
+    fontSize: 11,
+    color: '#64748b',
+    lineHeight: 1.6,
+    maxWidth: 220,
   },
   table: {
     marginTop: 20,
@@ -112,97 +132,136 @@ const styles = StyleSheet.create({
   },
   tableHeader: {
     flexDirection: 'row',
-    backgroundColor: '#F9FAFB',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
-    padding: 8,
+    backgroundColor: '#f8fafc',
+    borderBottomWidth: 2,
+    borderBottomColor: '#e2e8f0',
+    padding: '12 8',
   },
   tableRow: {
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
-    padding: 10,
+    borderBottomColor: '#f1f5f9',
+    padding: '16 8',
     alignItems: 'center',
   },
-  colDescription: {
-    flex: 3,
-  },
-  colQty: {
-    flex: 1,
-    textAlign: 'center',
-  },
-  colPrice: {
-    flex: 1,
-    textAlign: 'right',
-  },
+  colDesc: { flex: 4 },
+  colType: { flex: 2, textAlign: 'center' },
+  colQty: { flex: 1, textAlign: 'center' },
+  colRate: { flex: 2, textAlign: 'right' },
+  colAmt: { flex: 2, textAlign: 'right' },
+  
   headerText: {
-    fontFamily: 'Inter-Text',
-    fontSize: 10,
+    fontSize: 9,
     fontWeight: 'bold',
-    color: '#4B5563',
+    color: '#475569',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   rowText: {
-    fontFamily: 'Inter-Text',
     fontSize: 11,
-    color: '#1F2937',
+    color: '#1e293b',
+  },
+  descText: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    color: '#0f172a',
   },
   summarySection: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
   summaryBox: {
-    width: 200,
+    width: 280,
   },
   summaryRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 4,
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f1f5f9',
   },
   totalRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 12,
-    borderTopWidth: 1,
-    borderTopColor: '#E5E7EB',
-    marginTop: 8,
+    paddingVertical: 16,
+    borderTopWidth: 2,
+    borderTopColor: '#0f172a',
+    marginTop: 10,
   },
-  totalText: {
-    fontFamily: 'Inter-Text',
-    fontSize: 16,
+  summaryLabel: {
+    fontSize: 11,
+    color: '#64748b',
+  },
+  totalLabel: {
+    fontSize: 14,
     fontWeight: 'bold',
-    color: '#111827',
+    color: '#0f172a',
+  },
+  totalValue: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#4F46E5',
   },
   footer: {
-    position: 'absolute',
-    bottom: 40,
-    left: 40,
-    right: 40,
-    textAlign: 'center',
+    marginTop: 80,
     borderTopWidth: 1,
-    borderTopColor: '#F3F4F6',
-    paddingTop: 12,
+    borderTopColor: '#f1f5f9',
+    paddingTop: 40,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  paymentInfo: {
+    flexDirection: 'column',
+  },
+  footerSectionTitle: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    color: '#0f172a',
+    marginBottom: 6,
+    textTransform: 'uppercase',
   },
   footerText: {
-    fontFamily: 'Inter-Text',
     fontSize: 10,
-    color: '#9CA3AF',
+    color: '#64748b',
+    lineHeight: 1.5,
+  },
+  qrCodePlaceholder: {
+    width: 60,
+    height: 60,
+    backgroundColor: '#f1f5f9',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderStyle: 'dashed',
+    borderColor: '#cbd5e1',
+    marginTop: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  signatureBox: {
+    textAlign: 'center',
+    width: 180,
+  },
+  signatureLine: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#e2e8f0',
+    height: 40,
+    marginBottom: 8,
   },
   statusBadge: {
-    fontFamily: 'Inter-Text',
     fontSize: 10,
     fontWeight: 'bold',
     padding: '4 8',
     borderRadius: 4,
-    backgroundColor: '#ECFDF5',
-    color: '#059669',
-    alignSelf: 'flex-start',
-    marginTop: 10,
-  },
-  unpaidBadge: {
     backgroundColor: '#FEF2F2',
     color: '#DC2626',
+    textAlign: 'center',
+  },
+  paidBadge: {
+    backgroundColor: '#ECFDF5',
+    color: '#059669',
   }
 });
+
 interface InvoiceData {
   id: string;
   name: string;
@@ -215,54 +274,97 @@ interface InvoiceData {
   type: string;
   note: string;
   method?: string;
+  avatarColor?: string;
 }
 
-export const SingleInvoiceDoc = ({ invoice }: { invoice: InvoiceData }) => (
-  <Document>
+const parseCurrency = (val: string) => {
+  const numeric = parseFloat(val.replace(/[^\d.-]/g, ''));
+  const symbol = val.replace(/[\d.,\s-]/g, '');
+  return { numeric, symbol };
+};
+
+const InvoicePage = ({ invoice, index, total }: { invoice: InvoiceData, index?: number, total?: number }) => {
+  const { numeric, symbol } = parseCurrency(invoice.amount);
+  const taxRate = 0.18; // 18% GST mock
+  const subtotalNumericSize = numeric / (1 + taxRate);
+  const taxNumericSize = numeric - subtotalNumericSize;
+
+  const subtotal = `${symbol} ${subtotalNumericSize.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  const tax = `${symbol} ${taxNumericSize.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+  return (
     <Page size="A4" style={styles.page}>
+      <View style={styles.accentBar} />
+      
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.logoSection}>
           <Text style={styles.logo}>PayPlatform</Text>
-          <Text style={styles.companyName}>Enterprise Payment Gateway</Text>
+          <Text style={styles.tagline}>Digital Financial Gateway</Text>
+          <View style={styles.senderAddress}>
+            <Text>123 Tech Square, Suite 500</Text>
+            <Text>Bengaluru, KA 560103, India</Text>
+            <Text>support@payplatform.in</Text>
+            <Text>GSTIN: 29AAAAA0000A1Z5</Text>
+          </View>
         </View>
-        <View style={styles.invoiceInfo}>
+        <View style={styles.invoiceDetails}>
           <Text style={styles.invoiceTitle}>INVOICE</Text>
-          <Text style={styles.invoiceMetaText}>Invoice ID: {invoice.id}</Text>
-          <Text style={styles.invoiceMetaText}>Issue Date: {invoice.startDate}</Text>
-          <Text style={styles.invoiceMetaText}>Due Date: {invoice.endDate}</Text>
+          <View style={styles.metaGrid}>
+            <Text style={styles.metaLabel}>Invoice ID</Text>
+            <Text style={styles.metaValue}>{invoice.id}</Text>
+          </View>
+          <View style={styles.metaGrid}>
+            <Text style={styles.metaLabel}>Date Created</Text>
+            <Text style={styles.metaValue}>{invoice.startDate}</Text>
+          </View>
+          <View style={styles.metaGrid}>
+            <Text style={styles.metaLabel}>Due Date</Text>
+            <Text style={styles.metaValue}>{invoice.endDate}</Text>
+          </View>
+          <View style={[styles.metaGrid, {marginTop: 8}]}>
+            <Text style={styles.metaLabel}>Status</Text>
+            <View style={{width: 100}}>
+               <Text style={[styles.statusBadge, invoice.status === 'PAID' ? styles.paidBadge : {}]}>{invoice.status}</Text>
+            </View>
+          </View>
         </View>
       </View>
 
-      {/* Billing */}
+      {/* Billing & Info */}
       <View style={styles.billingSection}>
         <View style={styles.billingBox}>
-          <Text style={styles.sectionTitle}>Bill To</Text>
+          <Text style={styles.boxTitle}>Bill To</Text>
           <Text style={styles.billingName}>{invoice.name}</Text>
           <Text style={styles.billingAddress}>{invoice.clientAddress}</Text>
         </View>
-        <View style={styles.billingBox}>
-          <Text style={styles.sectionTitle}>Status</Text>
-          <View style={[styles.statusBadge, invoice.status !== 'PAID' ? styles.unpaidBadge : {}]}>
-            <Text>{invoice.status}</Text>
-          </View>
-          {invoice.method && (
-            <Text style={[styles.invoiceMetaText, { marginTop: 10 }]}>Payment Method: {invoice.method}</Text>
-          )}
+        <View style={{flex: 1, flexDirection: 'row'}}>
+            <View style={styles.billingBox}>
+              <Text style={styles.boxTitle}>Payment Info</Text>
+              <Text style={styles.rowText}>Method: <Text style={{fontWeight: 'bold'}}>{invoice.method || 'Credit Card'}</Text></Text>
+              <Text style={[styles.rowText, {marginTop: 4}]}>Currency: <Text style={{fontWeight: 'bold'}}>{symbol || 'INR'}</Text></Text>
+            </View>
         </View>
       </View>
 
-      {/* Items Table */}
+      {/* Table */}
       <View style={styles.table}>
         <View style={styles.tableHeader}>
-          <View style={styles.colDescription}><Text style={styles.headerText}>Description</Text></View>
-          <View style={styles.colQty}><Text style={styles.headerText}>Type</Text></View>
-          <View style={styles.colPrice}><Text style={styles.headerText}>Amount</Text></View>
+          <View style={styles.colDesc}><Text style={styles.headerText}>Description</Text></View>
+          <View style={styles.colType}><Text style={styles.headerText}>Type</Text></View>
+          <View style={styles.colQty}><Text style={styles.headerText}>Qty</Text></View>
+          <View style={styles.colRate}><Text style={styles.headerText}>Rate</Text></View>
+          <View style={styles.colAmt}><Text style={styles.headerText}>Amount</Text></View>
         </View>
         <View style={styles.tableRow}>
-          <View style={styles.colDescription}><Text style={styles.rowText}>{invoice.billName}</Text></View>
-          <View style={styles.colQty}><Text style={styles.rowText}>{invoice.type}</Text></View>
-          <View style={styles.colPrice}><Text style={styles.rowText}>{invoice.amount}</Text></View>
+          <View style={styles.colDesc}>
+            <Text style={styles.descText}>{invoice.billName}</Text>
+            <Text style={{fontSize: 9, color: '#94a3b8', marginTop: 2}}>Transaction ID: {invoice.id}</Text>
+          </View>
+          <View style={styles.colType}><Text style={styles.rowText}>{invoice.type}</Text></View>
+          <View style={styles.colQty}><Text style={styles.rowText}>1</Text></View>
+          <View style={styles.colRate}><Text style={styles.rowText}>{subtotal}</Text></View>
+          <View style={styles.colAmt}><Text style={[styles.rowText, {fontWeight: 'bold'}]}>{subtotal}</Text></View>
         </View>
       </View>
 
@@ -270,104 +372,60 @@ export const SingleInvoiceDoc = ({ invoice }: { invoice: InvoiceData }) => (
       <View style={styles.summarySection}>
         <View style={styles.summaryBox}>
           <View style={styles.summaryRow}>
-            <Text style={styles.rowText}>Subtotal</Text>
-            <Text style={styles.rowText}>{invoice.amount}</Text>
+            <Text style={styles.summaryLabel}>Subtotal</Text>
+            <Text style={styles.rowText}>{subtotal}</Text>
           </View>
           <View style={styles.summaryRow}>
-            <Text style={styles.rowText}>Tax (0%)</Text>
-            <Text style={styles.rowText}>$0.00</Text>
+            <Text style={styles.summaryLabel}>GST (18%)</Text>
+            <Text style={styles.rowText}>{tax}</Text>
           </View>
           <View style={styles.totalRow}>
-            <Text style={styles.totalText}>Total</Text>
-            <Text style={styles.totalText}>{invoice.amount}</Text>
+            <Text style={styles.totalLabel}>Grand Total</Text>
+            <Text style={styles.totalValue}>{invoice.amount}</Text>
           </View>
         </View>
       </View>
 
       {/* Note */}
-      <View style={{ marginTop: 60 }}>
-        <Text style={styles.sectionTitle}>Notes</Text>
-        <Text style={[styles.billingAddress, { maxWidth: '100%' }]}>{invoice.note}</Text>
-      </View>
+      {invoice.note && (
+        <View style={{ marginTop: 40 }}>
+            <Text style={styles.boxTitle}>Notes</Text>
+            <Text style={[styles.billingAddress, {maxWidth: '100%'}]}>{invoice.note}</Text>
+        </View>
+      )}
 
       {/* Footer */}
       <View style={styles.footer}>
-        <Text style={styles.footerText}>Thank you for your business! Reach us at support@payplatform.in</Text>
+        <View style={styles.paymentInfo}>
+          <Text style={styles.footerSectionTitle}>Bank Details</Text>
+          <Text style={styles.footerText}>Bank: HDFC Bank | Acc: 50200012345678</Text>
+          <Text style={styles.footerText}>IFSC: HDFC0000123 | Branch: MG Road</Text>
+          <View style={styles.qrCodePlaceholder}>
+            <Text style={{fontSize: 8, color: '#94a3b8'}}>Scan to Pay</Text>
+          </View>
+        </View>
+        <View style={styles.signatureBox}>
+          <View style={styles.signatureLine} />
+          <Text style={styles.footerSectionTitle}>Authorized Signatory</Text>
+          {index !== undefined && total !== undefined && (
+            <Text style={[styles.footerText, {marginTop: 10}]}>Page {index + 1} of {total}</Text>
+          )}
+        </View>
       </View>
     </Page>
+  );
+};
+
+export const SingleInvoiceDoc = ({ invoice }: { invoice: InvoiceData }) => (
+  <Document title={`Invoice-${invoice.id}`}>
+    <InvoicePage invoice={invoice} />
   </Document>
 );
 
 export const BulkInvoiceDoc = ({ invoices }: { invoices: InvoiceData[] }) => (
-  <Document>
+  <Document title="Invoices-Export">
     {invoices.map((invoice, index) => (
-      <Page key={index} size="A4" style={styles.page}>
-        {/* Header content repeated for each invoice */}
-        <View style={styles.header}>
-          <View style={styles.logoSection}>
-            <Text style={styles.logo}>PayPlatform</Text>
-            <Text style={styles.companyName}>Enterprise Payment Gateway</Text>
-          </View>
-          <View style={styles.invoiceInfo}>
-            <Text style={styles.invoiceTitle}>INVOICE</Text>
-            <Text style={styles.invoiceMetaText}>Invoice ID: {invoice.id}</Text>
-            <Text style={styles.invoiceMetaText}>Issue Date: {invoice.startDate}</Text>
-            <Text style={styles.invoiceMetaText}>Due Date: {invoice.endDate}</Text>
-          </View>
-        </View>
-
-        <View style={styles.billingSection}>
-          <View style={styles.billingBox}>
-            <Text style={styles.sectionTitle}>Bill To</Text>
-            <Text style={styles.billingName}>{invoice.name}</Text>
-            <Text style={styles.billingAddress}>{invoice.clientAddress}</Text>
-          </View>
-          <View style={styles.billingBox}>
-            <Text style={styles.sectionTitle}>Status</Text>
-            <View style={[styles.statusBadge, invoice.status !== 'PAID' ? styles.unpaidBadge : {}]}>
-              <Text>{invoice.status}</Text>
-            </View>
-            {invoice.method && (
-              <Text style={[styles.invoiceMetaText, { marginTop: 10 }]}>Payment Method: {invoice.method}</Text>
-            )}
-          </View>
-        </View>
-
-        <View style={styles.table}>
-          <View style={styles.tableHeader}>
-            <View style={styles.colDescription}><Text style={styles.headerText}>Description</Text></View>
-            <View style={styles.colQty}><Text style={styles.headerText}>Type</Text></View>
-            <View style={styles.colPrice}><Text style={styles.headerText}>Amount</Text></View>
-          </View>
-          <View style={styles.tableRow}>
-            <View style={styles.colDescription}><Text style={styles.rowText}>{invoice.billName}</Text></View>
-            <View style={styles.colQty}><Text style={styles.rowText}>{invoice.type}</Text></View>
-            <View style={styles.colPrice}><Text style={styles.rowText}>{invoice.amount}</Text></View>
-          </View>
-        </View>
-
-        <View style={styles.summarySection}>
-          <View style={styles.summaryBox}>
-            <View style={styles.summaryRow}>
-              <Text style={styles.rowText}>Subtotal</Text>
-              <Text style={styles.rowText}>{invoice.amount}</Text>
-            </View>
-            <View style={styles.totalRow}>
-              <Text style={styles.totalText}>Total</Text>
-              <Text style={styles.totalText}>{invoice.amount}</Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={{ marginTop: 60 }}>
-          <Text style={styles.sectionTitle}>Notes</Text>
-          <Text style={[styles.billingAddress, { maxWidth: '100%' }]}>{invoice.note}</Text>
-        </View>
-
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>Page {index + 1} of {invoices.length} | Generated by PayPlatform</Text>
-        </View>
-      </Page>
+      <InvoicePage key={invoice.id} invoice={invoice} index={index} total={invoices.length} />
     ))}
   </Document>
 );
