@@ -7,7 +7,8 @@ import './css/components.css';
 import PAYMENTS_DATA from '@data/payments.json';
 import { getStatusBadge, getMethodIcon } from './utils/PaymentUtils.tsx';
 
-const PIE_COLORS = ["#4CAF50", "#FF4444", "#ff9800", "#6a6a6aff", "#2f46adff"];
+const PIE_COLORS = ["#10B981", "#F43F5E", "#F59E0B","#6366F1", "#3B82F6"];
+// const PIE_COLORS = ["#4DB6AC"," #64B5F6","#9575CD","#FF8A65","#81C784"];
 
 interface DashboardProps {
   showMorePayments: () => void;
@@ -111,7 +112,8 @@ export function Dashboard({ showMorePayments }: DashboardProps) {
       let total = 0;
       filteredPayments.forEach(p => total += parseAmt(p.amount));
       return [{ label: 'Today', revenue: total }];
-    } else if (timeRange === 'This Week') {
+    } 
+    else if (timeRange === 'This Week') {
       const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
       const data = days.map(d => ({ label: d, revenue: 0 }));
       filteredPayments.forEach(p => {
@@ -119,7 +121,8 @@ export function Dashboard({ showMorePayments }: DashboardProps) {
         if (!isNaN(d)) data[d].revenue += parseAmt(p.amount);
       });
       return data;
-    } else if (timeRange === 'This Month') {
+    } 
+    else if (timeRange === 'This Month') {
       const data = [0, 1, 2, 3, 4].map(w => ({ label: `Week ${w + 1}`, revenue: 0 }));
       filteredPayments.forEach(p => {
         const dateObj = new Date(p.date);
@@ -129,7 +132,8 @@ export function Dashboard({ showMorePayments }: DashboardProps) {
         }
       });
       return data;
-    } else if (timeRange === 'This Year') {
+    }
+    else if (timeRange === 'This Year') {
       const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       const data = months.map(m => ({ label: m, revenue: 0 }));
       filteredPayments.forEach(p => {
@@ -137,7 +141,8 @@ export function Dashboard({ showMorePayments }: DashboardProps) {
         if (!isNaN(m)) data[m].revenue += parseAmt(p.amount);
       });
       return data;
-    } else {
+    } 
+    else {
       const yearMap = new Map<number, number>();
       filteredPayments.forEach(p => {
         const yr = new Date(p.date).getFullYear();
@@ -241,6 +246,7 @@ export function Dashboard({ showMorePayments }: DashboardProps) {
               <XAxis dataKey="label" tick={{ fontSize: 13, fill: 'var(--text-secondary)' }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} axisLine={false} tickLine={false} />
               <RechartsTooltip
+                formatter={(value) => [Number(value).toFixed(3), "Revenue"]}
                 cursor={false}
                 contentStyle={{
                   backgroundColor: 'var(--tooltip-bg)',
@@ -253,7 +259,7 @@ export function Dashboard({ showMorePayments }: DashboardProps) {
                 labelStyle={{ color: 'var(--tooltip-text)', fontWeight: 600, marginBottom: '4px' }}
                 itemStyle={{ color: 'var(--tooltip-text-sec)' }}
               />
-              <Bar dataKey="revenue" fill="#4CAF50" radius={[6, 6, 0, 0]} />
+              <Bar dataKey="revenue" fill="#10B981" radius={[6, 6, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

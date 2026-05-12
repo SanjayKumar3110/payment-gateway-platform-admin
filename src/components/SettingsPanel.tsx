@@ -8,7 +8,7 @@ interface UserData {
     email: string;
     name: string;
     businessName?: string;
-    phone?: string;
+    // phone?: string;
     role: string;
     rz_key_id?: string;
     rz_key_secret?: string;
@@ -265,7 +265,7 @@ export function SettingsPanel({ userData, darkMode, setDarkMode }: SettingsPanel
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <ProfileRow label="Name" value={userData?.name || '—'} />
                                 <ProfileRow label="Email" value={userData?.email || '—'} />
-                                <ProfileRow label="Phone Number" value={userData?.phone || '—'} />
+                                {/* <ProfileRow label="Phone Number" value={userData?.phone || '—'} /> */}
                                 <ProfileRow label="Business ID" value={userData?.id || '—'} copyable />
                             </div>
                         </div>
