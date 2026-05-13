@@ -12,6 +12,13 @@ import ANALYTICS_DATA from '@data/analytics.json';
 const fallbackRevenueTrends = DASHBOARD_DATA.barData.map(d => ({ timeLabel: d.month, revenue: d.revenue }));
 const fallbackStatusBreakdown = DASHBOARD_DATA.pieData;
 
+// Full month name → short abbreviation map for date parsing
+const MONTH_NAME_MAP: Record<string, string> = {
+  January: 'Jan', February: 'Feb', March: 'Mar', April: 'Apr',
+  May: 'May', June: 'Jun', July: 'Jul', August: 'Aug',
+  September: 'Sep', October: 'Oct', November: 'Nov', December: 'Dec',
+};
+
 // --- 1. THEME & CONSTANTS ---
 const THEME_COLORS = {
   primary: '#6366F1', success: '#10B981', warning: '#F59E0B',
@@ -32,8 +39,16 @@ const parseAmount = (val: any) => {
 
 const parseDate = (dateStr: string): Date => {
   try {
-    // Cleans "Mar 22, 2026, 20:17 PM" to "Mar 22, 2026 20:17"
-    const cleaned = dateStr.replace(/, (\d{2}:\d{2}) [APM]{2}/, '$1');
+    // Step 1: Replace full month names with abbreviations (e.g. "April" -> "Apr")
+    let normalized = dateStr;
+    for (const [full, abbr] of Object.entries(MONTH_NAME_MAP)) {
+      normalized = normalized.replace(new RegExp(`\\b${full}\\b`, 'g'), abbr);
+    }
+    // Step 2: Clean up the time format - remove AM/PM and the comma before the time
+    // Handles patterns like "Apr 22, 2026, 20:17 PM" or "Apr 22, 2026, 8:17 AM"
+    const cleaned = normalized
+      .replace(/,\s*(\d{1,2}:\d{2})\s*[APap][Mm]/, ' $1') // remove AM/PM and preceding comma
+      .replace(/,\s*(\d{1,2}:\d{2})$/, ' $1'); // handle no AM/PM case
     const d = new Date(cleaned);
     return isNaN(d.getTime()) ? new Date(0) : d;
   } catch {
@@ -73,10 +88,11 @@ export function Analytics() {
   const currentMetrics = useMemo(() => {
     const allPayments = [...realPayments, ...PAYMENTS_DATA];
 
-    // FIX: Instead of using 'new Date()', find the latest date in your JSON 
-    // so that the "Last 7 Days" logic actually finds your 2026 data.
-    const latestDateInData = new Date(Math.max(...allPayments.map(p => parseDate(p.date).getTime())));
-    const referenceDate = latestDateInData;
+    // Find the latest date in the data so time-range filters work correctly
+    // regardless of when the app is running relative to the data dates.
+    const timestamps = allPayments.map(p => parseDate(p.date).getTime()).filter(t => t > 0);
+    const latestTimestamp = timestamps.length > 0 ? Math.max(...timestamps) : Date.now();
+    const referenceDate = new Date(latestTimestamp);
 
     const getWindow = (range: string) => {
       const end = referenceDate.getTime();
@@ -137,12 +153,14 @@ export function Analytics() {
       }
     });
 
+    const referenceYear = referenceDate.getFullYear();
     const sortedKeys = Object.keys(revenueByTime).sort((a, b) => {
       if (timeRange === 'Last Year') {
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         return months.indexOf(a) - months.indexOf(b);
       }
-      return new Date(`${a}, 2026`).getTime() - new Date(`${b}, 2026`).getTime();
+      // Use the actual reference year instead of hardcoded 2026
+      return new Date(`${a}, ${referenceYear}`).getTime() - new Date(`${b}, ${referenceYear}`).getTime();
     });
 
     const dynamicRevenueTrends = sortedKeys.map(k => ({
